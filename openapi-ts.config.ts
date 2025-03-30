@@ -10,9 +10,7 @@ export default defineConfig({
       asClass: true,
       operationId: true,
       methodNameBuilder: (operation) => {
-        // @ts-ignore
         let name: string = operation.name;
-        // @ts-ignore
         const service: string = operation.service;
 
         if (service && name.toLowerCase().startsWith(service.toLowerCase())) {

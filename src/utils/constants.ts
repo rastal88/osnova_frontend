@@ -1,0 +1,1 @@
+export const DEBUG_MODE_CONTROLLER = import.meta.env.VITE_DEBUG_MODE === 'true';

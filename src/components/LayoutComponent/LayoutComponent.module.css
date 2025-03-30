@@ -1,0 +1,23 @@
+.header_logo {
+    width: 100px;
+}
+
+.side_trigger .ant-layout-sider-trigger {
+    background-color: #e8e8e8 !important;
+    height: 70px !important;
+}
+.ant-layout-sider-trigger {
+    background-color: #e8e8e8 !important;
+}
+
+.footer {
+    position: sticky;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px -1px 2px;
+    z-index: 1000;
+    bottom: 0;
+    max-width: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 12px 24px;
+    height: 70px;
+}
