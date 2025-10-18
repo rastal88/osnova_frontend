@@ -6,69 +6,84 @@ import AdminLayout from '../components/AdminLayout/AdminLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Profile from '../pages/Profile/Profile';
 import AdminDashboard from '../pages/Admin/Dashboard/Dashboard.tsx';
+
 import Login from '../pages/Login/Login';
-import HomePage from '../pages/Home/Home';
-import { checkAuth, checkAdmin } from '../utils/auth.ts';
+import ProtectedRoute from "../components/ProtectedRoute.tsx";
+import Home from "../pages/Home/Home.tsx";
+import Register from "../pages/Register/Register.tsx";
 
 const routes = createBrowserRouter([
   {
     path: '/login',
-    element: <Login />,
+    element: <Login />
   },
-  // Главный маршрут (клиентская часть)
+  {
+    path: '/register',
+    element: <Register />
+  },
+
   {
     path: '/',
     element: <LayoutComponent />,
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'profile',
-        element: <Profile />,
-        loader: async () => {
-          // Проверяем авторизацию
-          const isAuthenticated = await checkAuth();
-          if (!isAuthenticated) {
-            return <Navigate to="/login" replace />;
-          }
-          return null;
-        }
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
-  // Админка
+
   {
     path: '/admin',
-    element: <AdminLayout />,
-    loader: async () => {
-      // Проверяем права администратора
-      const isAdmin = await checkAdmin();
-      if (!isAdmin) {
-        return <Navigate to="/" replace />;
-      }
-      return null;
-    },
+    element: (
+      <ProtectedRoute roles={['ADMIN', 'MODERATOR']}>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      {
-        index: true,
-        element: <Navigate to="/admin/dashboard" replace />,
-      },
+      { index: true, element: <Navigate to="/admin/dashboard" replace /> },
       {
         path: 'dashboard',
-        element: <AdminDashboard />,
+        element: (
+          <ProtectedRoute roles={['ADMIN', 'MODERATOR']}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        ),
       },
-      // Общий для админки и клиентской части профиль
       {
         path: 'profile',
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
+  },
+
+  {
+    path: '*',
+    element: <Navigate to="/" replace />
   },
 ]);
 

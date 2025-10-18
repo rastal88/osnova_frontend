@@ -1,54 +1,65 @@
-import { Card, Form, Input, Button, Typography, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-
-const { Title } = Typography;
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore';
+import './Login.css';
+import { login } from '../../api/auth.ts';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { fetchUser } = useAuthStore();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const onFinish = (values: any) => {
-    console.log('Received values:', values);
-    // Здесь должна быть логика авторизации
-    message.success('Вход выполнен успешно!');
-    navigate('/');
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      const user = await fetchUser();
+
+      if (user?.role === 'ADMIN' || user?.role === 'MODERATOR') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 400) {
+          setError('Неверный логин или пароль');
+        } else {
+          setError('Ошибка сервера, попробуйте позже');
+        }
+      } else {
+        setError('Неизвестная ошибка');
+      }
+    }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Card style={{ width: 400 }}>
-        <Title level={3} style={{ textAlign: 'center' }}>Вход в систему</Title>
-
-        <Form
-          name="login"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Введите имя пользователя!' }]}
-          >
-            <Input prefix={<UserOutlined />} placeholder="Имя пользователя" />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Введите пароль!' }]}
-          >
-            <Input
-              prefix={<LockOutlined />}
-              type="password"
-              placeholder="Пароль"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Войти
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
+    <div className="login-container">
+      <form onSubmit={handleLogin} className="login-form">
+        <h2>Вход</h2>
+        {error && <p className="error">{error}</p>}
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Пароль"
+          required
+        />
+        <button type="submit">Войти</button>
+        <p>
+          Нет аккаунта? <Link to="/register">Зарегистрируйтесь</Link>
+        </p>
+      </form>
     </div>
   );
 };

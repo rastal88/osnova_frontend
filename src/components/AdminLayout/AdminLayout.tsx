@@ -1,57 +1,33 @@
-import { Layout, Menu, Button } from 'antd';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { DashboardOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Outlet, Link } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { useAuthStore } from '../../store/authStore';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const AdminLayout = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Логика выхода
-    navigate('/login');
-  };
+  const { logout } = useAuthStore();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={200} theme="dark">
-        <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <DashboardOutlined />,
-              label: <Link to="/admin/dashboard">Админ панель</Link>,
-            },
-            {
-              key: '2',
-              icon: <UserOutlined />,
-              label: <Link to="/admin/profile">Профиль</Link>,
-            },
-          ]}
-        />
-      </Sider>
+    <Layout>
+      <Header style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Menu theme="dark" mode="horizontal">
+          <Menu.Item key="dashboard">
+            <Link to="/admin/dashboard">Admin Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="profile">
+            <Link to="/admin/profile">Profile</Link>
+          </Menu.Item>
+        </Menu>
+        <button onClick={logout} style={{ color: 'white' }}>
+          Выйти
+        </button>
+      </Header>
 
-      <Layout>
-        <Header style={{ padding: 0, background: '#fff', display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
-            type="text"
-            icon={<LogoutOutlined />}
-            onClick={handleLogout}
-          >
-            Выйти
-          </Button>
-        </Header>
+      <Content style={{ padding: '24px', minHeight: '80vh' }}>
+        <Outlet />
+      </Content>
 
-        <Content style={{ margin: '24px 16px 0' }}>
-          <div style={{ padding: 24, minHeight: 360 }}>
-            <Outlet />
-          </div>
-        </Content>
-      </Layout>
+      <Footer style={{ textAlign: 'center' }}>© {new Date().getFullYear()} Osnova Admin</Footer>
     </Layout>
   );
 };
