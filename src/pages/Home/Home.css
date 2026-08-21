@@ -1,0 +1,47 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.home-card h2 {
+  color: #1e293b;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.home-card p {
+  color: #475569;
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.home-card .ant-btn-primary {
+  background-color: #1677ff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+
+.home-card .ant-btn-primary:hover {
+  background-color: #125fcc;
+}
+
+.home-card .ant-btn-primary:active {
+  transform: scale(0.98);
+}

@@ -56,7 +56,7 @@ const routes = createBrowserRouter([
   {
     path: '/admin',
     element: (
-      <ProtectedRoute roles={['ADMIN', 'MODERATOR']}>
+      <ProtectedRoute roles={['ROOT', 'MODERATOR']}>
         <AdminLayout />
       </ProtectedRoute>
     ),
@@ -65,7 +65,7 @@ const routes = createBrowserRouter([
       {
         path: 'dashboard',
         element: (
-          <ProtectedRoute roles={['ADMIN', 'MODERATOR']}>
+          <ProtectedRoute roles={['ROOT', 'MODERATOR']}>
             <AdminDashboard />
           </ProtectedRoute>
         ),

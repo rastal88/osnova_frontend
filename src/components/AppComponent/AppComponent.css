@@ -1,6 +1,7 @@
 #root {
   margin: 0 auto;
   text-align: center;
+  width: 100%;
   height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
@@ -11,9 +12,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -37,6 +40,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -64,17 +68,19 @@
   white-space: normal;
 }
 
-.ant-menu-submenu-vertical.ant-menu-submenu-selected > .ant-menu-submenu-title {
+.ant-menu-submenu-vertical.ant-menu-submenu-selected>.ant-menu-submenu-title {
   background-color: #c6cacc;
 }
-.ant-menu-submenu-vertical.ant-menu-submenu-selected > .ant-menu-submenu-title:hover {
+
+.ant-menu-submenu-vertical.ant-menu-submenu-selected>.ant-menu-submenu-title:hover {
   background-color: #bdc1c4;
 }
 
-.ant-menu-submenu-inline.ant-menu-submenu-selected > .ant-menu-submenu-title {
+.ant-menu-submenu-inline.ant-menu-submenu-selected>.ant-menu-submenu-title {
   background-color: #c6cacc;
 }
-.ant-menu-submenu-inline.ant-menu-submenu-selected > .ant-menu-submenu-title:hover {
+
+.ant-menu-submenu-inline.ant-menu-submenu-selected>.ant-menu-submenu-title:hover {
   background-color: #bdc1c4;
 }
 
@@ -100,11 +106,15 @@ button:focus, button:focus-visible {
   margin: 0 -1px;
 }
 
-.ant-table-container > table > thead > tr:first-child {
+.ant-table-container>table>thead>tr:first-child {
   border-radius: 0
 }
 
-.edited-table .ant-select-selector, .edited-table .ant-select, .edited-table .ant-input, .edited-table .ant-input-number, .edited-table .ant-input-password {
+.edited-table .ant-select-selector,
+.edited-table .ant-select,
+.edited-table .ant-input,
+.edited-table .ant-input-number,
+.edited-table .ant-input-password {
   width: 100%;
   border: none !important;
   border-radius: 0;
@@ -119,7 +129,7 @@ button:focus, button:focus-visible {
 }
 
 .edited-table .ant-switch {
- margin: 0 10px;
+  margin: 0 10px;
 }
 
 .edited-table tr {

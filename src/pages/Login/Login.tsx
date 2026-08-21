@@ -17,8 +17,7 @@ const Login = () => {
     try {
       await login(email, password);
       const user = await fetchUser();
-
-      if (user?.role === 'ADMIN' || user?.role === 'MODERATOR') {
+      if (user?.role === 'ROOT' || user?.role === 'MODERATOR') {
         navigate('/admin');
       } else {
         navigate('/');
@@ -26,12 +25,12 @@ const Login = () => {
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 400) {
-          setError('Неверный логин или пароль');
+          setError('Invalid login or password');
         } else {
-          setError('Ошибка сервера, попробуйте позже');
+          setError('Server error, try again later');
         }
       } else {
-        setError('Неизвестная ошибка');
+        setError('Unknown error');
       }
     }
   };
@@ -39,7 +38,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleLogin} className="login-form">
-        <h2>Вход</h2>
+        <h2>Sign In</h2>
         {error && <p className="error">{error}</p>}
         <input
           type="email"
@@ -52,12 +51,12 @@ const Login = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Пароль"
+          placeholder="Password"
           required
         />
-        <button type="submit">Войти</button>
+        <button type="submit">Sign In</button>
         <p>
-          Нет аккаунта? <Link to="/register">Зарегистрируйтесь</Link>
+          Don't have an account? <Link to="/register">Sign Up</Link>
         </p>
       </form>
     </div>

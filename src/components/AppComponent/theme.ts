@@ -1,6 +1,6 @@
 import { ThemeConfig } from 'antd';
 
-export const theme: ThemeConfig = {
+export const themeLight: ThemeConfig = {
   token: {
     colorPrimary: '#3b516a',
     colorBgBase: '#f1f5f8',
@@ -28,14 +28,14 @@ export const theme: ThemeConfig = {
     Table: {
       cellFontSizeSM: 12,
       headerBorderRadius: 0,
-      // fontFamily: 'RobotoMono',
-      // colorBgContainer: '#ffffff',
-      // headerBg: '#dce4e9',
-      // bodySortBg: '#f1f5f8',
-      // headerSortActiveBg: '#cfdde7',
-      // headerSortHoverBg: '',
-      // rowHoverBg: '#f1f5f8',
-      // borderColor: '#3b516a',
+      fontFamily: 'RobotoMono',
+      colorBgContainer: '#ffffff',
+      headerBg: '#dce4e9',
+      bodySortBg: '#f1f5f8',
+      headerSortActiveBg: '#cfdde7',
+      headerSortHoverBg: '',
+      rowHoverBg: '#f1f5f8',
+      borderColor: '#3b516a',
     },
     Button: {
       defaultShadow: 'none',
@@ -43,7 +43,7 @@ export const theme: ThemeConfig = {
     },
     Layout: {
       headerBg: '#8996a5',
-      headerHeight: 70,
+      headerHeight: 50,
     },
     Popover: {
       colorBgElevated: '#ffffff',
@@ -69,3 +69,76 @@ export const theme: ThemeConfig = {
     },
   },
 };
+
+export const themeDark: ThemeConfig = {
+  token: {
+    colorPrimary: '#1677ff', // Синий основной для тёмной темы (пример)
+    colorBgBase: '#10141a',
+    colorText: '#f5f7fa',
+    fontFamily: 'Roboto',
+  },
+  components: {
+    Input: {
+      activeBg: '#23272f',
+      hoverBg: '#23272f',
+      colorBgContainer: '#23272f',
+    },
+    InputNumber: {
+      activeBg: '#23272f',
+      hoverBg: '#23272f',
+      colorBgContainer: '#23272f',
+    },
+    Menu: {
+      itemSelectedBg: '#23272f',
+      groupTitleFontSize: 16,
+      groupTitleColor: '#f5f7fa',
+      lineHeight: 2,
+    },
+    Table: {
+      cellFontSizeSM: 12,
+      headerBorderRadius: 0,
+      fontFamily: 'RobotoMono',
+      colorBgContainer: '#23272f',
+      headerBg: '#23272f',
+      bodySortBg: '#23272f',
+      headerSortActiveBg: '#23272f',
+      headerSortHoverBg: '',
+      rowHoverBg: '#23272f',
+      borderColor: '#f5f7fa',
+    },
+    Button: {
+      defaultShadow: 'none',
+      primaryShadow: 'none',
+    },
+    Layout: {
+      headerBg: '#23272f',
+      headerHeight: 50,
+    },
+    Popover: {
+      colorBgElevated: '#23272f',
+      colorTextHeading: '#ff4d4f',
+      colorText: '#ff4d4f',
+    },
+    Dropdown: {
+      colorBgElevated: '#23272f',
+    },
+    Tabs: {
+      // itemSelectedColor: 'black',
+      cardBg: 'white',
+    },
+    Alert: {
+      withDescriptionPadding: 8,
+      colorInfo: '#f5f7fa',
+      colorInfoBg: '',
+      colorInfoBorder: '#f5f7fa',
+    },
+    DatePicker: {
+      activeBg: '#23272f',
+      hoverBg: '#23272f',
+    },
+  },
+};
+
+export function getTheme(themeName: 'light' | 'dark') {
+  return themeName === 'dark' ? themeDark : themeLight;
+}

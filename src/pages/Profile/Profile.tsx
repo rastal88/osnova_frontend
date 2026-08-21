@@ -11,8 +11,8 @@ const Profile = () => {
 
   return (
     <Card
-      title="Профиль пользователя"
-      extra={<Button icon={<EditOutlined />}>Редактировать</Button>}
+      title="User profile"
+      extra={<Button icon={<EditOutlined />}>Edit</Button>}
     >
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
         <Avatar size={64} icon={<UserOutlined />} style={{ marginRight: 16 }} />
@@ -21,7 +21,7 @@ const Profile = () => {
 
       <Descriptions bordered column={1}>
         <Descriptions.Item label="Email">{userData.email}</Descriptions.Item>
-        <Descriptions.Item label="Роль">{userData.role}</Descriptions.Item>
+        <Descriptions.Item label="Role">{userData.role}</Descriptions.Item>
       </Descriptions>
     </Card>
   );

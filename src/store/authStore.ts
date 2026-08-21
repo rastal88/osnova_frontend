@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { getCurrentUser, logout } from '../api/auth';
 
-type Role = 'USER' | 'ADMIN' | 'MODERATOR';
+type Role = 'USER' | 'ROOT' | 'MODERATOR';
 
 interface User {
   id: string;

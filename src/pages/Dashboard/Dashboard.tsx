@@ -5,8 +5,8 @@ const { Title } = Typography;
 const Dashboard = () => {
   return (
     <Card>
-      <Title level={3}>Клиентский дашборд</Title>
-      <p>Здесь может быть контент для обычных пользователей</p>
+      <Title level={3}>Client dashboard</Title>
+      	<p>There may be content for ordinary users here</p>
     </Card>
   );
 };
