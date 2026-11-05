@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { useAuthStore } from '../../store/authStore';
-import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
-import { ThemeContext } from '../AppComponent/AppComponent';
+import { useAuthStore } from '../../auth/authStore';
+import ThemeSwitcher from '../../../components/AppComponent/ThemeSwitcher';
+import { ThemeContext } from '../../../components/AppComponent/AppComponent';
 
 const { Header, Content, Footer } = Layout;
 

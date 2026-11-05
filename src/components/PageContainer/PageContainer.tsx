@@ -28,7 +28,6 @@ interface PageContainerProps {
 
 const PageContainer = ({
   title,
-  titleKey,
   subtitle,
   actions,
   breadcrumbs,
@@ -40,6 +39,7 @@ const PageContainer = ({
   maxWidth,
   children,
 }: PageContainerProps) => {
+  const location = useLocation();
   const autoBreadcrumbs = navigationConfig.showBreadcrumbs
     ? getBreadcrumbs(location.pathname)
     : [];

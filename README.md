@@ -28,14 +28,23 @@
 
 ```
 src/
-├── api/          # клиенты Axios и обёртки над эндпоинтами
-├── store/        # Zustand-сторы (auth, bootstrap)
-├── routes/       # маршрутизация (React Router)
-├── pages/        # страницы (Home, Dashboard, Profile, Admin, ...)
-├── components/   # компоненты (Layout, ProtectedRoute, Bootstrap, ...)
+├── api/          # Axios-клиент и bootstrap
+├── store/        # Zustand-сторы ядра (bootstrap)
+├── routes/       # маршрутизация из capabilities + lazyElement()
+├── pages/        # публичные страницы ядра (Home, 404, ошибка)
+├── components/   # каркас: Layout, PageContainer, PageState, Seo, ...
+├── config/       # навигация и редиректы
+├── modules/      # опциональные модули — каждый в своей папке
+│   ├── auth/     # вход, регистрация, профиль, ProtectedRoute  ← authentication
+│   └── admin/    # раздел /admin для root/moderator          ← admin
 ├── types/        # общие TypeScript-типы
 └── utils/        # константы и утилиты
 ```
+
+**Модуль = папка.** Модуль экспортирует свои маршруты из `modules/<name>/index.tsx`,
+страницы подключаются через `lazyElement()` и попадают в отдельные чанки: если
+capability выключена или страница не открыта, её код не скачивается. Удалить модуль —
+удалить папку и его подключение в `src/routes/routes.tsx`.
 
 ## Быстрый старт
 

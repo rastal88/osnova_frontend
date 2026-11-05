@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getCurrentUser, logout } from '../api/auth';
+import { getCurrentUser, logout } from './api';
 
 type Role = 'user' | 'root' | 'moderator';
 

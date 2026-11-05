@@ -1,7 +1,7 @@
 import { Card, Descriptions, Button, Avatar } from 'antd';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 
-import PageContainer from '../../components/PageContainer/PageContainer';
+import PageContainer from '../../../../components/PageContainer/PageContainer';
 
 const Profile = () => {
   const userData = {

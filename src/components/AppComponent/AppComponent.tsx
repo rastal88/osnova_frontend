@@ -3,7 +3,6 @@ import { ConfigProvider } from 'antd';
 import AppRouter from '../../routes/routes';
 import BootstrapComponent from '../BootstrapComponent/BootstrapComponent';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { TranslationProvider } from '../i18n/index.tsx';
 import { getTheme } from './theme';
 import './AppComponent.css';
 
@@ -41,7 +40,6 @@ const AppComponent = () => {
   }, [themeName]);
 
   return (
-    <TranslationProvider>
       <ThemeContext.Provider value={{ themeName, setThemeName }}>
         <ConfigProvider theme={getTheme(themeName)}>
           <ErrorBoundary>
@@ -51,7 +49,6 @@ const AppComponent = () => {
           </ErrorBoundary>
         </ConfigProvider>
       </ThemeContext.Provider>
-    </TranslationProvider>
   );
 };
 

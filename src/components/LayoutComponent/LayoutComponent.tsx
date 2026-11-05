@@ -22,10 +22,9 @@ import {
   MenuOutlined,
 } from '@ant-design/icons';
 
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../modules/auth';
 import { useBootstrapStore } from '../../store/bootstrapStore';
 import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import { ThemeContext } from '../AppComponent/AppComponent';
 import {
   findActiveNavPath,
@@ -44,7 +43,6 @@ const LayoutComponent = () => {
   const authEnabled = features?.authentication ?? false;
 
   const { themeName, setThemeName } = useContext(ThemeContext);
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const screens = Grid.useBreakpoint();
@@ -146,7 +144,6 @@ const LayoutComponent = () => {
         </div>
 
         <div className="app-header-actions">
-          <LanguageSwitcher />
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
 
           {authEnabled && (
