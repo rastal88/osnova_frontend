@@ -7,5 +7,5 @@ const RAW_API_BASE_URL =
 export const API_BASE_URL = RAW_API_BASE_URL;
 export const API_DOCS_URL = `${RAW_API_BASE_URL.replace(/\/api\/v1\/?$/, '')}/docs`;
 
-export const GITHUB_BACKEND_URL = 'https://github.com/<org>/osnova_backend';
-export const GITHUB_FRONTEND_URL = 'https://github.com/<org>/osnova_frontend';
+export const GITHUB_BACKEND_URL = 'https://github.com/rastal88/osnova_backend';
+export const GITHUB_FRONTEND_URL = 'https://github.com/rastal88/osnova_frontend';

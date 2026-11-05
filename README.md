@@ -1,6 +1,9 @@
 # Osnova Frontend
 
-**SPA-интерфейс для проекта [Osnova](https://github.com/<org>/osnova_backend)** —
+[![CI](https://github.com/rastal88/osnova_frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/rastal88/osnova_frontend/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**SPA-интерфейс для проекта [Osnova](https://github.com/rastal88/osnova_backend)** —
 универсального full-stack шаблона для быстрой разработки web-приложений.
 
 Этот проект является клиентской частью Osnova и **работает в связке с бэкендом
@@ -86,4 +89,10 @@ docker build --build-arg VITE_BASE_URL=/api/v1 -t osnova-frontend .
 
 Полное описание архитектуры, профилей `minimal` / `standard` / `scalable` и механизма
 capabilities — в README основного репозитория:
-[**osnova_backend**](https://github.com/<org>/osnova_backend).
+[**osnova_backend**](https://github.com/rastal88/osnova_backend).
+
+## Roadmap, участие, лицензия
+
+- Общий план: [ROADMAP.md](https://github.com/rastal88/osnova_backend/blob/main/ROADMAP.md), изменения: [CHANGELOG.md](CHANGELOG.md).
+- Как участвовать: [CONTRIBUTING.md](CONTRIBUTING.md), безопасность: [SECURITY.md](SECURITY.md).
+- Лицензия: [MIT](LICENSE).
