@@ -1,34 +1,39 @@
-import { useEffect, useState, createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
-import { RouterProvider } from 'react-router-dom';
-import routes from '../../routes/routes';
+import AppRouter from '../../routes/routes';
+import BootstrapComponent from '../BootstrapComponent/BootstrapComponent';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { TranslationProvider } from '../i18n/index.tsx';
 import { getTheme } from './theme';
-import { useAuthStore } from '../../store/authStore';
 import './AppComponent.css';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ThemeContext = createContext<{
   themeName: 'light' | 'dark';
   setThemeName: (t: 'light' | 'dark') => void;
-}>({ themeName: 'light', setThemeName: () => {} });
+}>({
+  themeName: 'light',
+  setThemeName: () => {},
+});
 
 const THEME_KEY = 'app_theme';
 
 const AppComponent = () => {
-  const fetchUser = useAuthStore((state) => state.fetchUser);
   const [themeName, setThemeName] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
       const persisted = localStorage.getItem(THEME_KEY);
-      if (persisted === 'dark' || persisted === 'light') return persisted;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+
+      if (persisted === 'dark' || persisted === 'light') {
+        return persisted;
+      }
+
+      if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
         return 'dark';
       }
     }
+
     return 'light';
   });
-
-  useEffect(() => {
-    void fetchUser();
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(THEME_KEY, themeName);
@@ -36,11 +41,17 @@ const AppComponent = () => {
   }, [themeName]);
 
   return (
-    <ThemeContext.Provider value={{ themeName, setThemeName }}>
-      <ConfigProvider theme={getTheme(themeName)}>
-        <RouterProvider router={routes} />
-      </ConfigProvider>
-    </ThemeContext.Provider>
+    <TranslationProvider>
+      <ThemeContext.Provider value={{ themeName, setThemeName }}>
+        <ConfigProvider theme={getTheme(themeName)}>
+          <ErrorBoundary>
+            <BootstrapComponent>
+              <AppRouter />
+            </BootstrapComponent>
+          </ErrorBoundary>
+        </ConfigProvider>
+      </ThemeContext.Provider>
+    </TranslationProvider>
   );
 };
 

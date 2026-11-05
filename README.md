@@ -1,54 +1,80 @@
-# React + TypeScript + Vite
+# Osnova Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SPA-интерфейс для проекта [Osnova](https://github.com/<org>/osnova_backend)** —
+универсального full-stack шаблона для быстрой разработки web-приложений.
 
-Currently, two official plugins are available:
+Этот проект является клиентской частью Osnova и **работает в связке с бэкендом
+`osnova_backend`**, взаимодействуя с ним исключительно через REST API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Стек
 
-## Expanding the ESLint configuration
+- React 19 + TypeScript
+- Vite (сборка, HMR, режимы dev/prod)
+- Zustand — управление состоянием
+- Ant Design — UI-компоненты
+- Axios — сетевой слой, React Router — маршрутизация
+- Biome — линтинг и форматирование, Playwright — e2e-тесты
+- `@hey-api/openapi-ts` — генерация API-клиента из OpenAPI бэкенда
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Возможности
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Аутентификация и регистрация (при `AUTH_ENABLED` на бэкенде)
+- Защищённые маршруты с ролевым доступом (`ROOT`, `MODERATOR`)
+- Административная панель (при `ADMIN_ENABLED`)
+- Динамическая конфигурация через `bootstrap` (тема, capabilities)
+- Светлая/тёмная тема
+
+## Структура
+
+```
+src/
+├── api/          # клиенты Axios и обёртки над эндпоинтами
+├── store/        # Zustand-сторы (auth, bootstrap)
+├── routes/       # маршрутизация (React Router)
+├── pages/        # страницы (Home, Dashboard, Profile, Admin, ...)
+├── components/   # компоненты (Layout, ProtectedRoute, Bootstrap, ...)
+├── types/        # общие TypeScript-типы
+└── utils/        # константы и утилиты
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Быстрый старт
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
+# в .env.dev укажите адрес бэкенда, например:
+#   VITE_BASE_URL=http://localhost:8000/api/v1
+npm run dev
 ```
+
+По умолчанию фронтенд обращается к бэкенду по адресу `http://localhost:8000/api/v1`.
+
+### Скрипты
+
+| Команда | Назначение |
+|---|---|
+| `npm run dev` | Запуск dev-сервера |
+| `npm run build` | Сборка (tsc + vite) |
+| `npm run generate:client` | Генерация API-клиента из OpenAPI бэкенда |
+| `npm run lint` / `format` / `check` | Biome |
+
+## Связь с бэкендом
+
+- Базовый URL API — переменная `VITE_BASE_URL` (например, `http://localhost:8000/api/v1`).
+- Авторизация — cookie/JWT, межстраничный редирект на `/login` при `401`.
+- Конфигурация возможностей — через `GET /api/v1/bootstrap`.
+
+## Развёртывание (Docker)
+
+Образ собирается в два этапа (Node build → nginx) и раздаёт SPA, проксируя `/api`,
+`/docs`, `/openapi.json`, `/redoc` на сервис `backend` (один origin — без CORS).
+
+```bash
+docker build --build-arg VITE_BASE_URL=/api/v1 -t osnova-frontend .
+```
+
+В составе всей системы запускается из `osnova_backend` через `docker compose`
+(сервис `frontend`), см. README основного репозитория.
+
+Полное описание архитектуры, профилей `minimal` / `standard` / `scalable` и механизма
+capabilities — в README основного репозитория:
+[**osnova_backend**](https://github.com/<org>/osnova_backend).

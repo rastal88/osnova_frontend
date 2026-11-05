@@ -1,0 +1,28 @@
+.page-container {
+  width: 100%;
+}
+
+.page-container-breadcrumbs {
+  margin-bottom: 12px;
+}
+
+.page-container-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.page-container-heading {
+  min-width: 0;
+}
+
+.page-container-title.ant-typography {
+  margin: 0 0 4px;
+}
+
+.page-container-actions {
+  flex-shrink: 0;
+}

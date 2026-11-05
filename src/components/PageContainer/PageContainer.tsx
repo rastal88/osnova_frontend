@@ -1,0 +1,105 @@
+import type { CSSProperties, ReactNode } from 'react';
+import { Breadcrumb, Space, Typography } from 'antd';
+import { Link, useLocation } from 'react-router-dom';
+
+import {
+  getBreadcrumbs,
+  navigationConfig,
+  type BreadcrumbItem,
+} from '../../config/navigation';
+import PageState from '../PageState/PageState';
+import './PageContainer.css';
+
+const { Title, Text } = Typography;
+
+interface PageContainerProps {
+  title?: ReactNode;
+  subtitle?: ReactNode;
+  actions?: ReactNode;
+  breadcrumbs?: BreadcrumbItem[];
+  loading?: boolean;
+  error?: boolean;
+  forbidden?: boolean;
+  empty?: boolean;
+  emptyText?: ReactNode;
+  maxWidth?: number | string;
+  children?: ReactNode;
+}
+
+const PageContainer = ({
+  title,
+  titleKey,
+  subtitle,
+  actions,
+  breadcrumbs,
+  loading = false,
+  error = false,
+  forbidden = false,
+  empty = false,
+  emptyText,
+  maxWidth,
+  children,
+}: PageContainerProps) => {
+  const autoBreadcrumbs = navigationConfig.showBreadcrumbs
+    ? getBreadcrumbs(location.pathname)
+    : [];
+  const items = breadcrumbs ?? autoBreadcrumbs;
+  const showBreadcrumbs = items.length > 1;
+
+  let content: ReactNode = children;
+
+  if (loading) {
+    content = <PageState kind="loading" />;
+  } else if (error) {
+    content = <PageState kind="error" />;
+  } else if (forbidden) {
+    content = <PageState kind="forbidden" />;
+  } else if (empty) {
+    content = <PageState kind="empty" description={emptyText} />;
+  }
+
+  const style: CSSProperties = maxWidth
+    ? { maxWidth, marginInline: 'auto' }
+    : {};
+
+  return (
+    <div className="page-container" style={style}>
+      {showBreadcrumbs && (
+        <Breadcrumb
+          className="page-container-breadcrumbs"
+          items={items.map((item, index) => ({
+            title:
+              index === items.length - 1 ? (
+                <span>{item.title}</span>
+              ) : (
+                <Link to={item.path}>{item.title}</Link>
+              ),
+          }))}
+        />
+      )}
+
+      {(title || subtitle || actions) && (
+        <div className="page-container-header">
+          <div className="page-container-heading">
+            {title && (
+              <Title level={3} className="page-container-title">
+                {title}
+              </Title>
+            )}
+            {subtitle && <Text type="secondary">{subtitle}</Text>}
+          </div>
+
+          {actions && (
+            <Space className="page-container-actions" wrap>
+              {actions}
+            </Space>
+          )}
+        </div>
+      )}
+
+      <div className="page-container-body">{content}</div>
+    </div>
+  );
+};
+
+export default PageContainer;
