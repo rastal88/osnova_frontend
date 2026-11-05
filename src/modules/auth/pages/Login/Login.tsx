@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../authStore';
 import './Login.css';
-import { login } from '../../api/auth.ts';
+import { login } from '../../api';
 import axios from 'axios';
 
 const Login = () => {

@@ -6,12 +6,9 @@ import {
 import type { ComponentType } from 'react';
 
 import type { BootstrapFeatures } from '../api/bootstrap';
-import { ru } from '../i18n/locales/ru';
-import { en } from '../i18n/locales/en';
 
 export type Capability = keyof BootstrapFeatures;
 export type MenuPosition = 'top' | 'left' | 'right';
-export type LanguageCode = 'ru' | 'en';
 
 export interface NavItem {
   path: string;
@@ -101,7 +98,7 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   for (const segment of segments) {
     current += `/${segment}`;
     const title = routeTitles[current];
-    if (title && (title in ru || title in en)) {
+    if (title) {
       crumbs.push({ title, path: current });
     }
   }

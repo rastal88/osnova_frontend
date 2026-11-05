@@ -1,6 +1,6 @@
 import { Card, Typography } from 'antd';
 
-import PageContainer from '../../components/PageContainer/PageContainer';
+import PageContainer from '../../../../components/PageContainer/PageContainer';
 
 const { Text } = Typography;
 

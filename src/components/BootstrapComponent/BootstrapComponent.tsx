@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Alert, Button, Spin } from 'antd';
 
 import { useBootstrapStore } from '../../store/bootstrapStore';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../modules/auth';
 import './BootstrapComponent.css';
 
 interface BootstrapComponentProps {
