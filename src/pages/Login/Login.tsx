@@ -17,7 +17,7 @@ const Login = () => {
     try {
       await login(email, password);
       const user = await fetchUser();
-      if (user?.role === 'ROOT' || user?.role === 'MODERATOR') {
+      if (user?.role === 'root' || user?.role === 'moderator') {
         navigate('/admin');
       } else {
         navigate('/');

@@ -31,7 +31,6 @@ export async function register(email: string, password: string) {
     {
       email,
       password,
-      role: 'user',
     },
     {
       headers: {
@@ -39,5 +38,10 @@ export async function register(email: string, password: string) {
       },
     }
   );
+  return response.data;
+}
+
+export async function getAdminUsers() {
+  const response = await api.get('/admin_flow/users');
   return response.data;
 }

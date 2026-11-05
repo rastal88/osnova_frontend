@@ -1,0 +1,15 @@
+.page-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-state-loading {
+  min-height: 240px;
+}
+
+.page-state-action {
+  margin-top: 8px;
+}

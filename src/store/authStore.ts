@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { getCurrentUser, logout } from '../api/auth';
 
-type Role = 'USER' | 'ROOT' | 'MODERATOR';
+type Role = 'user' | 'root' | 'moderator';
 
 interface User {
   id: string;
@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({ user, isAuthenticated: true, isLoading: false });
       return user;
     } catch {
-      set({ user: null, isAuthenticated: false });
+      set({ user: null, isAuthenticated: false, isLoading: false });
       return null;
     }
   },

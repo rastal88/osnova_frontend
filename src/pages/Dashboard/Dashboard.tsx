@@ -1,13 +1,19 @@
 import { Card, Typography } from 'antd';
 
-const { Title } = Typography;
+import PageContainer from '../../components/PageContainer/PageContainer';
+
+const { Text } = Typography;
 
 const Dashboard = () => {
   return (
-    <Card>
-      <Title level={3}>Client dashboard</Title>
-      	<p>There may be content for ordinary users here</p>
-    </Card>
+    <PageContainer
+      title="Client dashboard"
+      subtitle="Area for authenticated users"
+    >
+      <Card>
+        <Text>There may be content for ordinary users here.</Text>
+      </Card>
+    </PageContainer>
   );
 };
 
