@@ -18,7 +18,6 @@ dist-ssr
 !.env.example
 
 # Generated API client
-src/client
 
 # Editor directories and files
 .vscode/*

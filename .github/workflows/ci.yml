@@ -19,5 +19,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # API types must match the backend schema (osnova_backend/openapi.json)
+      - uses: actions/checkout@v4
+        with:
+          repository: rastal88/osnova_backend
+          path: backend
+
+      - name: API types are up to date
+        env:
+          OPENAPI_INPUT: backend/openapi.json
+        run: |
+          npm run generate:client
+          git diff --exit-code src/api/generated || {
+            echo "::error::src/api/generated is out of date: run npm run generate:client"
+            exit 1
+          }
+
       - name: Build
         run: npm run build

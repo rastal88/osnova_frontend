@@ -1,19 +1,10 @@
 import axios from 'axios';
 
 import i18n from '../i18n';
+import type { ErrorResponse as ApiError } from './generated';
 
 /** Error body returned by the backend: `message` is already in the user's language. */
-export interface ApiFieldError {
-  field: string;
-  code: string;
-  message: string;
-}
-
-export interface ApiError {
-  code: string;
-  message: string;
-  fields?: ApiFieldError[];
-}
+export type { ErrorResponse as ApiError, FieldError as ApiFieldError } from './generated';
 
 export function getApiError(error: unknown): ApiError | null {
   if (!axios.isAxiosError(error)) return null;

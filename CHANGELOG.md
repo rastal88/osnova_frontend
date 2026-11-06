@@ -7,6 +7,8 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- API types generated from the backend `openapi.json` into `src/api/generated` (committed);
+  CI fails when they are out of date. Bootstrap, form and error types come from there.
 - Routing and navigation built from backend capabilities (`/bootstrap`).
 - App shell with configurable menu position, mobile drawer, light/dark theme.
 - `PageContainer` with shared page states, 404 and error pages, error boundary, `Seo`.
@@ -58,3 +60,6 @@ All notable changes are documented here. The format follows
   white background.
 - Profile page shows the signed-in user instead of sample data.
 - Production build (removed references to a missing i18n module, fixed `tsconfig`).
+
+### Removed
+- Unused `@hey-api/client-axios` runtime dependency and the empty `openapi.json`.

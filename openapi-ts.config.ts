@@ -1,11 +1,11 @@
 import { defineConfig } from '@hey-api/openapi-ts';
 
+/**
+ * API types generated from the backend schema (osnova_backend: make openapi).
+ * Run `npm run generate:client` after the backend API changes and commit the result.
+ */
 export default defineConfig({
-  input: 'http://localhost:8000/openapi.json',
-  output: 'src/client',
-  plugins: [
-    '@hey-api/client-axios',
-    '@hey-api/typescript',
-    '@hey-api/sdk',
-  ],
+  input: process.env.OPENAPI_INPUT ?? '../osnova_backend/openapi.json',
+  output: { path: 'src/api/generated', format: false, lint: false },
+  plugins: ['@hey-api/typescript'],
 });

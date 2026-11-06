@@ -17,7 +17,7 @@
 - Ant Design — UI-компоненты
 - Axios — сетевой слой, React Router — маршрутизация
 - Biome — линтинг и форматирование, Playwright — e2e-тесты
-- `@hey-api/openapi-ts` — генерация API-клиента из OpenAPI бэкенда
+- `@hey-api/openapi-ts` — типы API из `openapi.json` бэкенда (`src/api/generated`)
 
 ## Возможности
 
@@ -70,7 +70,7 @@ frontend env files must never contain secrets — they belong on the backend.
 |---|---|
 | `npm run dev` | Запуск dev-сервера |
 | `npm run build` | Сборка (tsc + vite) |
-| `npm run generate:client` | Генерация API-клиента из OpenAPI бэкенда |
+| `npm run generate:client` | Типы API из `../osnova_backend/openapi.json` (после `make openapi` на бэкенде; результат коммитится) |
 | `npm run lint` / `format` / `check` | Biome |
 
 ## Связь с бэкендом
