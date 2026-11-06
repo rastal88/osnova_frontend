@@ -214,6 +214,13 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
           );
         })}
 
+        {/* Off-screen, not display:none: bots skip fields that are obviously hidden */}
+        <div className="schema-form-honeypot" aria-hidden="true">
+          <Form.Item name={description.honeypot} label={description.honeypot}>
+            <Input tabIndex={-1} autoComplete="off" />
+          </Form.Item>
+        </div>
+
         <Form.Item className="schema-form-actions">
           <Button type="primary" htmlType="submit" loading={sending}>
             {sending ? t('sending') : description.submit}

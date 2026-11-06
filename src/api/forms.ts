@@ -30,6 +30,8 @@ export interface FormDescription {
   name: string;
   title: string;
   submit: string;
+  /** Hidden anti-spam field: people leave it empty, bots fill it */
+  honeypot: string;
   fields: FormFieldDescription[];
 }
 
