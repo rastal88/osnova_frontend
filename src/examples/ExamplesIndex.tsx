@@ -1,4 +1,4 @@
-import { FormOutlined, TableOutlined } from '@ant-design/icons';
+import { FormOutlined, LayoutOutlined, TableOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Typography } from 'antd';
 import type { ComponentType } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,11 +11,12 @@ const { Paragraph } = Typography;
 
 interface ExampleLink {
   path: string;
-  key: 'contact' | 'data';
+  key: 'contact' | 'data' | 'landing';
   icon: ComponentType;
 }
 
 const EXAMPLES: ExampleLink[] = [
+  { path: '/examples/landing', key: 'landing', icon: LayoutOutlined },
   { path: '/contact', key: 'contact', icon: FormOutlined },
   { path: '/examples/data', key: 'data', icon: TableOutlined },
 ];

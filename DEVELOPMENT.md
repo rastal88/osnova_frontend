@@ -190,7 +190,14 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
   Use them instead of hex values; do not override Ant Design classes globally.
 - **Font**: Roboto WOFF2 subset (Latin + Cyrillic, ~23 KB per weight), see
   `src/assets/fonts/Roboto/README.md` to add a language or drop the font.
-- **Блоки лендинга**: пока нет (контент —自由 разметка в каждой странице).
+- **Landing blocks**: `src/components/blocks` — `Hero`, `Services`, `Gallery`, `Pricing`,
+  `Reviews`, `Faq`, `Cta` and the `Section` wrapper (`id` for anchors, `tone`: plain / surface /
+  primary). Content comes in props, texts from translations; styles use the brand variables.
+  Example: `src/examples/landing` (`/examples/landing`).
+- **Images**: `<Image image={...} alt sizes priority />` renders `<picture>` with AVIF / WebP,
+  lazy loading, async decoding and fixed size (no layout jumps); `priority` for the first screen.
+  Put originals in `src/assets/images/source` and run `npm run images` (sharp, dev only) to get
+  640 / 1280 / 1920 px variants and `generated/index.ts` — see `src/assets/images/README.md`.
 - **Tables**: `DataTable` (`src/components/DataTable`) wraps Ant Design `Table` with a search
   box, column filters, sorting and pagination. The state is in the URL (`?q=&page=&size=&sort=-total&status=paid,new`),
   so a filtered table survives a reload and can be shared; `urlPrefix` separates several tables.
@@ -232,7 +239,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 ## Examples
 
 `src/examples/` holds pages that show the building blocks in use: `/examples` (index),
-`/examples/data` (formatting and tables), `/contact` (form). They are lazy-loaded. To remove
+`/examples/data` (formatting and tables), `/examples/landing` (landing blocks), `/contact` (form). They are lazy-loaded. To remove
 them: delete the folder, `exampleRoutes` in `src/routes/routes.tsx`, the Examples / Contact
 items in `src/config/navigation.ts` and their entries in `src/config/prerender.json`.
 
@@ -271,6 +278,8 @@ src/
 │   ├── PageState/             # состояния: loading/empty/error/403/404
 │   ├── SchemaForm/            # form rendered from its backend description
 │   ├── DataTable/             # table with search, filters, sorting, URL state
+│   ├── Image/                 # <picture> with AVIF / WebP, lazy loading
+│   ├── blocks/                # landing blocks: Hero, Services, Gallery, Pricing...
 │   ├── ErrorBoundary/         # глобальный хендлер ошибок
 │   └── LayoutComponent/       # общий каркас
 ├── examples/                  # example pages, safe to delete

@@ -31,6 +31,10 @@ All notable changes are documented here. The format follows
   data or a server `fetch(query) → { items, total }` with loading and retry.
 - `useFormat()`: dates, relative time, numbers, percent and money in the interface language
   (built on `Intl`).
+- Landing blocks in `src/components/blocks`: Hero, Services, Gallery, Pricing, Reviews, FAQ,
+  CTA; example page `/examples/landing`.
+- `Image`: `<picture>` with AVIF / WebP, lazy loading and fixed size; `npm run images` (sharp,
+  dev dependency) generates responsive variants from `src/assets/images/source`.
 - Examples in `src/examples` (`/examples`, `/examples/data`, `/contact`), easy to delete.
 - Brand in one place: `src/config/brand.ts` (light/dark palettes, radius, font) builds the
   Ant Design themes and CSS variables for custom styles.

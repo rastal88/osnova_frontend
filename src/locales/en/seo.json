@@ -17,5 +17,9 @@
   "exampleData": {
     "title": "Data and tables",
     "description": "Table with search, filters, sorting and pagination, and locale-aware formatting of dates, numbers and money"
+  },
+  "exampleLanding": {
+    "title": "Landing page example",
+    "description": "Hero, services, gallery, pricing, reviews, FAQ and call-to-action blocks of the Osnova template"
   }
 }
