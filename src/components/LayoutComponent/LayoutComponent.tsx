@@ -2,7 +2,6 @@ import { Suspense, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Outlet,
-  Navigate,
   Link,
   useLocation,
   useNavigate,
@@ -18,6 +17,7 @@ import {
 import type { MenuProps } from 'antd';
 import {
   UserOutlined,
+  LoginOutlined,
   LogoutOutlined,
   SettingOutlined,
   MenuOutlined,
@@ -39,7 +39,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const LayoutComponent = () => {
   const { t } = useTranslation();
-  const { isAuthenticated, isLoading, logout } = useAuthStore();
+  const { isAuthenticated, isLoading, user, logout } = useAuthStore();
   const features = useBootstrapStore((state) => state.config?.features);
   const appName =
     useBootstrapStore((state) => state.config?.application.name) ?? 'Osnova';
@@ -56,12 +56,13 @@ const LayoutComponent = () => {
     return null;
   }
 
-  if (authEnabled && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
+  // Public pages stay public: guests see them with a sign-in button,
+  // private pages are guarded by ProtectedRoute.
   const navItems = navigationConfig.items.filter(
-    (item) => !item.capability || Boolean(features?.[item.capability]),
+    (item) =>
+      (!item.capability || Boolean(features?.[item.capability])) &&
+      (!item.requiresAuth || isAuthenticated) &&
+      (!item.roles || (user !== null && item.roles.includes(user.role))),
   );
 
   const menuItems: MenuProps['items'] = navItems.map((item) => {
@@ -151,7 +152,13 @@ const LayoutComponent = () => {
           <LanguageSwitcher />
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
 
-          {authEnabled && (
+          {authEnabled && !isAuthenticated && (
+            <Button icon={<LoginOutlined />} onClick={() => navigate('/login')}>
+              {t('pages.login')}
+            </Button>
+          )}
+
+          {authEnabled && isAuthenticated && (
             <Dropdown
               overlay={profileMenu}
               placement="bottomRight"
