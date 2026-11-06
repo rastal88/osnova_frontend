@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { Breadcrumb, Space, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
 import {
@@ -40,8 +41,12 @@ const PageContainer = ({
   children,
 }: PageContainerProps) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const autoBreadcrumbs = navigationConfig.showBreadcrumbs
-    ? getBreadcrumbs(location.pathname)
+    ? getBreadcrumbs(location.pathname).map((crumb) => ({
+        title: t(crumb.titleKey),
+        path: crumb.path,
+      }))
     : [];
   const items = breadcrumbs ?? autoBreadcrumbs;
   const showBreadcrumbs = items.length > 1;

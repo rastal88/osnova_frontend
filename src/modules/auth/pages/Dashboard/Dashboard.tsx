@@ -1,17 +1,20 @@
 import { Card, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 
 const { Text } = Typography;
 
 const Dashboard = () => {
+  const { t } = useTranslation('auth');
+
   return (
     <PageContainer
-      title="Client dashboard"
-      subtitle="Area for authenticated users"
+      title={t('dashboard.title')}
+      subtitle={t('dashboard.subtitle')}
     >
       <Card>
-        <Text>There may be content for ordinary users here.</Text>
+        <Text>{t('dashboard.placeholder')}</Text>
       </Card>
     </PageContainer>
   );

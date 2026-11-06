@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../authStore';
 import {register, login} from "../../api";
 import './Register.css';
+import { getApiError, getErrorMessage } from '../../../../api/errors';
 
 
 const Register = () => {
+  const { t } = useTranslation('auth');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -17,7 +20,7 @@ const Register = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== repeatPassword) {
-      setError("Passwords don't match");
+      setError(t('register.passwordsMismatch'));
       return;
     }
     try {
@@ -31,21 +34,22 @@ const Register = () => {
         navigate('/');
       }
 
-    } catch {
-      setError('Registration error');
+    } catch (err: unknown) {
+      // Until per-field form errors arrive, show the first field message if any
+      setError(getApiError(err)?.fields?.[0]?.message ?? getErrorMessage(err));
     }
   };
 
   return (
     <div className="register-container">
       <form onSubmit={handleRegister} className="register-form">
-        <h2>Sign Up</h2>
+        <h2>{t('register.title')}</h2>
 
         {error && <p className="error">{error}</p>}
 
         <input
           type="email"
-          placeholder="E-mail"
+          placeholder={t('email')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -53,7 +57,7 @@ const Register = () => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder={t('password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -61,16 +65,16 @@ const Register = () => {
 
         <input
           type="password"
-          placeholder="Repeat password"
+          placeholder={t('register.repeatPassword')}
           value={repeatPassword}
           onChange={(e) => setRepeatPassword(e.target.value)}
           required
         />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">{t('register.submit')}</button>
 
         <p>
-          Already have an account? <Link to="/login">Sign In</Link>
+          {t('register.haveAccount')} <Link to="/login">{t('register.toLogin')}</Link>
         </p>
       </form>
     </div>

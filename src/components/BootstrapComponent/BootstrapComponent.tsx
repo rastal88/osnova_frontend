@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Alert, Button, Spin } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import { useBootstrapStore } from '../../store/bootstrapStore';
 import { useAuthStore } from '../../modules/auth';
@@ -12,6 +13,7 @@ interface BootstrapComponentProps {
 const BootstrapComponent = ({
   children,
 }: BootstrapComponentProps) => {
+  const { t } = useTranslation();
   const initialize = useBootstrapStore((state) => state.initialize);
   const isInitialized = useBootstrapStore(
     (state) => state.isInitialized,
@@ -46,8 +48,8 @@ const BootstrapComponent = ({
     return (
       <div className="bootstrap-error">
         <Alert
-          message="Application initialization failed"
-          description="Unable to connect to the server. Please try again."
+          message={t('bootstrap.failedTitle')}
+          description={t('bootstrap.failedDescription')}
           type="error"
           showIcon
           action={
@@ -56,7 +58,7 @@ const BootstrapComponent = ({
               danger
               onClick={() => void initialize()}
             >
-              Retry
+              {t('bootstrap.retry')}
             </Button>
           }
         />

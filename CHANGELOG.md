@@ -13,6 +13,12 @@ All notable changes are documented here. The format follows
 - Auth and admin as lazy-loaded modules in `src/modules/` (separate bundle chunks).
 - Docker image (Node build → nginx) proxying the API on the same origin.
 - Open-source repository files.
+- Translations with react-i18next: `src/locales/{en,ru}`, lazy-loaded per namespace,
+  keys type-checked against English. Language from `/bootstrap`, Ant Design locale,
+  `Accept-Language` on API requests, `getErrorMessage` for translated server errors.
+
+### Changed
+- Profile page shows the signed-in user instead of sample data.
 
 ### Fixed
 - Production build (removed references to a missing i18n module, fixed `tsconfig`).

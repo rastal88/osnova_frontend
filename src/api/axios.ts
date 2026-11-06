@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import i18n from '../i18n';
+
 const API_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:8000/api/v1';
 
 const api = axios.create({
@@ -8,6 +10,12 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+// The backend answers errors and messages in this language.
+api.interceptors.request.use((request) => {
+  request.headers.set('Accept-Language', i18n.language);
+  return request;
 });
 
 api.interceptors.response.use(

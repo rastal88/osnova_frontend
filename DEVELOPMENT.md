@@ -30,9 +30,9 @@ export const navigationConfig: NavigationConfig = {
   showBrand: true,             // показывать бренд в шапке
   showBreadcrumbs: true,       // показывать хлебные крошки (если > 1 уровня)
   items: [
-    { path: '/', label: 'Home', icon: HomeOutlined },
-    { path: '/dashboard', label: 'Dashboard', icon: DashboardOutlined, capability: 'authentication' },
-    { path: '/admin', label: 'Admin', icon: SettingOutlined, capability: 'admin' },
+    { path: '/', label: 'pages.home', icon: HomeOutlined },
+    { path: '/dashboard', label: 'pages.dashboard', icon: DashboardOutlined, capability: 'authentication' },
+    { path: '/admin', label: 'pages.admin', icon: SettingOutlined, capability: 'admin' },
   ],
 };
 
@@ -41,7 +41,7 @@ export const redirects = [
 ];
 ```
 
-- **Пункт меню**: `path`, `label`, опционально `icon` (Antd Icon компонент), `capability` (кнопка скроется если фича отключена).
+- **Пункт меню**: `path`, `label` (ключ перевода из `common`), опционально `icon` (Antd Icon компонент), `capability` (кнопка скроется если фича отключена).
 - **Свобода**: чтобы убрать пункт, удалите его из `items` — страница останется доступной по URL.
 - **Редиректы**: добавляйте пары `{from, to}`.
 
@@ -92,7 +92,31 @@ const MyPage = () => (
 
 ## 2. Языки и SEO (B)
 
-Пока заглушка. Скоро: настройка языков с бэкенда, переводы, мета-теги, sitemap.
+### 2.1. Translations
+
+- Library: react-i18next. Setup: `src/i18n/index.ts`.
+- Files: `src/locales/<language>/<namespace>.json`. Namespaces: `common` (shell, states,
+  errors), `home`, and one per module (`auth`, `admin`).
+- English is the source language: add every key to `en` first. Keys are type-checked
+  against the English files, so a typo fails `npm run build`.
+- Only English `common` is in the main bundle; other files are separate chunks loaded
+  when a page uses their namespace.
+- The language comes from `/bootstrap` (`i18n.default`); the URL prefix and the
+  switcher arrive in the next steps.
+
+```tsx
+const { t } = useTranslation('auth');
+<h2>{t('login.title')}</h2>
+```
+
+**Add a language:** enable it on the backend (`LANGUAGES`), copy `src/locales/en` to
+`src/locales/<code>` and translate, add its Ant Design locale to `src/i18n/antdLocale.ts`.
+
+### 2.2. Server errors
+
+The backend returns `{code, message, fields?}` with `message` already translated
+(it receives `Accept-Language`). Use `getErrorMessage(error)` from `src/api/errors.ts`
+to show it; `getApiError(error)` gives the code and per-field errors.
 
 ---
 

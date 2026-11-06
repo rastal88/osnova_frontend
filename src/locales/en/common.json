@@ -1,0 +1,39 @@
+{
+  "pages": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "login": "Sign in",
+    "register": "Sign up",
+    "admin": "Admin",
+    "overview": "Overview",
+    "users": "Users",
+    "other": "Other"
+  },
+  "header": {
+    "openMenu": "Open menu",
+    "openProfileMenu": "Open profile menu",
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+  "state": {
+    "empty": "Nothing here yet",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "Please try again. If the problem persists, contact support.",
+    "forbiddenTitle": "Access denied",
+    "forbiddenDescription": "You do not have permission to view this page.",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you are looking for does not exist or has moved.",
+    "goHome": "Go home",
+    "tryAgain": "Try again"
+  },
+  "bootstrap": {
+    "failedTitle": "Application initialization failed",
+    "failedDescription": "Unable to connect to the server. Please try again.",
+    "retry": "Retry"
+  },
+  "errors": {
+    "network": "Unable to reach the server. Check your connection and try again.",
+    "unknown": "Something went wrong. Please try again."
+  }
+}

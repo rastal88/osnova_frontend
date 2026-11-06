@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Button, Empty, Result, Spin } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import './PageState.css';
 
@@ -18,6 +19,8 @@ interface PageStateProps {
 }
 
 const PageState = ({ kind, title, description, action }: PageStateProps) => {
+  const { t } = useTranslation();
+
   if (kind === 'loading') {
     return (
       <div className="page-state page-state-loading">
@@ -29,7 +32,7 @@ const PageState = ({ kind, title, description, action }: PageStateProps) => {
   if (kind === 'empty') {
     return (
       <div className="page-state">
-        <Empty description={description ?? 'Nothing here yet'} />
+        <Empty description={description ?? t('state.empty')} />
         {action && <div className="page-state-action">{action}</div>}
       </div>
     );
@@ -39,15 +42,15 @@ const PageState = ({ kind, title, description, action }: PageStateProps) => {
     kind === 'error' ? '500' : kind === 'forbidden' ? '403' : '404';
 
   const defaultTitle = {
-    error: 'Something went wrong',
-    forbidden: 'Access denied',
-    'not-found': 'Page not found',
+    error: t('state.errorTitle'),
+    forbidden: t('state.forbiddenTitle'),
+    'not-found': t('state.notFoundTitle'),
   }[kind];
 
   const defaultDescription = {
-    error: 'Please try again. If the problem persists, contact support.',
-    forbidden: 'You do not have permission to view this page.',
-    'not-found': 'The page you are looking for does not exist or has moved.',
+    error: t('state.errorDescription'),
+    forbidden: t('state.forbiddenDescription'),
+    'not-found': t('state.notFoundDescription'),
   }[kind];
 
   return (
@@ -59,7 +62,7 @@ const PageState = ({ kind, title, description, action }: PageStateProps) => {
         extra={
           action ?? (
             <Button type="primary" href="/">
-              Go home
+              {t('state.goHome')}
             </Button>
           )
         }

@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import PageState from '../../components/PageState/PageState';
 
@@ -7,6 +8,8 @@ interface ErrorPageProps {
 }
 
 const ErrorPage = ({ onRetry }: ErrorPageProps) => {
+  const { t } = useTranslation();
+
   return (
     <PageState
       kind="error"
@@ -15,7 +18,7 @@ const ErrorPage = ({ onRetry }: ErrorPageProps) => {
           type="primary"
           onClick={onRetry ?? (() => window.location.reload())}
         >
-          Try again
+          {t('state.tryAgain')}
         </Button>
       }
     />

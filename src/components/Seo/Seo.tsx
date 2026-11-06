@@ -4,9 +4,7 @@ import { useBootstrapStore } from '../../store/bootstrapStore';
 
 interface SeoProps {
   title?: string;
-  titleKey?: string;
   description?: string;
-  descriptionKey?: string;
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
@@ -15,9 +13,7 @@ interface SeoProps {
 
 export const Seo = ({
   title,
-  titleKey,
   description,
-  descriptionKey,
   ogTitle,
   ogDescription,
   ogImage,
@@ -26,8 +22,8 @@ export const Seo = ({
   const config = useBootstrapStore((state: any) => state.config);
   const appName = config?.application.name ?? 'Osnova';
 
-  const finalTitle = title ?? titleKey ?? 'Home';
-  const finalDescription = description ?? descriptionKey ?? '';
+  const finalTitle = title ?? appName;
+  const finalDescription = description ?? '';
   const finalOgTitle = ogTitle ?? finalTitle;
   const finalOgDescription = ogDescription ?? finalDescription;
 

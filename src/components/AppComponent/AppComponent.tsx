@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
+import { useAntdLocale } from '../../i18n/antdLocale';
 import AppRouter from '../../routes/routes';
 import BootstrapComponent from '../BootstrapComponent/BootstrapComponent';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
@@ -34,6 +35,8 @@ const AppComponent = () => {
     return 'light';
   });
 
+  const antdLocale = useAntdLocale();
+
   useEffect(() => {
     localStorage.setItem(THEME_KEY, themeName);
     document.body.dataset.theme = themeName;
@@ -41,7 +44,7 @@ const AppComponent = () => {
 
   return (
       <ThemeContext.Provider value={{ themeName, setThemeName }}>
-        <ConfigProvider theme={getTheme(themeName)}>
+        <ConfigProvider theme={getTheme(themeName)} locale={antdLocale}>
           <ErrorBoundary>
             <BootstrapComponent>
               <AppRouter />
