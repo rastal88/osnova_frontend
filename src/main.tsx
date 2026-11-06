@@ -4,7 +4,10 @@ import 'antd/dist/reset.css';
 import './index.css';
 import './i18n';
 import AppComponent from './components/AppComponent/AppComponent';
+import { applyConsent } from './consent';
 
+// Analytics of a returning visitor who has already agreed
+applyConsent();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -1,8 +1,10 @@
-import { Alert, Typography } from 'antd';
+import { Alert, Button, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import PageContainer from '../../components/PageContainer/PageContainer';
+import { analyticsEnabled } from '../../config/analytics';
 import { isLegalConfigured, legal } from '../../config/legal';
+import { resetConsent } from '../../consent';
 import { useFormat } from '../../i18n/format';
 import './LegalPage.css';
 
@@ -49,6 +51,10 @@ const LegalPage = ({ document }: { document: LegalDocument }) => {
             ))}
           </section>
         ))}
+
+        {document === 'cookies' && analyticsEnabled && (
+          <Button onClick={resetConsent}>{t('changeConsent')}</Button>
+        )}
       </article>
     </PageContainer>
   );
