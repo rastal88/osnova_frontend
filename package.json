@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build && node scripts/prerender.mjs",
-    "build:dev": "tsc && vite build --mode dev && node scripts/prerender.mjs --mode dev",
-    "build:prod": "tsc && vite build --mode prod && node scripts/prerender.mjs --mode prod",
     "lint": "biome lint .",
     "preview": "vite preview",
     "format": "biome format .",

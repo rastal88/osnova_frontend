@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Env files are local; only the documented example is committed
+.env
+.env.*
+!.env.example
+
 # Generated API client
 src/client
 

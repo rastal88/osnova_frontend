@@ -53,12 +53,15 @@ capability выключена или страница не открыта, её 
 
 ```bash
 npm install
-# в .env.dev укажите адрес бэкенда, например:
-#   VITE_BASE_URL=http://localhost:8000/api/v1
+cp .env.example .env.local   # optional: all values have defaults
 npm run dev
 ```
 
 По умолчанию фронтенд обращается к бэкенду по адресу `http://localhost:8000/api/v1`.
+
+Env files: only `.env.example` is committed; local values go to `.env.local`
+(ignored by git). Every `VITE_*` value ends up in the public JavaScript bundle, so
+frontend env files must never contain secrets — they belong on the backend.
 
 ### Скрипты
 

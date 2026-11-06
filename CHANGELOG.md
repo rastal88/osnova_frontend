@@ -24,6 +24,9 @@ All notable changes are documented here. The format follows
   `sitemap.xml` and `robots.txt` (`VITE_SITE_URL`).
 
 ### Changed
+- Env files are no longer committed: `.env.example` documents every variable,
+  local values go to `.env.local`. Removed unused `VITE_TOKEN`, `VITE_SOCKET_URL`,
+  `VITE_API_URL`, `VITE_DEBUG_MODE` and the `build:dev` / `build:prod` scripts.
 - Open Graph tags use `property` instead of `name`.
 - Profile page shows the signed-in user instead of sample data.
 
