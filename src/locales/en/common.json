@@ -9,7 +9,9 @@
     "admin": "Admin",
     "overview": "Overview",
     "users": "Users",
-    "other": "Other"
+    "other": "Other",
+    "examples": "Examples",
+    "exampleData": "Data and tables"
   },
   "header": {
     "openMenu": "Open menu",
@@ -37,5 +39,10 @@
   "errors": {
     "network": "Unable to reach the server. Check your connection and try again.",
     "unknown": "Something went wrong. Please try again."
+  },
+  "table": {
+    "search": "Search",
+    "total_one": "{{count}} item",
+    "total_other": "{{count}} items"
   }
 }

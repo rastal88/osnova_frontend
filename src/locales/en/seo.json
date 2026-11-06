@@ -9,5 +9,13 @@
   "contact": {
     "title": "Contact us",
     "description": "Send us a question or a request — we will get back to you soon"
+  },
+  "examples": {
+    "title": "Examples",
+    "description": "Ready-made building blocks of the Osnova template: forms, tables, formatting"
+  },
+  "exampleData": {
+    "title": "Data and tables",
+    "description": "Table with search, filters, sorting and pagination, and locale-aware formatting of dates, numbers and money"
   }
 }
