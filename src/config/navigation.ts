@@ -88,6 +88,7 @@ export const routeTitles: Record<string, LabelKey> = {
   '/contact': 'pages.contact',
   '/examples': 'pages.examples',
   '/examples/data': 'pages.exampleData',
+  '/examples/landing': 'pages.exampleLanding',
   '/dashboard': 'pages.dashboard',
   '/profile': 'pages.profile',
   '/login': 'pages.login',
