@@ -10,6 +10,10 @@
       "data": {
         "title": "Data and tables",
         "description": "Search, filters, sorting and pagination kept in the URL; dates, numbers and money in the interface language."
+      },
+      "landing": {
+        "title": "Landing page",
+        "description": "Hero, services, gallery, pricing, reviews, FAQ and CTA blocks; optimised images."
       }
     }
   },
@@ -47,6 +51,135 @@
       "paid": "Paid",
       "shipped": "Shipped",
       "cancelled": "Cancelled"
+    }
+  },
+  "landing": {
+    "contact": "Contact us",
+    "hero": {
+      "eyebrow": "Example landing",
+      "title": "Launch your product page in a day",
+      "text": "Hero, services, gallery, pricing, reviews, FAQ and a call to action — ready blocks that follow your brand colours, language and theme.",
+      "action": "See pricing",
+      "imageAlt": "Abstract illustration with growing blocks"
+    },
+    "services": {
+      "title": "What you get",
+      "subtitle": "Each block takes its content in props, so texts live in translation files.",
+      "items": {
+        "fast": {
+          "title": "Fast by default",
+          "text": "Lazy pages, optimised images and a light font keep the first load small."
+        },
+        "secure": {
+          "title": "Safe forms",
+          "text": "Validation on both sides and a consent checkbox out of the box."
+        },
+        "languages": {
+          "title": "Many languages",
+          "text": "Language URLs, translated texts and local formats of dates and money."
+        },
+        "mobile": {
+          "title": "Works on phones",
+          "text": "Every block adapts from a wide screen down to 320 px."
+        },
+        "api": {
+          "title": "Backend included",
+          "text": "FastAPI with forms, bootstrap and optional modules you switch on."
+        },
+        "support": {
+          "title": "Easy to change",
+          "text": "Brand colours in one file; remove what you do not need."
+        }
+      }
+    },
+    "gallery": {
+      "title": "Gallery",
+      "subtitle": "Images load lazily and come in AVIF / WebP with a fallback.",
+      "alt": "Placeholder image {{number}}",
+      "caption": "Project {{number}}"
+    },
+    "pricing": {
+      "title": "Pricing",
+      "subtitle": "Prices are formatted in the interface language.",
+      "period": "/ month",
+      "popular": "Popular",
+      "choose": "Choose",
+      "plans": {
+        "basic": {
+          "name": "Basic",
+          "description": "For a first site",
+          "features": [
+            "One landing page",
+            "Contact form",
+            "Two languages"
+          ]
+        },
+        "pro": {
+          "name": "Pro",
+          "description": "For a growing business",
+          "features": [
+            "Everything in Basic",
+            "Tables and data pages",
+            "Sign-in and user area",
+            "Priority support"
+          ]
+        },
+        "business": {
+          "name": "Business",
+          "description": "For teams",
+          "features": [
+            "Everything in Pro",
+            "Admin area",
+            "Background tasks",
+            "Custom integrations"
+          ]
+        }
+      }
+    },
+    "reviews": {
+      "title": "What clients say",
+      "items": {
+        "anna": {
+          "author": "Anna Petrova",
+          "role": "Founder, bakery",
+          "text": "We had a page with a working order form the same week."
+        },
+        "james": {
+          "author": "James Miller",
+          "role": "Product manager",
+          "text": "The blocks look consistent, and changing the brand colour took one line."
+        },
+        "olga": {
+          "author": "Olga Smirnova",
+          "role": "Freelance developer",
+          "text": "A solid starting point: forms, languages and SEO are already done."
+        }
+      }
+    },
+    "faq": {
+      "title": "Questions",
+      "items": {
+        "start": {
+          "question": "How do I start?",
+          "answer": "Clone both repositories, run make dev on the backend and npm run dev on the frontend."
+        },
+        "languages": {
+          "question": "How do I add a language?",
+          "answer": "Add it to LANGUAGES on the backend and a folder in src/locales on the frontend."
+        },
+        "design": {
+          "question": "How do I change the design?",
+          "answer": "Edit src/config/brand.ts: colours, radius and font apply to every block and component."
+        },
+        "remove": {
+          "question": "How do I remove these examples?",
+          "answer": "Delete src/examples and its line in the routes; the blocks stay available in src/components/blocks."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to build yours?",
+      "text": "Tell us about your project and we will get back to you."
     }
   }
 }

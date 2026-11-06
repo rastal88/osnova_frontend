@@ -11,7 +11,8 @@
     "users": "Пользователи",
     "other": "Прочее",
     "examples": "Примеры",
-    "exampleData": "Данные и таблицы"
+    "exampleData": "Данные и таблицы",
+    "exampleLanding": "Лендинг"
   },
   "header": {
     "openMenu": "Открыть меню",

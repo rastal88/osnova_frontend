@@ -11,7 +11,8 @@
     "users": "Users",
     "other": "Other",
     "examples": "Examples",
-    "exampleData": "Data and tables"
+    "exampleData": "Data and tables",
+    "exampleLanding": "Landing page"
   },
   "header": {
     "openMenu": "Open menu",

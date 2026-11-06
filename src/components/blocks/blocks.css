@@ -1,0 +1,262 @@
+/* Landing blocks. Colours come from the brand variables (see src/config/brand.ts). */
+
+.block {
+  /* In-page links (#pricing) stop below the sticky header */
+  scroll-margin-top: 80px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+  padding: 64px 24px;
+}
+
+.block-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.block-primary {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    color-mix(in srgb, var(--color-primary) 70%, #000)
+  );
+  color: #fff;
+}
+
+.block-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.block-header {
+  max-width: 680px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.block-title {
+  margin-bottom: 8px !important;
+}
+
+.block-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  margin: 0 !important;
+}
+
+.block-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.block-card {
+  margin: 0;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.block-card-title {
+  margin: 0 0 8px !important;
+}
+
+.block-card-text {
+  margin: 0 !important;
+}
+
+.block-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  font-size: 22px;
+}
+
+/* Hero */
+.block-hero {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+  text-align: center;
+}
+
+.block-hero-with-image {
+  text-align: start;
+}
+
+@media (min-width: 992px) {
+  .block-hero-with-image {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.block-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--color-primary) !important;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.block-hero-title {
+  margin: 0 0 16px !important;
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  line-height: 1.15 !important;
+}
+
+.block-hero-text {
+  max-width: 560px;
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+}
+
+.block-hero:not(.block-hero-with-image) .block-hero-text {
+  margin-inline: auto;
+}
+
+.block-hero-image img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* Gallery */
+.block-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.block-gallery-item {
+  margin: 0;
+}
+
+.block-gallery-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.block-gallery-item figcaption {
+  margin-top: 8px;
+  color: var(--color-text-secondary);
+}
+
+/* Pricing */
+.block-pricing {
+  align-items: stretch;
+}
+
+.block-plan {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-plan-highlighted {
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow);
+}
+
+.block-plan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.block-plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 8px 0 16px;
+}
+
+.block-plan-price > span:first-child {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.block-plan-features {
+  flex: 1;
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.block-plan-features li {
+  display: flex;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.block-plan-check {
+  color: var(--color-success);
+  margin-top: 4px;
+}
+
+.block-plan-action .ant-btn {
+  width: 100%;
+}
+
+/* FAQ */
+.block-faq {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--color-surface);
+}
+
+/* Reviews */
+.block-review blockquote {
+  margin: 12px 0 16px;
+}
+
+.block-review-rating {
+  font-size: 14px;
+}
+
+.block-review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.block-review-author > span {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-review-role {
+  font-size: 0.85rem;
+}
+
+/* CTA */
+.block-cta {
+  text-align: center;
+}
+
+.block-cta-title,
+.block-cta-text {
+  color: inherit !important;
+}
+
+.block-cta-text {
+  max-width: 560px;
+  margin: 0 auto 24px !important;
+  opacity: 0.85;
+}
+
+@media (max-width: 576px) {
+  .block {
+    padding: 40px 16px;
+  }
+}
