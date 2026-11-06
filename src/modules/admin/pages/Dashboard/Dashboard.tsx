@@ -2,6 +2,8 @@ import { Card, Typography, Statistic, Row, Col } from 'antd';
 import { UserOutlined, ShoppingCartOutlined, DollarOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
+import Seo from '../../../../components/Seo/Seo';
+
 const { Title } = Typography;
 
 const AdminDashboard = () => {
@@ -9,6 +11,7 @@ const AdminDashboard = () => {
 
   return (
     <Card>
+      <Seo title={t('dashboard.title')} noindex />
       <Title level={3}>{t('dashboard.title')}</Title>
 
       <Row gutter={16}>

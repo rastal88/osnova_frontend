@@ -131,6 +131,31 @@ to show it; `getApiError(error)` gives the code and per-field errors.
 
 ---
 
+### 2.4. SEO and link previews
+
+- `<Seo page="home" />` sets title, description, canonical, `hreflang` (+ `x-default`),
+  Open Graph and Twitter tags. Texts: `src/locales/<language>/seo.json`.
+  Other props: `title`, `description`, `image`, `noindex` (sign-in, account, admin, 404).
+  `PageContainer` with a string `title` sets the page title automatically.
+- **Prerender:** `npm run build` runs `scripts/prerender.mjs`. For each page in
+  `src/config/prerender.json` and each language it writes `dist/<language>/<path>/index.html`
+  with these tags already in `<head>`, so Telegram and social networks show a preview
+  without running JavaScript. Only `<head>` is prerendered (no headless browser).
+- It also writes `robots.txt` and, when `VITE_SITE_URL` is set, `sitemap.xml`.
+- **Add a public page:** add it to `prerender.json` (`path`, `seo` key), add the key to
+  every `seo.json` and to `SeoPage` in `src/components/Seo/Seo.tsx`.
+
+Build variables:
+
+| Variable | Purpose |
+|----------|---------|
+| `VITE_SITE_URL` | Public origin (`https://example.com`) for canonical, `hreflang`, `og:url`, sitemap. Without it these are skipped |
+| `VITE_OG_IMAGE` | Default preview image (absolute URL or `/path` in `public/`) |
+| `PRERENDER_API_URL` | Backend API to read languages from `/bootstrap` at build time (default: `VITE_BASE_URL` if absolute) |
+| `VITE_LANGUAGES`, `VITE_DEFAULT_LANGUAGE`, `VITE_APP_NAME` | Fallback when the backend is not reachable (default: folders in `src/locales`, `en`, `Osnova`) |
+
+---
+
 ## 3. Формы (C)
 
 Пока заглушка. Скоро: конструктор форм, валидация, состояние отправки.

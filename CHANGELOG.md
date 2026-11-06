@@ -19,8 +19,12 @@ All notable changes are documented here. The format follows
 - Language URLs (`/en/...`, `/ru/...`) with redirect from unprefixed URLs (saved choice,
   browser language, backend default) and a language switcher that remembers the choice.
 - Router-level 404 and error pages instead of the React Router default.
+- SEO: `Seo` sets canonical, `hreflang`, Open Graph and Twitter tags; texts in `seo.json`.
+- Build-time prerender of `<head>` per page and language for link previews, plus
+  `sitemap.xml` and `robots.txt` (`VITE_SITE_URL`).
 
 ### Changed
+- Open Graph tags use `property` instead of `name`.
 - Profile page shows the signed-in user instead of sample data.
 
 ### Fixed

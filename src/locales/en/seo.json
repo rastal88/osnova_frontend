@@ -1,0 +1,9 @@
+{
+  "site": {
+    "description": "Osnova is a full-stack template for building web applications quickly with Python and React"
+  },
+  "home": {
+    "title": "Home",
+    "description": "Osnova is a full-stack template for building web applications quickly with Python and React"
+  }
+}

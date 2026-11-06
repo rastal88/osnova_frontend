@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import Seo from '../../../../components/Seo/Seo';
 import { useAuthStore } from '../../authStore';
 import './Login.css';
 import { login } from '../../api';
@@ -31,6 +32,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      <Seo title={t('login.title')} noindex />
       <form onSubmit={handleLogin} className="login-form">
         <h2>{t('login.title')}</h2>
         {error && <p className="error">{error}</p>}

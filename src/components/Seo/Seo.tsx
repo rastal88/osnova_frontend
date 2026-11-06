@@ -1,64 +1,70 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
+import { buildHead } from '../../seo/head';
+import type { HeadTag } from '../../seo/head';
 import { useBootstrapStore } from '../../store/bootstrapStore';
 
+/** Page keys of the `seo` namespace (src/locales/<language>/seo.json). */
+export type SeoPage = 'home';
+
 interface SeoProps {
+  /** Title and description from the `seo` namespace */
+  page?: SeoPage;
   title?: string;
   description?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  canonical?: string;
+  /** Absolute URL or a path on the site, defaults to VITE_OG_IMAGE */
+  image?: string;
+  /** Private pages: sign-in, account, admin, errors */
+  noindex?: boolean;
 }
 
-export const Seo = ({
-  title,
-  description,
-  ogTitle,
-  ogDescription,
-  ogImage,
-  canonical,
-}: SeoProps) => {
-  const config = useBootstrapStore((state: any) => state.config);
-  const appName = config?.application.name ?? 'Osnova';
+const SITE_URL = import.meta.env.VITE_SITE_URL || window.location.origin;
+const DEFAULT_IMAGE = import.meta.env.VITE_OG_IMAGE || undefined;
 
-  const finalTitle = title ?? appName;
-  const finalDescription = description ?? '';
-  const finalOgTitle = ogTitle ?? finalTitle;
-  const finalOgDescription = ogDescription ?? finalDescription;
+function applyTags(title: string, tags: HeadTag[]) {
+  document.title = title;
+  for (const el of document.head.querySelectorAll('[data-seo]')) el.remove();
+  for (const { tag, attrs } of tags) {
+    const el = document.createElement(tag);
+    el.setAttribute('data-seo', '');
+    for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, value);
+    document.head.appendChild(el);
+  }
+}
 
+/**
+ * Title, description, canonical, hreflang, Open Graph and Twitter tags.
+ * The same tags are written into static HTML at build time (scripts/prerender.mjs)
+ * for link previews; this component keeps them current while navigating.
+ */
+export const Seo = ({ page, title, description, image, noindex }: SeoProps) => {
+  const { t, i18n } = useTranslation('seo');
+  const { pathname } = useLocation();
+  const config = useBootstrapStore((state) => state.config);
+  const siteName = config?.application.name ?? 'Osnova';
+  const languages = config?.i18n.languages.map((language) => language.code) ?? [];
+  const defaultLanguage = config?.i18n.default ?? i18n.language;
+
+  const head = buildHead({
+    title: title ?? (page ? t(`${page}.title`) : siteName),
+    description: description ?? (page ? t(`${page}.description`) : t('site.description')),
+    siteName,
+    siteUrl: SITE_URL,
+    path: pathname,
+    language: i18n.language,
+    languages,
+    defaultLanguage,
+    image: image ?? DEFAULT_IMAGE,
+    noindex,
+  });
+  const key = JSON.stringify(head);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` is the serialized head
   useEffect(() => {
-    document.title = `${finalTitle} – ${appName}`;
-  }, [finalTitle, appName]);
-
-  useEffect(() => {
-    const updateMeta = (selector: string, content: string) => {
-      let el = document.querySelector(selector);
-      if (!el) {
-        el = document.createElement('meta');
-        document.head.appendChild(el);
-      }
-      (el as HTMLMetaElement).content = content;
-    };
-
-    updateMeta('meta[name="description"]', finalDescription);
-    updateMeta('meta[name="og:title"]', finalOgTitle);
-    updateMeta('meta[name="og:description"]', finalOgDescription);
-    if (ogImage) updateMeta('meta[name="og:image"]', ogImage);
-    if (canonical) {
-      let linkEl = document.querySelector('link[rel="canonical"]');
-      if (!linkEl) {
-        linkEl = document.createElement('link');
-        document.head.appendChild(linkEl);
-      }
-      (linkEl as HTMLLinkElement).rel = 'canonical';
-      (linkEl as HTMLLinkElement).href = canonical;
-    }
-
-    return () => {
-      // cleanup? optional
-    };
-  }, [finalDescription, finalOgTitle, finalOgDescription, ogImage, canonical]);
+    applyTags(head.title, head.tags);
+  }, [key]);
 
   return null;
 };

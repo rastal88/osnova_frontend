@@ -81,8 +81,10 @@ npm run dev
 `/docs`, `/openapi.json`, `/redoc` на сервис `backend` (один origin — без CORS).
 
 ```bash
-docker build --build-arg VITE_BASE_URL=/api/v1 -t osnova-frontend .
+docker build --build-arg VITE_BASE_URL=/api/v1 --build-arg VITE_SITE_URL=https://example.com -t osnova-frontend .
 ```
+
+Build variables for SEO and link previews: see `DEVELOPMENT.md` → "SEO and link previews".
 
 В составе всей системы запускается из `osnova_backend` через `docker compose`
 (сервис `frontend`), см. README основного репозитория.
