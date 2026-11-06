@@ -24,6 +24,7 @@ import {
 } from '@ant-design/icons';
 
 import { useAuthStore } from '../../modules/auth';
+import { LEGAL_LINKS } from '../../pages/Legal';
 import { useBootstrapStore } from '../../store/bootstrapStore';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import PageState from '../PageState/PageState';
@@ -212,7 +213,16 @@ const LayoutComponent = () => {
       </Layout>
 
       <Footer className="footer">
-        © {new Date().getFullYear()} {appName}
+        <span>
+          © {new Date().getFullYear()} {appName}
+        </span>
+        <nav className="footer-links" aria-label={t('footer.legal')}>
+          {LEGAL_LINKS.map((link) => (
+            <Link key={link.path} to={link.path}>
+              {t(`pages.${link.document}`)}
+            </Link>
+          ))}
+        </nav>
       </Footer>
 
       {showMenu && (

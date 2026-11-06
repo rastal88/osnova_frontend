@@ -7,7 +7,15 @@ import type { HeadTag } from '../../seo/head';
 import { useBootstrapStore } from '../../store/bootstrapStore';
 
 /** Page keys of the `seo` namespace (src/locales/<language>/seo.json). */
-export type SeoPage = 'home' | 'contact' | 'examples' | 'exampleData' | 'exampleLanding';
+export type SeoPage =
+  | 'home'
+  | 'contact'
+  | 'examples'
+  | 'exampleData'
+  | 'exampleLanding'
+  | 'privacy'
+  | 'terms'
+  | 'cookies';
 
 interface SeoProps {
   /** Title and description from the `seo` namespace */

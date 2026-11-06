@@ -4,5 +4,5 @@ export const API_DOCS_URL = `${API_BASE_URL.replace(/\/api\/v1\/?$/, '')}/docs`;
 export const GITHUB_BACKEND_URL = 'https://github.com/rastal88/osnova_backend';
 export const GITHUB_FRONTEND_URL = 'https://github.com/rastal88/osnova_frontend';
 
-/** Linked from consent checkboxes; the page itself arrives with the legal pages. */
+/** Linked from consent checkboxes (src/pages/Legal). */
 export const PRIVACY_POLICY_PATH = '/privacy';

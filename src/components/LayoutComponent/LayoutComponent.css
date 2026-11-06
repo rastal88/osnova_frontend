@@ -168,10 +168,29 @@
 }
 
 .footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
   text-align: center;
   padding: 16px 24px;
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   color: var(--color-text-secondary);
   font-size: 0.85rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+}
+
+.footer-links a {
+  color: inherit;
+}
+
+.footer-links a:hover {
+  color: var(--color-primary);
 }

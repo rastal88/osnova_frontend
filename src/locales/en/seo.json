@@ -21,5 +21,17 @@
   "exampleLanding": {
     "title": "Landing page example",
     "description": "Hero, services, gallery, pricing, reviews, FAQ and call-to-action blocks of the Osnova template"
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "description": "How we collect, use and protect your personal data"
+  },
+  "terms": {
+    "title": "Terms of use",
+    "description": "Rules for using the site"
+  },
+  "cookies": {
+    "title": "Cookie policy",
+    "description": "Which cookies and browser storage the site uses and why"
   }
 }
