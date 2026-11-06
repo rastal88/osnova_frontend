@@ -1,0 +1,20 @@
+.examples-link {
+  display: block;
+  height: 100%;
+}
+
+.examples-card {
+  height: 100%;
+}
+
+.examples-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  font-size: 20px;
+}

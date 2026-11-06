@@ -1,6 +1,8 @@
 {
   "pages": [
     { "path": "/", "seo": "home" },
-    { "path": "/contact", "seo": "contact" }
+    { "path": "/contact", "seo": "contact" },
+    { "path": "/examples", "seo": "examples" },
+    { "path": "/examples/data", "seo": "exampleData" }
   ]
 }

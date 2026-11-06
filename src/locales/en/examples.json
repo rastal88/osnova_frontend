@@ -1,0 +1,52 @@
+{
+  "index": {
+    "title": "Examples",
+    "subtitle": "Building blocks of the template in use. Delete src/examples when you no longer need them.",
+    "items": {
+      "contact": {
+        "title": "Contact form",
+        "description": "A form described on the backend: client and server validation, submit states, consent."
+      },
+      "data": {
+        "title": "Data and tables",
+        "description": "Search, filters, sorting and pagination kept in the URL; dates, numbers and money in the interface language."
+      }
+    }
+  },
+  "data": {
+    "title": "Data and tables",
+    "subtitle": "DataTable and useFormat on demo orders",
+    "formatTitle": "Formatting",
+    "formatHint": "Switch the language to see the same values in another format.",
+    "format": {
+      "date": "Date",
+      "dateTime": "Date and time",
+      "relative": "Relative",
+      "number": "Number",
+      "percent": "Percent",
+      "compact": "Compact",
+      "currency": "Money"
+    },
+    "tableTitle": "Orders",
+    "localHint": "All rows are in the browser: search, filters and sorting run locally. The state is in the URL — try reloading or sharing the link.",
+    "remoteHint": "Each page is requested from a \"server\" (simulated, 400 ms): the table sends page, search, sort and filters and shows a loader.",
+    "modes": {
+      "local": "In the browser",
+      "remote": "From the server"
+    },
+    "searchPlaceholder": "Customer or number",
+    "columns": {
+      "number": "Number",
+      "customer": "Customer",
+      "createdAt": "Date",
+      "status": "Status",
+      "total": "Total"
+    },
+    "status": {
+      "new": "New",
+      "paid": "Paid",
+      "shipped": "Shipped",
+      "cancelled": "Cancelled"
+    }
+  }
+}

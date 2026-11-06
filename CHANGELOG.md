@@ -27,6 +27,11 @@ All notable changes are documented here. The format follows
   client rules, per-field server errors, sending / success / error-with-retry states and
   a consent checkbox linking to the privacy policy. Example `/contact` page in the menu,
   prerendered for link previews.
+- `DataTable`: search, column filters, sorting and pagination kept in the URL, for local
+  data or a server `fetch(query) → { items, total }` with loading and retry.
+- `useFormat()`: dates, relative time, numbers, percent and money in the interface language
+  (built on `Intl`).
+- Examples in `src/examples` (`/examples`, `/examples/data`, `/contact`), easy to delete.
 - Brand in one place: `src/config/brand.ts` (light/dark palettes, radius, font) builds the
   Ant Design themes and CSS variables for custom styles.
 

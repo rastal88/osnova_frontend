@@ -1,0 +1,18 @@
+.example-data-card {
+  margin-bottom: 24px;
+}
+
+.example-data-hint {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.example-data-date {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.example-data-date .ant-typography {
+  font-size: 12px;
+}

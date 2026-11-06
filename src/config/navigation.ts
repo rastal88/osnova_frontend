@@ -1,4 +1,5 @@
 import {
+  AppstoreOutlined,
   DashboardOutlined,
   HomeOutlined,
   MailOutlined,
@@ -52,6 +53,11 @@ export const navigationConfig: NavigationConfig = {
       icon: HomeOutlined,
     },
     {
+      path: '/examples',
+      label: 'pages.examples',
+      icon: AppstoreOutlined,
+    },
+    {
       path: '/contact',
       label: 'pages.contact',
       icon: MailOutlined,
@@ -74,6 +80,8 @@ export const navigationConfig: NavigationConfig = {
 export const routeTitles: Record<string, LabelKey> = {
   '/': 'pages.home',
   '/contact': 'pages.contact',
+  '/examples': 'pages.examples',
+  '/examples/data': 'pages.exampleData',
   '/dashboard': 'pages.dashboard',
   '/profile': 'pages.profile',
   '/login': 'pages.login',
