@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../auth/authStore';
 import LanguageSwitcher from '../../../components/LanguageSwitcher/LanguageSwitcher';
@@ -17,7 +17,7 @@ const AdminLayout = () => {
     <Layout>
       <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ flex: 1 }}>
-          <Menu theme="dark" mode="horizontal">
+          <Menu mode="horizontal">
             <Menu.Item key="dashboard">
               <Link to="/admin/dashboard">{t('menu.dashboard')}</Link>
             </Menu.Item>
@@ -29,9 +29,9 @@ const AdminLayout = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <LanguageSwitcher />
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
-          <button onClick={logout} style={{ color: 'white' }}>
+          <Button type="text" onClick={logout}>
             {t('logout')}
-          </button>
+          </Button>
         </div>
       </Header>
 

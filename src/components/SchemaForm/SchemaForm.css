@@ -7,11 +7,6 @@
   margin-bottom: 0;
 }
 
-/* The app root centres text; forms read better aligned to the start */
-.schema-form {
-  text-align: start;
-}
-
 .schema-form h3 {
   text-align: center;
 }

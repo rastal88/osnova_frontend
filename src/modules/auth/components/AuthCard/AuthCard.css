@@ -1,0 +1,30 @@
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 12%, var(--color-bg)), var(--color-bg) 70%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+}
+
+.auth-card-title {
+  text-align: center;
+  margin-bottom: 24px !important;
+}
+
+.auth-card-error {
+  margin-bottom: 16px;
+}
+
+.auth-card-footer {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
