@@ -1,5 +1,4 @@
 {
-  "seoDescription": "Osnova is a full-stack template for building web applications quickly with Python and React",
   "profile": "Profile: {{name}}",
   "tagline": "A full-stack template for building web applications quickly with Python and React.",
   "capabilitiesNote": "Capabilities are switched on in the configuration and reach the interface through bootstrap, without rewriting the architecture.",

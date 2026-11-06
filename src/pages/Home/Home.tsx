@@ -65,7 +65,7 @@ const Logo = () => (
 );
 
 const HomePage = () => {
-  const { t } = useTranslation(['home', 'common']);
+  const { t } = useTranslation('home');
   const config = useBootstrapStore((state) => state.config);
   const features = config?.features;
   const profile = config?.profile ?? 'minimal';
@@ -76,12 +76,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Seo
-        title={t('common:pages.home')}
-        description={t('seoDescription')}
-        ogTitle="Osnova"
-        canonical="/"
-      />
+      <Seo page="home" />
       <div className="welcome">
       <div className="welcome-hero">
         <Logo />

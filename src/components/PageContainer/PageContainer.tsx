@@ -9,6 +9,7 @@ import {
   type BreadcrumbItem,
 } from '../../config/navigation';
 import PageState from '../PageState/PageState';
+import Seo from '../Seo/Seo';
 import './PageContainer.css';
 
 const { Title, Text } = Typography;
@@ -69,6 +70,7 @@ const PageContainer = ({
 
   return (
     <div className="page-container" style={style}>
+      {typeof title === 'string' && <Seo title={title} />}
       {showBreadcrumbs && (
         <Breadcrumb
           className="page-container-breadcrumbs"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import Seo from '../../../../components/Seo/Seo';
 import { useAuthStore } from '../../authStore';
 import {register, login} from "../../api";
 import './Register.css';
@@ -42,6 +43,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
+      <Seo title={t('register.title')} noindex />
       <form onSubmit={handleRegister} className="register-form">
         <h2>{t('register.title')}</h2>
 

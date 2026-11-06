@@ -1,0 +1,9 @@
+{
+  "site": {
+    "description": "Osnova — универсальный full-stack шаблон для быстрой разработки web-приложений на Python и React"
+  },
+  "home": {
+    "title": "Главная",
+    "description": "Osnova — универсальный full-stack шаблон для быстрой разработки web-приложений на Python и React"
+  }
+}

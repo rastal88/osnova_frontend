@@ -1,5 +1,4 @@
 {
-  "seoDescription": "Osnova — универсальный full-stack шаблон для быстрой разработки web-приложений на Python и React",
   "profile": "Профиль: {{name}}",
   "tagline": "Универсальный full-stack шаблон для быстрой разработки web-приложений на Python и React.",
   "capabilitiesNote": "Возможности подключаются конфигурацией и передаются в интерфейс через bootstrap — без переписывания архитектуры.",
