@@ -3,7 +3,7 @@ import qs from 'qs';
 
 
 export const getCurrentUser = async () => {
-  const response = await api.get('/auth/users/me');
+  const response = await api.get('/auth/users/me', { skipAuthRedirect: true });
   return response.data;
 };
 

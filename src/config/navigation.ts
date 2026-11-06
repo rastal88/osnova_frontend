@@ -20,6 +20,9 @@ export interface NavItem {
   label: LabelKey;
   icon?: ComponentType;
   capability?: Capability;
+  /** Shown only to signed-in users (and only to these roles, when set) */
+  requiresAuth?: boolean;
+  roles?: string[];
 }
 
 export interface NavigationConfig {
@@ -61,12 +64,15 @@ export const navigationConfig: NavigationConfig = {
       label: 'pages.dashboard',
       icon: DashboardOutlined,
       capability: 'authentication',
+      requiresAuth: true,
     },
     {
       path: '/admin',
       label: 'pages.admin',
       icon: SettingOutlined,
       capability: 'admin',
+      requiresAuth: true,
+      roles: ['root', 'moderator'],
     },
   ],
 };
