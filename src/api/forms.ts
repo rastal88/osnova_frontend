@@ -1,43 +1,14 @@
 import api from './axios';
+import type { FormDescription, FormFieldDescription, FormSubmitResponse } from './generated';
 
 /** Forms are described on the backend (app/forms.py) and rendered from this description. */
-export type FormFieldType =
-  | 'text'
-  | 'textarea'
-  | 'email'
-  | 'tel'
-  | 'select'
-  | 'checkbox'
-  | 'consent';
-
-export interface FormFieldOption {
-  value: string;
-  label: string;
-}
-
-export interface FormFieldDescription {
-  name: string;
-  type: FormFieldType;
-  label: string;
-  required: boolean;
-  min_length: number | null;
-  max_length: number | null;
-  pattern: string | null;
-  options: FormFieldOption[];
-}
-
-export interface FormDescription {
-  name: string;
-  title: string;
-  submit: string;
-  /** Hidden anti-spam field: people leave it empty, bots fill it */
-  honeypot: string;
-  fields: FormFieldDescription[];
-}
-
-export interface FormSubmitResponse {
-  message: string;
-}
+export type {
+  FormDescription,
+  FormFieldDescription,
+  FormFieldOption,
+  FormSubmitResponse,
+} from './generated';
+export type FormFieldType = FormFieldDescription['type'];
 
 export type FormValues = Record<string, unknown>;
 

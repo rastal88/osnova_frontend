@@ -6,7 +6,8 @@
   "files": {
     "ignore": [
       "node_modules",
-      "playwright-report"
+      "playwright-report",
+      "src/api/generated"
     ]
   },
   "linter": {
