@@ -101,8 +101,7 @@ const MyPage = () => (
   against the English files, so a typo fails `npm run build`.
 - Only English `common` is in the main bundle; other files are separate chunks loaded
   when a page uses their namespace.
-- The language comes from `/bootstrap` (`i18n.default`); the URL prefix and the
-  switcher arrive in the next steps.
+- Enabled languages and the default come from `/bootstrap` (`i18n`).
 
 ```tsx
 const { t } = useTranslation('auth');
@@ -112,7 +111,19 @@ const { t } = useTranslation('auth');
 **Add a language:** enable it on the backend (`LANGUAGES`), copy `src/locales/en` to
 `src/locales/<code>` and translate, add its Ant Design locale to `src/i18n/antdLocale.ts`.
 
-### 2.2. Server errors
+### 2.2. Language in the URL
+
+- Every page lives under a prefix: `/en/...`, `/ru/...`. The prefix is the router
+  `basename`, so routes, `<Link to="/login">` and `navigate('/profile')` stay
+  language-free.
+- A URL without a prefix (`/`, an old `/login` link) is redirected to the saved
+  choice, then the browser language, then the backend default.
+- `LanguageSwitcher` (header and admin) keeps the current page, remembers the choice
+  in `localStorage` and is hidden when only one language is enabled.
+- Outside the router (plain `href`, `window.location`) use `localizedPath('/path')`
+  from `src/i18n/language.ts`.
+
+### 2.3. Server errors
 
 The backend returns `{code, message, fields?}` with `message` already translated
 (it receives `Accept-Language`). Use `getErrorMessage(error)` from `src/api/errors.ts`

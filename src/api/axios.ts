@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import i18n from '../i18n';
+import { localizedPath } from '../i18n/language';
 
 const API_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:8000/api/v1';
 
@@ -23,7 +24,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       if (!window.location.pathname.includes('/login')) {
-        window.location.href = '/login';
+        window.location.href = localizedPath('/login');
       }
     }
     return Promise.reject(error);

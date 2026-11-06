@@ -2,7 +2,6 @@ import i18n from 'i18next';
 import type { BackendModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import type { BootstrapI18n } from '../api/bootstrap';
 import common from '../locales/en/common.json';
 
 /**
@@ -54,10 +53,5 @@ void i18n
 i18n.on('languageChanged', (language) => {
   document.documentElement.lang = language;
 });
-
-/** Switches to the default language from /bootstrap and loads its common texts. */
-export async function setupLanguage(config: BootstrapI18n) {
-  await i18n.changeLanguage(config.default);
-}
 
 export default i18n;

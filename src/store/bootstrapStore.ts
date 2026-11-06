@@ -4,7 +4,7 @@ import {
   getBootstrap,
   type BootstrapResponse,
 } from '../api/bootstrap';
-import { setupLanguage } from '../i18n';
+import { setupLanguage } from '../i18n/language';
 
 interface BootstrapStore {
   config: BootstrapResponse | null;

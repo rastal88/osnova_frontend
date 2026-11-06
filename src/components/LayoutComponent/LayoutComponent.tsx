@@ -25,6 +25,7 @@ import {
 
 import { useAuthStore } from '../../modules/auth';
 import { useBootstrapStore } from '../../store/bootstrapStore';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import PageState from '../PageState/PageState';
 import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
 import { ThemeContext } from '../AppComponent/AppComponent';
@@ -147,6 +148,7 @@ const LayoutComponent = () => {
         </div>
 
         <div className="app-header-actions">
+          <LanguageSwitcher />
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
 
           {authEnabled && (
