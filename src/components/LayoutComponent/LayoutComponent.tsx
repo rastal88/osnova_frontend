@@ -155,8 +155,12 @@ const LayoutComponent = () => {
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
 
           {authEnabled && !isAuthenticated && (
-            <Button icon={<LoginOutlined />} onClick={() => navigate('/login')}>
-              {t('pages.login')}
+            <Button
+              icon={<LoginOutlined />}
+              aria-label={t('pages.login')}
+              onClick={() => navigate('/login')}
+            >
+              {!isMobile && t('pages.login')}
             </Button>
           )}
 

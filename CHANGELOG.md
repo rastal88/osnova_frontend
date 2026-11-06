@@ -59,6 +59,8 @@ All notable changes are documented here. The format follows
 - Open Graph tags use `property` instead of `name`.
 
 ### Fixed
+- Header on phones: a long site name is cut with an ellipsis instead of covering the
+  buttons; tighter spacing and an icon-only sign-in button below 768px.
 - With authentication enabled, guests can open public pages (home, contact, sign-up) by URL:
   the layout no longer redirects them, and the current-user check does not send a 401 to
   `/login`. Guests get a sign-in button; menu items can require sign-in or roles.

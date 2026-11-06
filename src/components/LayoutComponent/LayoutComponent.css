@@ -26,6 +26,9 @@
 }
 
 .app-brand {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-text);
@@ -193,4 +196,21 @@
 
 .footer-links a:hover {
   color: var(--color-primary);
+}
+
+/* Phones: a long site name is cut with an ellipsis instead of covering the buttons */
+@media (max-width: 767px) {
+  .app-header {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .app-header-left,
+  .app-header-actions {
+    gap: 8px;
+  }
+
+  .app-brand {
+    font-size: 1rem;
+  }
 }
