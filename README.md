@@ -28,6 +28,7 @@
 - Светлая/тёмная тема
 - Forms rendered from their backend description, with client and server validation
 - Legal pages (privacy, terms, cookies): placeholders, owner details in `src/config/legal.ts`
+- Cookie banner when analytics is on (`VITE_ANALYTICS_SCRIPT`): the script loads only after consent
 
 ## Структура
 

@@ -26,6 +26,7 @@ import {
 import { useAuthStore } from '../../modules/auth';
 import { LEGAL_LINKS } from '../../pages/Legal';
 import { useBootstrapStore } from '../../store/bootstrapStore';
+import CookieBanner from '../CookieBanner/CookieBanner';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import PageState from '../PageState/PageState';
 import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
@@ -224,6 +225,8 @@ const LayoutComponent = () => {
           ))}
         </nav>
       </Footer>
+
+      <CookieBanner />
 
       {showMenu && (
         <Drawer

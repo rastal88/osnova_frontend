@@ -7,6 +7,10 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Cookie consent: with `VITE_ANALYTICS_SCRIPT` set, a banner asks for consent and the
+  analytics script loads only after "Accept" (`src/config/analytics.ts`, `src/consent`);
+  the choice is kept in `app_consent` and can be changed on the cookie policy page.
+  Without analytics there is no banner.
 - Legal pages `/privacy`, `/terms`, `/cookies` with placeholder texts in `legal.json`
   (en, ru); owner details in `src/config/legal.ts`, a "template" notice until they are
   filled. Links in the footer; the pages are prerendered for SEO.

@@ -6,4 +6,6 @@ interface ImportMetaEnv {
   readonly VITE_SITE_URL?: string;
   /** Default link preview image: absolute URL or a path on the site */
   readonly VITE_OG_IMAGE?: string;
+  /** Analytics script URL; when set, a cookie banner asks for consent before loading it */
+  readonly VITE_ANALYTICS_SCRIPT?: string;
 }

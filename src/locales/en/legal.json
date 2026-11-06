@@ -1,5 +1,6 @@
 {
   "updated": "Last updated: {{date}}",
+  "changeConsent": "Change cookie settings",
   "templateNotice": "This is a template. Fill in the owner details in src/config/legal.ts and review the texts with a lawyer before publishing.",
   "privacy": {
     "title": "Privacy policy",
@@ -75,11 +76,11 @@
     "sections": [
       {
         "title": "Strictly necessary",
-        "text": "Interface settings in the browser storage: the language (app_language) and the colour theme (app_theme).\n\nIf you sign in: an authentication cookie that keeps you signed in until you log out or it expires.\n\nThese are needed for the site to work and do not require consent."
+        "text": "Interface settings in the browser storage: the language (app_language), the colour theme (app_theme) and your cookie choice (app_consent).\n\nIf you sign in: an authentication cookie that keeps you signed in until you log out or it expires.\n\nThese are needed for the site to work and do not require consent."
       },
       {
         "title": "Analytics and marketing",
-        "text": "The site does not use analytics or marketing cookies. If they are added, they will be listed here and used only with your consent, which you can change at any time."
+        "text": "Analytics cookies are set only if you allow them in the cookie banner, and you can change your choice at any time. If the site does not show the banner, it uses no analytics or marketing cookies."
       },
       {
         "title": "Managing cookies",

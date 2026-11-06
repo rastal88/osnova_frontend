@@ -17,6 +17,13 @@
     "terms": "Terms of use",
     "cookies": "Cookie policy"
   },
+  "cookieBanner": {
+    "label": "Cookie consent",
+    "text": "We use analytics cookies to understand how the site is used, only if you allow it.",
+    "policy": "Cookie policy",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
   "footer": {
     "legal": "Legal"
   },
