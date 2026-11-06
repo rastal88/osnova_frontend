@@ -1,6 +1,7 @@
 import {
   DashboardOutlined,
   HomeOutlined,
+  MailOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
 import type { ParseKeys } from 'i18next';
@@ -51,6 +52,11 @@ export const navigationConfig: NavigationConfig = {
       icon: HomeOutlined,
     },
     {
+      path: '/contact',
+      label: 'pages.contact',
+      icon: MailOutlined,
+    },
+    {
       path: '/dashboard',
       label: 'pages.dashboard',
       icon: DashboardOutlined,
@@ -67,6 +73,7 @@ export const navigationConfig: NavigationConfig = {
 
 export const routeTitles: Record<string, LabelKey> = {
   '/': 'pages.home',
+  '/contact': 'pages.contact',
   '/dashboard': 'pages.dashboard',
   '/profile': 'pages.profile',
   '/login': 'pages.login',

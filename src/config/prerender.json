@@ -1,3 +1,6 @@
 {
-  "pages": [{ "path": "/", "seo": "home" }]
+  "pages": [
+    { "path": "/", "seo": "home" },
+    { "path": "/contact", "seo": "contact" }
+  ]
 }

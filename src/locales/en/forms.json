@@ -1,0 +1,16 @@
+{
+  "validation": {
+    "required": "This field is required.",
+    "minLength": "Must be at least {{min}} characters.",
+    "maxLength": "Must be at most {{max}} characters.",
+    "pattern": "Invalid format.",
+    "email": "Enter a valid email address.",
+    "phone": "Enter a valid phone number.",
+    "mustBeChecked": "Please check this box to continue."
+  },
+  "privacyPolicy": "privacy policy",
+  "sending": "Sending…",
+  "sendAnother": "Send another",
+  "retry": "Try again",
+  "loadFailed": "The form could not be loaded."
+}

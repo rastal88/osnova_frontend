@@ -156,9 +156,27 @@ Build variables:
 
 ---
 
-## 3. Формы (C)
+## 3. Forms (C)
 
-Пока заглушка. Скоро: конструктор форм, валидация, состояние отправки.
+Forms are described once on the backend (`app/forms.py` in osnova_backend) and rendered here:
+
+```tsx
+<SchemaForm name="contact" />
+```
+
+- `GET /forms/<name>` returns the title, submit label and fields (labels already in the
+  current language); the form reloads it when the language changes.
+- Field types: `text`, `textarea`, `email`, `tel`, `select`, `checkbox`, `consent`.
+  Client rules (required, length, pattern, checked) come from the same description as the
+  server ones, so most mistakes are caught before sending.
+- `POST /forms/<name>`: per-field server errors are shown under the fields; any other
+  failure shows an alert with **Try again**, which resends the same values. Success
+  replaces the form with the server message and **Send another**.
+- `consent` links to `PRIVACY_POLICY_PATH` (`src/utils/constants.ts`, `/privacy`); the
+  page arrives with the legal pages (F).
+- Generic texts (validation, retry, sending): `src/locales/<language>/forms.json`.
+- Example page: `src/pages/Contact` (`/contact`, lazy-loaded — Ant Design form controls
+  are in its own chunk, not in the main bundle).
 
 ---
 
@@ -227,9 +245,11 @@ src/
 ├── components/
 │   ├── PageContainer/         # единая рамка страницы
 │   ├── PageState/             # состояния: loading/empty/error/403/404
+│   ├── SchemaForm/            # form rendered from its backend description
 │   ├── ErrorBoundary/         # глобальный хендлер ошибок
 │   └── LayoutComponent/       # общий каркас
 └── pages/
+    ├── Contact/               # example form page
     ├── NotFound/              # 404
     └── Error/                 # общая ошибка
 ```

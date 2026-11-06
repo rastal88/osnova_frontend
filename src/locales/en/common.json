@@ -1,6 +1,7 @@
 {
   "pages": {
     "home": "Home",
+    "contact": "Contact",
     "dashboard": "Dashboard",
     "profile": "Profile",
     "login": "Sign in",
