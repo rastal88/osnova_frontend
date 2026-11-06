@@ -25,10 +25,11 @@ jobs:
           repository: rastal88/osnova_backend
           path: backend
 
+      # Same path as in local development: the generated types depend on it
       - name: API types are up to date
-        env:
-          OPENAPI_INPUT: backend/openapi.json
         run: |
+          mkdir -p ../osnova_backend
+          cp backend/openapi.json ../osnova_backend/openapi.json
           npm run generate:client
           git diff --exit-code src/api/generated || {
             echo "::error::src/api/generated is out of date: run npm run generate:client"
