@@ -26,6 +26,7 @@
 - Административная панель (при `ADMIN_ENABLED`)
 - Динамическая конфигурация через `bootstrap` (тема, capabilities)
 - Светлая/тёмная тема
+- Forms rendered from their backend description, with client and server validation
 
 ## Структура
 

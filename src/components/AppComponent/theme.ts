@@ -1,4 +1,5 @@
-import { ThemeConfig } from 'antd';
+import { theme } from 'antd';
+import type { ThemeConfig } from 'antd';
 
 export const themeLight: ThemeConfig = {
   token: {
@@ -18,6 +19,10 @@ export const themeLight: ThemeConfig = {
       activeBg: '#ffffff',
       hoverBg: '#ffffff',
       colorBgContainer: '#ffffff',
+    },
+    Select: {
+      colorBgContainer: '#ffffff',
+      colorBgElevated: '#ffffff',
     },
     Menu: {
       itemSelectedBg: '#a1a7ab',
@@ -71,6 +76,8 @@ export const themeLight: ThemeConfig = {
 };
 
 export const themeDark: ThemeConfig = {
+  // Derives secondary text, borders and fills for a dark background
+  algorithm: theme.darkAlgorithm,
   token: {
     colorPrimary: '#1677ff', // Primary blue for the dark theme (example)
     colorBgBase: '#10141a',
@@ -87,6 +94,10 @@ export const themeDark: ThemeConfig = {
       activeBg: '#23272f',
       hoverBg: '#23272f',
       colorBgContainer: '#23272f',
+    },
+    Select: {
+      colorBgContainer: '#23272f',
+      colorBgElevated: '#23272f',
     },
     Menu: {
       itemSelectedBg: '#23272f',

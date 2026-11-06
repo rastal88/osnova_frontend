@@ -7,6 +7,7 @@ import type { BootstrapFeatures } from '../api/bootstrap';
 import LayoutComponent from '../components/LayoutComponent/LayoutComponent';
 import { redirects } from '../config/navigation';
 import { languageFromPath } from '../i18n/language';
+import { lazyElement } from './lazy';
 import { adminRoute } from '../modules/admin';
 import { authLayoutRoutes, authPublicRoutes } from '../modules/auth';
 import Home from '../pages/Home/Home';
@@ -20,7 +21,10 @@ import RouteError from './RouteError';
 // stay language-free; switching the language builds a router with a new basename.
 const createAppRouter = (features: BootstrapFeatures, language: string) => {
   const routes: RouteObject[] = [];
-  const layoutChildren: RouteObject[] = [{ index: true, element: <Home /> }];
+  const layoutChildren: RouteObject[] = [
+    { index: true, element: <Home /> },
+    { path: 'contact', element: lazyElement(() => import('../pages/Contact/Contact')) },
+  ];
 
   if (features.authentication) {
     routes.push(...authPublicRoutes);

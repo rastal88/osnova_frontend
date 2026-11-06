@@ -88,10 +88,6 @@ button:focus, button:focus-visible {
   outline: 0px;
 }
 
-.ant-select-selector, .ant-select-dropdown {
-  background-color: #ffffff !important;
-}
-
 .ant-table {
   /*border: 1px solid #dde6ee;*/
 }

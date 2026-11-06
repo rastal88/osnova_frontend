@@ -1,6 +1,7 @@
 {
   "pages": {
     "home": "Главная",
+    "contact": "Контакты",
     "dashboard": "Кабинет",
     "profile": "Профиль",
     "login": "Вход",

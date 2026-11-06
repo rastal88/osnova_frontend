@@ -23,11 +23,21 @@ All notable changes are documented here. The format follows
 - Build-time prerender of `<head>` per page and language for link previews, plus
   `sitemap.xml` and `robots.txt` (`VITE_SITE_URL`).
 
+- `SchemaForm`: a form rendered from its backend description (`GET /forms/<name>`) with
+  client rules, per-field server errors, sending / success / error-with-retry states and
+  a consent checkbox linking to the privacy policy. Example `/contact` page in the menu,
+  prerendered for link previews.
+
 ### Changed
 - Env files are no longer committed: `.env.example` documents every variable,
   local values go to `.env.local`. Removed unused `VITE_TOKEN`, `VITE_SOCKET_URL`,
   `VITE_API_URL`, `VITE_DEBUG_MODE` and the `build:dev` / `build:prod` scripts.
 - Open Graph tags use `property` instead of `name`.
+
+### Fixed
+- Dark theme uses Ant Design's dark algorithm, so secondary text (optional marks,
+  counters, placeholders) is readable; Select follows the theme instead of a global
+  white background.
 - Profile page shows the signed-in user instead of sample data.
 
 ### Fixed
