@@ -1,0 +1,14 @@
+{
+  "menu": {
+    "dashboard": "Панель",
+    "profile": "Профиль"
+  },
+  "logout": "Выйти",
+  "footer": "Админка",
+  "dashboard": {
+    "title": "Админ-панель",
+    "users": "Пользователи",
+    "orders": "Заказы",
+    "revenue": "Доход"
+  }
+}

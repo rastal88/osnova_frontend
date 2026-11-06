@@ -72,7 +72,7 @@ export const themeLight: ThemeConfig = {
 
 export const themeDark: ThemeConfig = {
   token: {
-    colorPrimary: '#1677ff', // Синий основной для тёмной темы (пример)
+    colorPrimary: '#1677ff', // Primary blue for the dark theme (example)
     colorBgBase: '#10141a',
     colorText: '#f5f7fa',
     fontFamily: 'Roboto',

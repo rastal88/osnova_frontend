@@ -14,9 +14,20 @@ export interface BootstrapFeatures {
   background_tasks: boolean;
 }
 
+export interface BootstrapLanguage {
+  code: string;
+  name: string;
+}
+
+export interface BootstrapI18n {
+  languages: BootstrapLanguage[];
+  default: string;
+}
+
 export interface BootstrapResponse {
   application: BootstrapApplication;
   profile: 'minimal' | 'standard' | 'scalable';
+  i18n: BootstrapI18n;
   features: BootstrapFeatures;
 }
 

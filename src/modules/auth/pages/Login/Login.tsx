@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../authStore';
 import './Login.css';
 import { login } from '../../api';
-import axios from 'axios';
+import { getErrorMessage } from '../../../../api/errors';
 
 const Login = () => {
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const { fetchUser } = useAuthStore();
   const [email, setEmail] = useState('');
@@ -23,40 +25,32 @@ const Login = () => {
         navigate('/');
       }
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 400) {
-          setError('Invalid login or password');
-        } else {
-          setError('Server error, try again later');
-        }
-      } else {
-        setError('Unknown error');
-      }
+      setError(getErrorMessage(err));
     }
   };
 
   return (
     <div className="login-container">
       <form onSubmit={handleLogin} className="login-form">
-        <h2>Sign In</h2>
+        <h2>{t('login.title')}</h2>
         {error && <p className="error">{error}</p>}
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          placeholder={t('email')}
           required
         />
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder={t('password')}
           required
         />
-        <button type="submit">Sign In</button>
+        <button type="submit">{t('login.submit')}</button>
         <p>
-          Don't have an account? <Link to="/register">Sign Up</Link>
+          {t('login.noAccount')} <Link to="/register">{t('login.toRegister')}</Link>
         </p>
       </form>
     </div>

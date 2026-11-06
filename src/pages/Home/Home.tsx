@@ -5,6 +5,7 @@ import {
   GithubOutlined,
   ReadOutlined,
 } from '@ant-design/icons';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { useBootstrapStore } from '../../store/bootstrapStore';
 import type { BootstrapFeatures } from '../../api/bootstrap';
@@ -18,34 +19,19 @@ import './Home.css';
 
 const { Title, Paragraph, Text } = Typography;
 
-const FEATURE_LABELS: { key: keyof BootstrapFeatures; label: string }[] = [
-  { key: 'authentication', label: 'Аутентификация' },
-  { key: 'admin', label: 'Админ-панель' },
-  { key: 'files', label: 'Файловое хранилище' },
-  { key: 'notifications', label: 'Уведомления' },
-  { key: 'background_tasks', label: 'Фоновые задачи' },
+const FEATURES: (keyof BootstrapFeatures)[] = [
+  'authentication',
+  'admin',
+  'files',
+  'notifications',
+  'background_tasks',
 ];
 
-const PROFILE_INFO: Record<
-  string,
-  { title: string; description: string }
-> = {
-  minimal: {
-    title: 'Minimal',
-    description:
-      'Минимальная инфраструктура: сайты, информационные приложения и небольшие сервисы.',
-  },
-  standard: {
-    title: 'Standard',
-    description:
-      'Production-профиль: пользователи, админка, фоновые задачи, хранилище.',
-  },
-  scalable: {
-    title: 'Scalable',
-    description:
-      'Горизонтальное масштабирование: балансировка, несколько инстансов, CDN.',
-  },
-};
+const PROFILE_TITLES = {
+  minimal: 'Minimal',
+  standard: 'Standard',
+  scalable: 'Scalable',
+} as const;
 
 const Logo = () => (
   <svg
@@ -79,10 +65,10 @@ const Logo = () => (
 );
 
 const HomePage = () => {
+  const { t } = useTranslation(['home', 'common']);
   const config = useBootstrapStore((state) => state.config);
   const features = config?.features;
   const profile = config?.profile ?? 'minimal';
-  const profileInfo = PROFILE_INFO[profile] ?? PROFILE_INFO.minimal;
 
   const enabledCount = features
     ? Object.values(features).filter(Boolean).length
@@ -91,10 +77,9 @@ const HomePage = () => {
   return (
     <>
       <Seo
-        title="Home"
-        description="Osnova — универсальный full-stack шаблон для быстрой разработки web-приложений на Python и React"
+        title={t('common:pages.home')}
+        description={t('seoDescription')}
         ogTitle="Osnova"
-        ogDescription="Универсальный full-stack шаблон для быстрой разработки web-приложений"
         canonical="/"
       />
       <div className="welcome">
@@ -103,7 +88,7 @@ const HomePage = () => {
 
         <div className="welcome-badges">
           <Tag color="blue" className="welcome-profile-tag">
-            Профиль: {profileInfo.title}
+            {t('profile', { name: PROFILE_TITLES[profile] })}
           </Tag>
           <Tag className="welcome-version-tag">
             v{config?.application.version ?? '1.0.0'}
@@ -115,13 +100,11 @@ const HomePage = () => {
         </Title>
 
         <Paragraph className="welcome-tagline">
-          Универсальный full-stack шаблон для быстрой разработки web-приложений
-          на Python и React.
+          {t('tagline')}
         </Paragraph>
 
         <Paragraph className="welcome-description">
-          {profileInfo.description} Возможности подключаются конфигурацией и
-          передаются в интерфейс через bootstrap — без переписывания архитектуры.
+          {t(`profiles.${profile}`)} {t('capabilitiesNote')}
         </Paragraph>
 
         <Space size="middle" wrap className="welcome-actions">
@@ -133,7 +116,7 @@ const HomePage = () => {
             target="_blank"
             rel="noreferrer"
           >
-            Документация API
+            {t('apiDocs')}
           </Button>
           <Button
             size="large"
@@ -158,14 +141,14 @@ const HomePage = () => {
 
       <div className="welcome-panel">
         <div className="welcome-panel-head">
-          <Text strong>Активные возможности</Text>
+          <Text strong>{t('featuresTitle')}</Text>
           <Text type="secondary">
-            включено {enabledCount} из {FEATURE_LABELS.length}
+            {t('featuresCount', { count: enabledCount, total: FEATURES.length })}
           </Text>
         </div>
 
         <ul className="welcome-features">
-          {FEATURE_LABELS.map(({ key, label }) => {
+          {FEATURES.map((key) => {
             const enabled = Boolean(features?.[key]);
             return (
               <li
@@ -177,7 +160,7 @@ const HomePage = () => {
                 ) : (
                   <CloseCircleFilled className="welcome-feature-icon" />
                 )}
-                <span>{label}</span>
+                <span>{t(`features.${key}`)}</span>
               </li>
             );
           })}
@@ -186,9 +169,7 @@ const HomePage = () => {
         {enabledCount === 0 && (
           <div className="welcome-hint">
             <Text type="secondary">
-              Все возможности отключены — приложение работает как публичный
-              сайт. Включите нужные флаги в <code>.env</code> и перезапустите
-              backend.
+              <Trans t={t} i18nKey="allDisabled" components={{ code: <code /> }} />
             </Text>
           </div>
         )}

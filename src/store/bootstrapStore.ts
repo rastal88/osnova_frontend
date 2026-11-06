@@ -4,6 +4,7 @@ import {
   getBootstrap,
   type BootstrapResponse,
 } from '../api/bootstrap';
+import { setupLanguage } from '../i18n';
 
 interface BootstrapStore {
   config: BootstrapResponse | null;
@@ -27,6 +28,7 @@ export const useBootstrapStore = create<BootstrapStore>((set) => ({
 
     try {
       const config = await getBootstrap();
+      await setupLanguage(config.i18n);
 
       set({
         config,

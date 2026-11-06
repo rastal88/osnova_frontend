@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+import { Suspense, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Outlet,
   Navigate,
@@ -24,6 +25,7 @@ import {
 
 import { useAuthStore } from '../../modules/auth';
 import { useBootstrapStore } from '../../store/bootstrapStore';
+import PageState from '../PageState/PageState';
 import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
 import { ThemeContext } from '../AppComponent/AppComponent';
 import {
@@ -35,6 +37,7 @@ import './LayoutComponent.css';
 const { Header, Content, Footer, Sider } = Layout;
 
 const LayoutComponent = () => {
+  const { t } = useTranslation();
   const { isAuthenticated, isLoading, logout } = useAuthStore();
   const features = useBootstrapStore((state) => state.config?.features);
   const appName =
@@ -66,7 +69,7 @@ const LayoutComponent = () => {
     return {
       key: item.path,
       icon: Icon ? <Icon /> : undefined,
-      label: item.label,
+      label: t(item.label),
     };
   });
 
@@ -95,7 +98,7 @@ const LayoutComponent = () => {
         className="profile-menu-item"
         onClick={() => navigate('/profile')}
       >
-        Profile
+        {t('header.profile')}
       </Button>
 
       <Button
@@ -105,7 +108,7 @@ const LayoutComponent = () => {
         className="profile-menu-item profile-menu-logout"
         onClick={() => void handleLogout()}
       >
-        Log out
+        {t('header.logout')}
       </Button>
     </div>
   );
@@ -127,7 +130,7 @@ const LayoutComponent = () => {
           {showMenu && isMobile && (
             <Button
               type="text"
-              aria-label="Open menu"
+              aria-label={t('header.openMenu')}
               icon={<MenuOutlined />}
               onClick={() => setDrawerOpen(true)}
               className="app-menu-trigger"
@@ -155,7 +158,7 @@ const LayoutComponent = () => {
             >
               <Button
                 type="text"
-                aria-label="Open profile menu"
+                aria-label={t('header.openProfileMenu')}
                 icon={<UserOutlined style={{ fontSize: 20 }} />}
                 className="app-profile-trigger"
               />
@@ -179,7 +182,10 @@ const LayoutComponent = () => {
           )}
 
         <Content className="app-content">
-          <Outlet />
+          {/* Pages suspend while their translations load */}
+          <Suspense fallback={<PageState kind="loading" />}>
+            <Outlet />
+          </Suspense>
         </Content>
 
         {showMenu &&

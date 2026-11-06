@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../auth/authStore';
 import ThemeSwitcher from '../../../components/AppComponent/ThemeSwitcher';
 import { ThemeContext } from '../../../components/AppComponent/AppComponent';
@@ -8,6 +9,7 @@ import { ThemeContext } from '../../../components/AppComponent/AppComponent';
 const { Header, Content, Footer } = Layout;
 
 const AdminLayout = () => {
+  const { t } = useTranslation('admin');
   const { logout } = useAuthStore();
   const { themeName, setThemeName } = useContext(ThemeContext);
   return (
@@ -16,17 +18,17 @@ const AdminLayout = () => {
         <div style={{ flex: 1 }}>
           <Menu theme="dark" mode="horizontal">
             <Menu.Item key="dashboard">
-              <Link to="/admin/dashboard">Admin Dashboard</Link>
+              <Link to="/admin/dashboard">{t('menu.dashboard')}</Link>
             </Menu.Item>
             <Menu.Item key="profile">
-              <Link to="/admin/profile">Profile</Link>
+              <Link to="/admin/profile">{t('menu.profile')}</Link>
             </Menu.Item>
           </Menu>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
           <button onClick={logout} style={{ color: 'white' }}>
-            Выйти
+            {t('logout')}
           </button>
         </div>
       </Header>
@@ -35,7 +37,7 @@ const AdminLayout = () => {
         <Outlet />
       </Content>
 
-      <Footer style={{ textAlign: 'center' }}>© {new Date().getFullYear()} Osnova Admin</Footer>
+      <Footer style={{ textAlign: 'center' }}>© {new Date().getFullYear()} Osnova {t('footer')}</Footer>
     </Layout>
   );
 };

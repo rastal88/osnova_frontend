@@ -1,0 +1,22 @@
+{
+  "seoDescription": "Osnova is a full-stack template for building web applications quickly with Python and React",
+  "profile": "Profile: {{name}}",
+  "tagline": "A full-stack template for building web applications quickly with Python and React.",
+  "capabilitiesNote": "Capabilities are switched on in the configuration and reach the interface through bootstrap, without rewriting the architecture.",
+  "apiDocs": "API documentation",
+  "featuresTitle": "Active capabilities",
+  "featuresCount": "{{count}} of {{total}} enabled",
+  "allDisabled": "All capabilities are off, so the app works as a public website. Turn on the flags you need in <code>.env</code> and restart the backend.",
+  "features": {
+    "authentication": "Authentication",
+    "admin": "Admin panel",
+    "files": "File storage",
+    "notifications": "Notifications",
+    "background_tasks": "Background tasks"
+  },
+  "profiles": {
+    "minimal": "Minimal infrastructure: websites, information apps and small services.",
+    "standard": "Production profile: users, admin panel, background tasks, storage.",
+    "scalable": "Horizontal scaling: load balancing, several instances, CDN."
+  }
+}

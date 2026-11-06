@@ -3,6 +3,7 @@ import {
   HomeOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import type { ParseKeys } from 'i18next';
 import type { ComponentType } from 'react';
 
 import type { BootstrapFeatures } from '../api/bootstrap';
@@ -10,9 +11,12 @@ import type { BootstrapFeatures } from '../api/bootstrap';
 export type Capability = keyof BootstrapFeatures;
 export type MenuPosition = 'top' | 'left' | 'right';
 
+/** A key in the `common` namespace, translated where it is shown. */
+export type LabelKey = ParseKeys<'common'>;
+
 export interface NavItem {
   path: string;
-  label: string;
+  label: LabelKey;
   icon?: ComponentType;
   capability?: Capability;
 }
@@ -30,6 +34,11 @@ export interface BreadcrumbItem {
   path: string;
 }
 
+export interface RouteCrumb {
+  titleKey: LabelKey;
+  path: string;
+}
+
 export const navigationConfig: NavigationConfig = {
   enabled: true,
   position: 'top',
@@ -38,35 +47,35 @@ export const navigationConfig: NavigationConfig = {
   items: [
     {
       path: '/',
-      label: 'Home',
+      label: 'pages.home',
       icon: HomeOutlined,
     },
     {
       path: '/dashboard',
-      label: 'Dashboard',
+      label: 'pages.dashboard',
       icon: DashboardOutlined,
       capability: 'authentication',
     },
     {
       path: '/admin',
-      label: 'Admin',
+      label: 'pages.admin',
       icon: SettingOutlined,
       capability: 'admin',
     },
   ],
 };
 
-export const routeTitles: Record<string, string> = {
-  '/': 'Home',
-  '/dashboard': 'Dashboard',
-  '/profile': 'Profile',
-  '/login': 'Login',
-  '/register': 'Register',
-  '/admin': 'Admin',
-  '/admin/dashboard': 'Overview',
-  '/admin/profile': 'Profile',
-  '/admin/users': 'Users',
-  '/admin/other': 'Other',
+export const routeTitles: Record<string, LabelKey> = {
+  '/': 'pages.home',
+  '/dashboard': 'pages.dashboard',
+  '/profile': 'pages.profile',
+  '/login': 'pages.login',
+  '/register': 'pages.register',
+  '/admin': 'pages.admin',
+  '/admin/dashboard': 'pages.overview',
+  '/admin/profile': 'pages.profile',
+  '/admin/users': 'pages.users',
+  '/admin/other': 'pages.other',
 };
 
 export const redirects: { from: string; to: string }[] = [
@@ -86,20 +95,20 @@ export function findActiveNavPath(
     .sort((a, b) => b.path.length - a.path.length)[0]?.path;
 }
 
-export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
+export function getBreadcrumbs(pathname: string): RouteCrumb[] {
   if (pathname === '/') {
     return [];
   }
 
   const segments = pathname.split('/').filter(Boolean);
-  const crumbs: BreadcrumbItem[] = [];
+  const crumbs: RouteCrumb[] = [];
   let current = '';
 
   for (const segment of segments) {
     current += `/${segment}`;
-    const title = routeTitles[current];
-    if (title) {
-      crumbs.push({ title, path: current });
+    const titleKey = routeTitles[current];
+    if (titleKey) {
+      crumbs.push({ titleKey, path: current });
     }
   }
 
