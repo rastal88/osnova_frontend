@@ -6,6 +6,7 @@ import type common from '../locales/en/common.json';
 import type examples from '../locales/en/examples.json';
 import type forms from '../locales/en/forms.json';
 import type home from '../locales/en/home.json';
+import type legal from '../locales/en/legal.json';
 import type seo from '../locales/en/seo.json';
 
 // Keys are checked against the English files at compile time.
@@ -20,6 +21,7 @@ declare module 'i18next' {
       forms: typeof forms;
       examples: typeof examples;
       seo: typeof seo;
+      legal: typeof legal;
     };
   }
 }

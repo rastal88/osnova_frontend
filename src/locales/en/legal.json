@@ -1,0 +1,94 @@
+{
+  "updated": "Last updated: {{date}}",
+  "templateNotice": "This is a template. Fill in the owner details in src/config/legal.ts and review the texts with a lawyer before publishing.",
+  "privacy": {
+    "title": "Privacy policy",
+    "intro": "This policy explains how {{owner}} (\"we\") collects and uses personal data when you use {{site}}.",
+    "sections": [
+      {
+        "title": "Who is responsible",
+        "text": "The controller of your personal data is {{owner}}, {{address}}. For any question about your data, write to {{email}}."
+      },
+      {
+        "title": "What data we collect",
+        "text": "Data you send us through forms: for example your name, email, phone number and message.\n\nIf you create an account: your email and the data you add to your profile.\n\nTechnical data needed to run the site: IP address, browser type and the time of requests, kept in server logs."
+      },
+      {
+        "title": "Why we use it",
+        "text": "To answer your requests, to provide the services you ask for, to keep the site secure and to meet legal obligations. We do not sell your data."
+      },
+      {
+        "title": "Legal basis",
+        "text": "Your consent (for example, the checkbox in a form), the performance of a contract with you, and our legitimate interest in keeping the site working and secure."
+      },
+      {
+        "title": "How long we keep it",
+        "text": "Requests from forms are kept as long as needed to handle them, and then for the period required by law. Server logs are kept for a limited time."
+      },
+      {
+        "title": "Who we share it with",
+        "text": "Only with service providers that help us run the site (hosting, email), under agreements that protect your data, and with authorities when the law requires it."
+      },
+      {
+        "title": "Your rights",
+        "text": "You can ask us to access, correct or delete your data, to restrict or object to its use, to receive a copy, and you can withdraw your consent at any time. Write to {{email}}. You can also complain to your data protection authority."
+      },
+      {
+        "title": "Cookies",
+        "text": "How the site uses cookies and browser storage is described in the cookie policy."
+      },
+      {
+        "title": "Changes",
+        "text": "We may update this policy. The date at the top shows the latest version."
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms of use",
+    "intro": "These terms apply to your use of {{site}}, run by {{owner}}. By using the site you accept them.",
+    "sections": [
+      {
+        "title": "Using the site",
+        "text": "Use the site lawfully and do not interfere with its work: no attempts to break in, overload it or collect data from it automatically without permission."
+      },
+      {
+        "title": "Accounts",
+        "text": "If the site lets you create an account, keep your password secret and give accurate information. We may suspend accounts that break these terms."
+      },
+      {
+        "title": "Content",
+        "text": "Texts, images and other content on the site belong to {{owner}} or to their licensors, unless stated otherwise. Do not copy them without permission."
+      },
+      {
+        "title": "Liability",
+        "text": "The site is provided as is. We do our best to keep it correct and available, but we are not liable for losses caused by its use or by interruptions, as far as the law allows."
+      },
+      {
+        "title": "Changes and contacts",
+        "text": "We may change these terms; the date at the top shows the latest version. Questions: {{email}}."
+      }
+    ]
+  },
+  "cookies": {
+    "title": "Cookie policy",
+    "intro": "Cookies and browser storage are small pieces of data the site keeps in your browser. This page lists what {{site}} stores and why.",
+    "sections": [
+      {
+        "title": "Strictly necessary",
+        "text": "Interface settings in the browser storage: the language (app_language) and the colour theme (app_theme).\n\nIf you sign in: an authentication cookie that keeps you signed in until you log out or it expires.\n\nThese are needed for the site to work and do not require consent."
+      },
+      {
+        "title": "Analytics and marketing",
+        "text": "The site does not use analytics or marketing cookies. If they are added, they will be listed here and used only with your consent, which you can change at any time."
+      },
+      {
+        "title": "Managing cookies",
+        "text": "You can delete cookies and site data in your browser settings. Some parts of the site, such as signing in, will not work without the necessary ones."
+      },
+      {
+        "title": "Contacts",
+        "text": "Questions about cookies: {{email}}."
+      }
+    ]
+  }
+}

@@ -12,7 +12,13 @@
     "other": "Other",
     "examples": "Examples",
     "exampleData": "Data and tables",
-    "exampleLanding": "Landing page"
+    "exampleLanding": "Landing page",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "cookies": "Cookie policy"
+  },
+  "footer": {
+    "legal": "Legal"
   },
   "header": {
     "openMenu": "Open menu",

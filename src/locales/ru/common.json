@@ -12,7 +12,13 @@
     "other": "Прочее",
     "examples": "Примеры",
     "exampleData": "Данные и таблицы",
-    "exampleLanding": "Лендинг"
+    "exampleLanding": "Лендинг",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования",
+    "cookies": "Политика cookies"
+  },
+  "footer": {
+    "legal": "Правовая информация"
   },
   "header": {
     "openMenu": "Открыть меню",

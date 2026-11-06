@@ -11,6 +11,7 @@ import { languageFromPath } from '../i18n/language';
 import { adminRoute } from '../modules/admin';
 import { authLayoutRoutes, authPublicRoutes } from '../modules/auth';
 import Home from '../pages/Home/Home';
+import { legalRoutes } from '../pages/Legal';
 import NotFound from '../pages/NotFound/NotFound';
 import { useBootstrapStore } from '../store/bootstrapStore';
 import RouteError from './RouteError';
@@ -24,6 +25,7 @@ const createAppRouter = (features: BootstrapFeatures, language: string) => {
   const layoutChildren: RouteObject[] = [
     { index: true, element: <Home /> },
     ...exampleRoutes,
+    ...legalRoutes,
   ];
 
   if (features.authentication) {

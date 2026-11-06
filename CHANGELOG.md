@@ -7,6 +7,9 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Legal pages `/privacy`, `/terms`, `/cookies` with placeholder texts in `legal.json`
+  (en, ru); owner details in `src/config/legal.ts`, a "template" notice until they are
+  filled. Links in the footer; the pages are prerendered for SEO.
 - API types generated from the backend `openapi.json` into `src/api/generated` (committed);
   CI fails when they are out of date. Bootstrap, form and error types come from there.
 - Routing and navigation built from backend capabilities (`/bootstrap`).
