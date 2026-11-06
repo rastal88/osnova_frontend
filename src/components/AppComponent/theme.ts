@@ -1,155 +1,50 @@
 import { theme } from 'antd';
 import type { ThemeConfig } from 'antd';
 
-export const themeLight: ThemeConfig = {
-  token: {
-    colorPrimary: '#3b516a',
-    colorBgBase: '#f1f5f8',
-    colorText: '#3b516a',
-    fontFamily: 'Roboto',
-    // colorBgContainer: '#ffffff',
-  },
-  components: {
-    Input: {
-      activeBg: '#ffffff',
-      hoverBg: '#ffffff',
-      colorBgContainer: '#ffffff',
-    },
-    InputNumber: {
-      activeBg: '#ffffff',
-      hoverBg: '#ffffff',
-      colorBgContainer: '#ffffff',
-    },
-    Select: {
-      colorBgContainer: '#ffffff',
-      colorBgElevated: '#ffffff',
-    },
-    Menu: {
-      itemSelectedBg: '#a1a7ab',
-      groupTitleFontSize: 16,
-      groupTitleColor: '#3b516a',
-      lineHeight: 2,
-    },
-    Table: {
-      cellFontSizeSM: 12,
-      headerBorderRadius: 0,
-      fontFamily: 'RobotoMono',
-      colorBgContainer: '#ffffff',
-      headerBg: '#dce4e9',
-      bodySortBg: '#f1f5f8',
-      headerSortActiveBg: '#cfdde7',
-      headerSortHoverBg: '',
-      rowHoverBg: '#f1f5f8',
-      borderColor: '#3b516a',
-    },
-    Button: {
-      defaultShadow: 'none',
-      primaryShadow: 'none',
-    },
-    Layout: {
-      headerBg: '#8996a5',
-      headerHeight: 50,
-    },
-    Popover: {
-      colorBgElevated: '#ffffff',
-      colorTextHeading: '#ff4d4f',
-      colorText: '#ff4d4f',
-    },
-    Dropdown: {
-      colorBgElevated: '#ffffff',
-    },
-    Tabs: {
-      // itemSelectedColor: 'black',
-      cardBg: 'white',
-    },
-    Alert: {
-      withDescriptionPadding: 8,
-      colorInfo: '#3b516a',
-      colorInfoBg: '',
-      colorInfoBorder: '#3b516a',
-    },
-    DatePicker: {
-      activeBg: '#ffffff',
-      hoverBg: '#ffffff',
-    },
-  },
-};
+import { brand } from '../../config/brand';
+import type { ThemeMode } from '../../config/brand';
 
-export const themeDark: ThemeConfig = {
-  // Derives secondary text, borders and fills for a dark background
-  algorithm: theme.darkAlgorithm,
-  token: {
-    colorPrimary: '#1677ff', // Primary blue for the dark theme (example)
-    colorBgBase: '#10141a',
-    colorText: '#f5f7fa',
-    fontFamily: 'Roboto',
-  },
-  components: {
-    Input: {
-      activeBg: '#23272f',
-      hoverBg: '#23272f',
-      colorBgContainer: '#23272f',
-    },
-    InputNumber: {
-      activeBg: '#23272f',
-      hoverBg: '#23272f',
-      colorBgContainer: '#23272f',
-    },
-    Select: {
-      colorBgContainer: '#23272f',
-      colorBgElevated: '#23272f',
-    },
-    Menu: {
-      itemSelectedBg: '#23272f',
-      groupTitleFontSize: 16,
-      groupTitleColor: '#f5f7fa',
-      lineHeight: 2,
-    },
-    Table: {
-      cellFontSizeSM: 12,
-      headerBorderRadius: 0,
-      fontFamily: 'RobotoMono',
-      colorBgContainer: '#23272f',
-      headerBg: '#23272f',
-      bodySortBg: '#23272f',
-      headerSortActiveBg: '#23272f',
-      headerSortHoverBg: '',
-      rowHoverBg: '#23272f',
-      borderColor: '#f5f7fa',
-    },
-    Button: {
-      defaultShadow: 'none',
-      primaryShadow: 'none',
-    },
-    Layout: {
-      headerBg: '#23272f',
-      headerHeight: 50,
-    },
-    Popover: {
-      colorBgElevated: '#23272f',
-      colorTextHeading: '#ff4d4f',
-      colorText: '#ff4d4f',
-    },
-    Dropdown: {
-      colorBgElevated: '#23272f',
-    },
-    Tabs: {
-      // itemSelectedColor: 'black',
-      cardBg: 'white',
-    },
-    Alert: {
-      withDescriptionPadding: 8,
-      colorInfo: '#f5f7fa',
-      colorInfoBg: '',
-      colorInfoBorder: '#f5f7fa',
-    },
-    DatePicker: {
-      activeBg: '#23272f',
-      hoverBg: '#23272f',
-    },
-  },
-};
+/** Mixes two #rrggbb colours: `weight` of `color` over `base`. */
+function mix(color: string, base: string, weight: number): string {
+  const channel = (hex: string, index: number) =>
+    Number.parseInt(hex.slice(1 + index * 2, 3 + index * 2), 16);
+  const value = [0, 1, 2].map((index) =>
+    Math.round(channel(color, index) * weight + channel(base, index) * (1 - weight)),
+  );
+  return `#${value.map((part) => part.toString(16).padStart(2, '0')).join('')}`;
+}
 
-export function getTheme(themeName: 'light' | 'dark') {
-  return themeName === 'dark' ? themeDark : themeLight;
+/** Ant Design theme for a mode: brand tokens + the light or dark algorithm. */
+export function getTheme(mode: ThemeMode): ThemeConfig {
+  const palette = brand[mode];
+
+  return {
+    algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    token: {
+      colorPrimary: palette.primary,
+      // The generated tints turn grey for muted brand colours: derive them from the surface
+      colorPrimaryBg: mix(palette.primary, palette.surface, 0.1),
+      colorPrimaryBgHover: mix(palette.primary, palette.surface, 0.18),
+      colorInfo: palette.primary,
+      colorTextBase: palette.text,
+      colorBgBase: palette.background,
+      colorBgLayout: palette.background,
+      colorBgContainer: palette.surface,
+      colorBgElevated: palette.surface,
+      borderRadius: brand.borderRadius,
+      fontFamily: brand.fontFamily,
+    },
+    components: {
+      Button: {
+        defaultShadow: 'none',
+        primaryShadow: 'none',
+      },
+      Layout: {
+        headerBg: palette.surface,
+        siderBg: palette.surface,
+        footerBg: palette.surface,
+        bodyBg: palette.background,
+      },
+    },
+  };
 }

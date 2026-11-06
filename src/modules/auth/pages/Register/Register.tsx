@@ -1,85 +1,107 @@
-import React, { useState } from 'react';
+import { Button, Form, Input } from 'antd';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-import Seo from '../../../../components/Seo/Seo';
-import { useAuthStore } from '../../authStore';
-import {register, login} from "../../api";
-import './Register.css';
-import { getApiError, getErrorMessage } from '../../../../api/errors';
 
+import { getErrorMessage } from '../../../../api/errors';
+import { setServerFieldErrors } from '../../../../utils/formErrors';
+import { login, register } from '../../api';
+import { useAuthStore } from '../../authStore';
+import AuthCard from '../../components/AuthCard/AuthCard';
+
+interface RegisterValues {
+  email: string;
+  password: string;
+  repeatPassword: string;
+}
+
+const PASSWORD_MIN_LENGTH = 8;
 
 const Register = () => {
-  const { t } = useTranslation('auth');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-
+  const { t } = useTranslation(['auth', 'forms']);
+  const [form] = Form.useForm<RegisterValues>();
   const navigate = useNavigate();
   const { fetchUser } = useAuthStore();
+  const [error, setError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password !== repeatPassword) {
-      setError(t('register.passwordsMismatch'));
-      return;
-    }
+  const handleRegister = async ({ email, password }: RegisterValues) => {
+    setError(null);
+    setSending(true);
     try {
       await register(email, password);
       await login(email, password);
       const user = await fetchUser();
-
-      if (user?.role === 'root' || user?.role === 'moderator') {
-        navigate('/admin');
-      } else {
-        navigate('/');
-      }
-
+      navigate(user?.role === 'root' || user?.role === 'moderator' ? '/admin' : '/');
     } catch (err: unknown) {
-      // Until per-field form errors arrive, show the first field message if any
-      setError(getApiError(err)?.fields?.[0]?.message ?? getErrorMessage(err));
+      if (!setServerFieldErrors(form, err, ['email', 'password'])) {
+        setError(getErrorMessage(err));
+      }
+    } finally {
+      setSending(false);
     }
   };
 
   return (
-    <div className="register-container">
-      <Seo title={t('register.title')} noindex />
-      <form onSubmit={handleRegister} className="register-form">
-        <h2>{t('register.title')}</h2>
-
-        {error && <p className="error">{error}</p>}
-
-        <input
-          type="email"
-          placeholder={t('email')}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          placeholder={t('password')}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          placeholder={t('register.repeatPassword')}
-          value={repeatPassword}
-          onChange={(e) => setRepeatPassword(e.target.value)}
-          required
-        />
-
-        <button type="submit">{t('register.submit')}</button>
-
-        <p>
+    <AuthCard
+      title={t('register.title')}
+      error={error}
+      footer={
+        <>
           {t('register.haveAccount')} <Link to="/login">{t('register.toLogin')}</Link>
-        </p>
-      </form>
-    </div>
+        </>
+      }
+    >
+      <Form<RegisterValues>
+        form={form}
+        layout="vertical"
+        requiredMark={false}
+        onFinish={handleRegister}
+      >
+        <Form.Item
+          name="email"
+          label={t('email')}
+          rules={[
+            { required: true, message: t('forms:validation.required') },
+            { type: 'email', message: t('forms:validation.email') },
+          ]}
+        >
+          <Input inputMode="email" autoComplete="email" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label={t('password')}
+          rules={[
+            { required: true, message: t('forms:validation.required') },
+            {
+              min: PASSWORD_MIN_LENGTH,
+              message: t('forms:validation.minLength', { min: PASSWORD_MIN_LENGTH }),
+            },
+          ]}
+        >
+          <Input.Password autoComplete="new-password" />
+        </Form.Item>
+        <Form.Item
+          name="repeatPassword"
+          label={t('register.repeatPassword')}
+          dependencies={['password']}
+          rules={[
+            { required: true, message: t('forms:validation.required') },
+            ({ getFieldValue }) => ({
+              validator: (_, value) =>
+                !value || getFieldValue('password') === value
+                  ? Promise.resolve()
+                  : Promise.reject(new Error(t('register.passwordsMismatch'))),
+            }),
+          ]}
+        >
+          <Input.Password autoComplete="new-password" />
+        </Form.Item>
+        <Button type="primary" htmlType="submit" block loading={sending}>
+          {t('register.submit')}
+        </Button>
+      </Form>
+    </AuthCard>
   );
 };
 

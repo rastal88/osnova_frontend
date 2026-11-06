@@ -182,8 +182,14 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 
 ## 4. Внешний вид и данные (D)
 
-- **Тема**: уже есть (light/dark) — переключается в шапке.
-- **Бренд-токены**: CSS-переменные в `index.css`.
+- **Brand and theme**: colours, radius and font live in `src/config/brand.ts` (light and dark
+  palettes). Ant Design themes are built from it (`theme.ts`, default/dark algorithm), and
+  `ThemeVariables` exposes the derived colours to custom CSS: `--color-primary`,
+  `--color-primary-bg`, `--color-bg`, `--color-surface`, `--color-text`,
+  `--color-text-secondary`, `--color-border`, `--color-fill`, `--radius`, `--shadow`...
+  Use them instead of hex values; do not override Ant Design classes globally.
+- **Font**: Roboto WOFF2 subset (Latin + Cyrillic, ~23 KB per weight), see
+  `src/assets/fonts/Roboto/README.md` to add a language or drop the font.
 - **Блоки лендинга**: пока нет (контент —自由 разметка в каждой странице).
 - **Таблицы**: использовать `antd Table` напрямую (пагинация, сортировка — по соглашению позже).
 - **Форматы**: пока без `dayjs` (используется стандартный `Date.toLocaleString`).

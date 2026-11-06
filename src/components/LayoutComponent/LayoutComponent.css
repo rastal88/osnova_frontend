@@ -9,8 +9,8 @@
   gap: 16px;
   height: 64px;
   padding: 0 24px;
-  background: var(--color-card-bg);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   position: sticky;
   top: 0;
@@ -62,7 +62,7 @@
 }
 
 .app-profile-trigger:hover {
-  background: rgba(128, 128, 128, 0.1) !important;
+  background: var(--color-fill) !important;
   color: var(--color-primary) !important;
 }
 
@@ -73,25 +73,8 @@
 }
 
 .app-header-actions .language-switcher:hover {
-  background: rgba(128, 128, 128, 0.1) !important;
+  background: var(--color-fill) !important;
   color: var(--color-primary) !important;
-}
-
-.app-header-actions .ant-switch {
-  background: #cbd5e1;
-  transition: all 0.2s ease;
-}
-
-.app-header-actions .ant-switch:hover {
-  background: #94a3b8;
-}
-
-.app-header-actions .ant-switch-checked {
-  background: var(--color-primary);
-}
-
-.app-header-actions .ant-switch-checked:hover {
-  background: var(--color-btn-bg-hover);
 }
 
 .app-nav-top {
@@ -124,15 +107,18 @@
 }
 
 .app-sider {
-  background: var(--color-card-bg);
+  position: sticky !important;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
 }
 
 .app-sider-left {
-  border-right: 1px solid rgba(128, 128, 128, 0.15);
+  border-right: 1px solid var(--color-border);
 }
 
 .app-sider-right {
-  border-left: 1px solid rgba(128, 128, 128, 0.15);
+  border-left: 1px solid var(--color-border);
 }
 
 .app-nav-sider {
@@ -151,11 +137,11 @@
 }
 
 .profile-menu {
-  background: var(--color-card-bg);
+  background: var(--color-surface);
   padding: 8px;
   border-radius: 10px;
   min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -172,21 +158,20 @@
 }
 
 .profile-menu-item:hover {
-  background: rgba(128, 128, 128, 0.1) !important;
+  background: var(--color-fill) !important;
   color: var(--color-primary) !important;
 }
 
 .profile-menu-logout:hover {
-  background: rgba(255, 77, 79, 0.1) !important;
-  color: #ff4d4f !important;
+  background: color-mix(in srgb, var(--color-error) 10%, transparent) !important;
+  color: var(--color-error) !important;
 }
 
 .footer {
   text-align: center;
   padding: 16px 24px;
-  background: var(--color-card-bg);
-  border-top: 1px solid rgba(128, 128, 128, 0.15);
-  color: var(--color-text);
-  opacity: 0.7;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
   font-size: 0.85rem;
 }

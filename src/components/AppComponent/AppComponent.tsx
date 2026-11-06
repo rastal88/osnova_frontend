@@ -4,13 +4,14 @@ import { useAntdLocale } from '../../i18n/antdLocale';
 import AppRouter from '../../routes/routes';
 import BootstrapComponent from '../BootstrapComponent/BootstrapComponent';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import type { ThemeMode } from '../../config/brand';
 import { getTheme } from './theme';
-import './AppComponent.css';
+import ThemeVariables from './ThemeVariables';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ThemeContext = createContext<{
-  themeName: 'light' | 'dark';
-  setThemeName: (t: 'light' | 'dark') => void;
+  themeName: ThemeMode;
+  setThemeName: (t: ThemeMode) => void;
 }>({
   themeName: 'light',
   setThemeName: () => {},
@@ -19,7 +20,7 @@ export const ThemeContext = createContext<{
 const THEME_KEY = 'app_theme';
 
 const AppComponent = () => {
-  const [themeName, setThemeName] = useState<'light' | 'dark'>(() => {
+  const [themeName, setThemeName] = useState<ThemeMode>(() => {
     if (typeof window !== 'undefined') {
       const persisted = localStorage.getItem(THEME_KEY);
 
@@ -39,12 +40,12 @@ const AppComponent = () => {
 
   useEffect(() => {
     localStorage.setItem(THEME_KEY, themeName);
-    document.body.dataset.theme = themeName;
   }, [themeName]);
 
   return (
       <ThemeContext.Provider value={{ themeName, setThemeName }}>
         <ConfigProvider theme={getTheme(themeName)} locale={antdLocale}>
+          <ThemeVariables mode={themeName} />
           <ErrorBoundary>
             <BootstrapComponent>
               <AppRouter />

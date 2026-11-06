@@ -6,10 +6,11 @@ import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { getApiError, getErrorMessage } from '../../api/errors';
+import { getErrorMessage } from '../../api/errors';
 import { getForm, submitForm } from '../../api/forms';
 import type { FormDescription, FormFieldDescription, FormValues } from '../../api/forms';
 import { PRIVACY_POLICY_PATH } from '../../utils/constants';
+import { setServerFieldErrors } from '../../utils/formErrors';
 import PageState from '../PageState/PageState';
 import './SchemaForm.css';
 
@@ -136,13 +137,8 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
       form.resetFields();
       setOutcome({ kind: 'success', message: response.message });
     } catch (error) {
-      const apiError = getApiError(error);
-      const known = new Set(description?.fields.map((field) => field.name));
-      const fieldErrors = (apiError?.fields ?? []).filter((item) => known.has(item.field));
-      if (fieldErrors.length > 0) {
-        form.setFields(fieldErrors.map((item) => ({ name: item.field, errors: [item.message] })));
-        form.scrollToField(fieldErrors[0].field);
-      } else {
+      const names = description?.fields.map((field) => field.name) ?? [];
+      if (!setServerFieldErrors(form, error, names)) {
         setOutcome({ kind: 'error', message: getErrorMessage(error) });
       }
     } finally {
