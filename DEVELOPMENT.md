@@ -175,7 +175,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - `consent` links to `PRIVACY_POLICY_PATH` (`src/utils/constants.ts`, `/privacy`); the
   page arrives with the legal pages (F).
 - Generic texts (validation, retry, sending): `src/locales/<language>/forms.json`.
-- Example page: `src/pages/Contact` (`/contact`, lazy-loaded — Ant Design form controls
+- Example page: `src/examples/contact` (`/contact`, lazy-loaded — Ant Design form controls
   are in its own chunk, not in the main bundle).
 
 ---
@@ -191,8 +191,17 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - **Font**: Roboto WOFF2 subset (Latin + Cyrillic, ~23 KB per weight), see
   `src/assets/fonts/Roboto/README.md` to add a language or drop the font.
 - **Блоки лендинга**: пока нет (контент —自由 разметка в каждой странице).
-- **Таблицы**: использовать `antd Table` напрямую (пагинация, сортировка — по соглашению позже).
-- **Форматы**: пока без `dayjs` (используется стандартный `Date.toLocaleString`).
+- **Tables**: `DataTable` (`src/components/DataTable`) wraps Ant Design `Table` with a search
+  box, column filters, sorting and pagination. The state is in the URL (`?q=&page=&size=&sort=-total&status=paid,new`),
+  so a filtered table survives a reload and can be shared; `urlPrefix` separates several tables.
+  - `data={rows}`: everything runs in the browser (`searchable`, `sortable`, `filters` on columns).
+  - `fetch={(query) => api...}`: the server gets `{ page, pageSize, search, sort, filters }`
+    and returns `{ items, total }`; the table shows a loader and an error with retry.
+  - Column `key` is the field name and the URL parameter, so `q`, `page`, `size`, `sort` are reserved.
+    Define columns with `useMemo`.
+- **Formatting**: `useFormat()` (`src/i18n/format.ts`) — `date`, `dateTime`, `time`,
+  `relative` ("3 days ago"), `number`, `percent`, `compact`, `currency` in the interface
+  language, built on `Intl` (no extra libraries). Default currency: `src/config/format.ts`.
 - **Графики**: не подключены (когда понадобятся — одна библиотека).
 
 ---
@@ -217,6 +226,15 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - **Типы**: `tsc -b`.
 - **Линт**: `biome lint .`.
 - **Docker**: `make up-standard`.
+
+---
+
+## Examples
+
+`src/examples/` holds pages that show the building blocks in use: `/examples` (index),
+`/examples/data` (formatting and tables), `/contact` (form). They are lazy-loaded. To remove
+them: delete the folder, `exampleRoutes` in `src/routes/routes.tsx`, the Examples / Contact
+items in `src/config/navigation.ts` and their entries in `src/config/prerender.json`.
 
 ---
 
@@ -252,10 +270,11 @@ src/
 │   ├── PageContainer/         # единая рамка страницы
 │   ├── PageState/             # состояния: loading/empty/error/403/404
 │   ├── SchemaForm/            # form rendered from its backend description
+│   ├── DataTable/             # table with search, filters, sorting, URL state
 │   ├── ErrorBoundary/         # глобальный хендлер ошибок
 │   └── LayoutComponent/       # общий каркас
+├── examples/                  # example pages, safe to delete
 └── pages/
-    ├── Contact/               # example form page
     ├── NotFound/              # 404
     └── Error/                 # общая ошибка
 ```

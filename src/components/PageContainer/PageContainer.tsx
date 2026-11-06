@@ -10,12 +10,15 @@ import {
 } from '../../config/navigation';
 import PageState from '../PageState/PageState';
 import Seo from '../Seo/Seo';
+import type { SeoPage } from '../Seo/Seo';
 import './PageContainer.css';
 
 const { Title, Text } = Typography;
 
 interface PageContainerProps {
   title?: ReactNode;
+  /** SEO texts from the `seo` namespace; otherwise a string title is used */
+  seo?: SeoPage;
   subtitle?: ReactNode;
   actions?: ReactNode;
   breadcrumbs?: BreadcrumbItem[];
@@ -30,6 +33,7 @@ interface PageContainerProps {
 
 const PageContainer = ({
   title,
+  seo,
   subtitle,
   actions,
   breadcrumbs,
@@ -70,7 +74,7 @@ const PageContainer = ({
 
   return (
     <div className="page-container" style={style}>
-      {typeof title === 'string' && <Seo title={title} />}
+      {seo ? <Seo page={seo} /> : typeof title === 'string' && <Seo title={title} />}
       {showBreadcrumbs && (
         <Breadcrumb
           className="page-container-breadcrumbs"
