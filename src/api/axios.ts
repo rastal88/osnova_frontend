@@ -2,11 +2,10 @@ import axios from 'axios';
 
 import i18n from '../i18n';
 import { localizedPath } from '../i18n/language';
-
-const API_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:8000/api/v1';
+import { API_BASE_URL } from '../utils/constants';
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
