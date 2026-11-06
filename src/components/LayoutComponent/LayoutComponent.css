@@ -66,6 +66,17 @@
   color: var(--color-primary) !important;
 }
 
+.app-header-actions .language-switcher {
+  height: 40px;
+  border-radius: 10px;
+  color: var(--color-text) !important;
+}
+
+.app-header-actions .language-switcher:hover {
+  background: rgba(128, 128, 128, 0.1) !important;
+  color: var(--color-primary) !important;
+}
+
 .app-header-actions .ant-switch {
   background: #cbd5e1;
   transition: all 0.2s ease;

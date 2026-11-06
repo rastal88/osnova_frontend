@@ -3,6 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../auth/authStore';
+import LanguageSwitcher from '../../../components/LanguageSwitcher/LanguageSwitcher';
 import ThemeSwitcher from '../../../components/AppComponent/ThemeSwitcher';
 import { ThemeContext } from '../../../components/AppComponent/AppComponent';
 
@@ -26,6 +27,7 @@ const AdminLayout = () => {
           </Menu>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <LanguageSwitcher />
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
           <button onClick={logout} style={{ color: 'white' }}>
             {t('logout')}

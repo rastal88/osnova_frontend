@@ -14,7 +14,8 @@
     "openMenu": "Open menu",
     "openProfileMenu": "Open profile menu",
     "profile": "Profile",
-    "logout": "Log out"
+    "logout": "Log out",
+    "language": "Language"
   },
   "state": {
     "empty": "Nothing here yet",

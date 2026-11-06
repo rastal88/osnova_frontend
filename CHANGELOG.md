@@ -16,6 +16,9 @@ All notable changes are documented here. The format follows
 - Translations with react-i18next: `src/locales/{en,ru}`, lazy-loaded per namespace,
   keys type-checked against English. Language from `/bootstrap`, Ant Design locale,
   `Accept-Language` on API requests, `getErrorMessage` for translated server errors.
+- Language URLs (`/en/...`, `/ru/...`) with redirect from unprefixed URLs (saved choice,
+  browser language, backend default) and a language switcher that remembers the choice.
+- Router-level 404 and error pages instead of the React Router default.
 
 ### Changed
 - Profile page shows the signed-in user instead of sample data.

@@ -14,7 +14,8 @@
     "openMenu": "Открыть меню",
     "openProfileMenu": "Открыть меню профиля",
     "profile": "Профиль",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "language": "Язык"
   },
   "state": {
     "empty": "Здесь пока пусто",

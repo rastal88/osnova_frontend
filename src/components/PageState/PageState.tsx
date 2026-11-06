@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Button, Empty, Result, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 
+import { localizedPath } from '../../i18n/language';
 import './PageState.css';
 
 export type PageStateKind =
@@ -61,7 +62,7 @@ const PageState = ({ kind, title, description, action }: PageStateProps) => {
         subTitle={description ?? defaultDescription}
         extra={
           action ?? (
-            <Button type="primary" href="/">
+            <Button type="primary" href={localizedPath('/')}>
               {t('state.goHome')}
             </Button>
           )
