@@ -73,7 +73,9 @@ frontend env files must never contain secrets — they belong on the backend.
 | `npm run dev` | Запуск dev-сервера |
 | `npm run build` | Сборка (tsc + vite) |
 | `npm run generate:client` | Типы API из `../osnova_backend/openapi.json` (после `make openapi` на бэкенде; результат коммитится) |
-| `npm run lint` / `format` / `check` | Biome |
+| `npm run lint` | Biome: lint, format and import order check |
+| `npm run format` | Biome: fix formatting and safe lint issues |
+| `npm run typecheck` | TypeScript check (`tsc -b`) |
 
 ## Связь с бэкендом
 

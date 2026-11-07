@@ -26,7 +26,12 @@ export interface RowAccessors<T> {
 }
 
 // Filters use the column key as the URL parameter, so these keys are reserved
-const PARAMS = { search: 'q', page: 'page', pageSize: 'size', sort: 'sort' } as const;
+const PARAMS = {
+  search: 'q',
+  page: 'page',
+  pageSize: 'size',
+  sort: 'sort',
+} as const;
 
 export function readQuery(
   params: URLSearchParams,
@@ -51,7 +56,10 @@ export function readQuery(
     pageSize: positive(get(PARAMS.pageSize), defaultPageSize),
     search: get(PARAMS.search) ?? '',
     sort: sort
-      ? { field: sort.replace(/^-/, ''), order: sort.startsWith('-') ? 'desc' : 'asc' }
+      ? {
+          field: sort.replace(/^-/, ''),
+          order: sort.startsWith('-') ? 'desc' : 'asc',
+        }
       : null,
     filters,
   };
@@ -103,7 +111,11 @@ export function applyQuery<T>(
 
   if (search) {
     result = result.filter((row) =>
-      accessors.search.some((read) => String(read(row) ?? '').toLocaleLowerCase().includes(search)),
+      accessors.search.some((read) =>
+        String(read(row) ?? '')
+          .toLocaleLowerCase()
+          .includes(search),
+      ),
     );
   }
 
@@ -122,5 +134,8 @@ export function applyQuery<T>(
 
   const page = Math.min(query.page, lastPage(result.length, query.pageSize));
   const start = (page - 1) * query.pageSize;
-  return { items: result.slice(start, start + query.pageSize), total: result.length };
+  return {
+    items: result.slice(start, start + query.pageSize),
+    total: result.length,
+  };
 }

@@ -1,14 +1,13 @@
-import { createContext, useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
+import { createContext, useEffect, useState } from 'react';
+import type { ThemeMode } from '../../config/brand';
 import { useAntdLocale } from '../../i18n/antdLocale';
 import AppRouter from '../../routes/routes';
 import BootstrapComponent from '../BootstrapComponent/BootstrapComponent';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import type { ThemeMode } from '../../config/brand';
-import { getTheme } from './theme';
 import ThemeVariables from './ThemeVariables';
+import { getTheme } from './theme';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const ThemeContext = createContext<{
   themeName: ThemeMode;
   setThemeName: (t: ThemeMode) => void;
@@ -43,16 +42,16 @@ const AppComponent = () => {
   }, [themeName]);
 
   return (
-      <ThemeContext.Provider value={{ themeName, setThemeName }}>
-        <ConfigProvider theme={getTheme(themeName)} locale={antdLocale}>
-          <ThemeVariables mode={themeName} />
-          <ErrorBoundary>
-            <BootstrapComponent>
-              <AppRouter />
-            </BootstrapComponent>
-          </ErrorBoundary>
-        </ConfigProvider>
-      </ThemeContext.Provider>
+    <ThemeContext.Provider value={{ themeName, setThemeName }}>
+      <ConfigProvider theme={getTheme(themeName)} locale={antdLocale}>
+        <ThemeVariables mode={themeName} />
+        <ErrorBoundary>
+          <BootstrapComponent>
+            <AppRouter />
+          </BootstrapComponent>
+        </ErrorBoundary>
+      </ConfigProvider>
+    </ThemeContext.Provider>
   );
 };
 

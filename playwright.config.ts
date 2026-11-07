@@ -4,10 +4,7 @@ export default defineConfig({
   timeout: 30000,
   retries: 1,
   workers: 3,
-  reporter: [
-    ['list'],
-    ['html', { outputFolder: 'playwright-report' }],
-  ],
+  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
   projects: [
     {
       name: 'chromium',

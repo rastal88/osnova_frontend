@@ -57,13 +57,19 @@ async function resolveSite() {
     a === 'en' ? -1 : b === 'en' ? 1 : a.localeCompare(b),
   );
   const languages = env.VITE_LANGUAGES
-    ? env.VITE_LANGUAGES.split(',').map((code) => code.trim().toLowerCase()).filter(Boolean)
+    ? env.VITE_LANGUAGES.split(',')
+        .map((code) => code.trim().toLowerCase())
+        .filter(Boolean)
     : folders;
   const defaultLanguage = languages.includes(env.VITE_DEFAULT_LANGUAGE)
     ? env.VITE_DEFAULT_LANGUAGE
     : languages[0];
   console.log('prerender: backend not reachable, languages from env / src/locales');
-  return { siteName: env.VITE_APP_NAME || 'Osnova', languages, defaultLanguage };
+  return {
+    siteName: env.VITE_APP_NAME || 'Osnova',
+    languages,
+    defaultLanguage,
+  };
 }
 
 async function seoTexts(language) {

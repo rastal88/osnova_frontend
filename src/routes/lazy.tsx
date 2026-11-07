@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import type { ComponentType } from 'react';
 
 import PageState from '../components/PageState/PageState';

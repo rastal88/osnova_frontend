@@ -17,10 +17,7 @@ export const getForm = async (name: string): Promise<FormDescription> => {
   return response.data;
 };
 
-export const submitForm = async (
-  name: string,
-  values: FormValues,
-): Promise<FormSubmitResponse> => {
+export const submitForm = async (name: string, values: FormValues): Promise<FormSubmitResponse> => {
   const response = await api.post<FormSubmitResponse>(`/forms/${name}`, values);
   return response.data;
 };

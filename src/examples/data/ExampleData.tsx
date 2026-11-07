@@ -83,7 +83,11 @@ const ExampleData = () => {
           size="small"
           column={{ xs: 1, sm: 2, lg: 3 }}
           items={[
-            { key: 'date', label: t('data.format.date'), children: format.date(sample.createdAt) },
+            {
+              key: 'date',
+              label: t('data.format.date'),
+              children: format.date(sample.createdAt),
+            },
             {
               key: 'dateTime',
               label: t('data.format.dateTime'),
@@ -94,9 +98,21 @@ const ExampleData = () => {
               label: t('data.format.relative'),
               children: format.relative(sample.createdAt),
             },
-            { key: 'number', label: t('data.format.number'), children: format.number(1234567.891) },
-            { key: 'percent', label: t('data.format.percent'), children: format.percent(0.256, 1) },
-            { key: 'compact', label: t('data.format.compact'), children: format.compact(1530000) },
+            {
+              key: 'number',
+              label: t('data.format.number'),
+              children: format.number(1234567.891),
+            },
+            {
+              key: 'percent',
+              label: t('data.format.percent'),
+              children: format.percent(0.256, 1),
+            },
+            {
+              key: 'compact',
+              label: t('data.format.compact'),
+              children: format.compact(1530000),
+            },
             {
               key: 'currency',
               label: t('data.format.currency'),

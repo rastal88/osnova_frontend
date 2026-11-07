@@ -9,10 +9,7 @@ const Dashboard = () => {
   const { t } = useTranslation('auth');
 
   return (
-    <PageContainer
-      title={t('dashboard.title')}
-      subtitle={t('dashboard.subtitle')}
-    >
+    <PageContainer title={t('dashboard.title')} subtitle={t('dashboard.subtitle')}>
       <Card>
         <Text>{t('dashboard.placeholder')}</Text>
       </Card>

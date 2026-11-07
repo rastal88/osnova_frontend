@@ -1,5 +1,5 @@
-import { Card, Typography, Statistic, Row, Col } from 'antd';
-import { UserOutlined, ShoppingCartOutlined, DollarOutlined } from '@ant-design/icons';
+import { DollarOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Statistic, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import Seo from '../../../../components/Seo/Seo';

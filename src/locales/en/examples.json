@@ -108,11 +108,7 @@
         "basic": {
           "name": "Basic",
           "description": "For a first site",
-          "features": [
-            "One landing page",
-            "Contact form",
-            "Two languages"
-          ]
+          "features": ["One landing page", "Contact form", "Two languages"]
         },
         "pro": {
           "name": "Pro",
@@ -127,12 +123,7 @@
         "business": {
           "name": "Business",
           "description": "For teams",
-          "features": [
-            "Everything in Pro",
-            "Admin area",
-            "Background tasks",
-            "Custom integrations"
-          ]
+          "features": ["Everything in Pro", "Admin area", "Background tasks", "Custom integrations"]
         }
       }
     },

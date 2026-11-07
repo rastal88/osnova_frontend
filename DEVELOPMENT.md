@@ -230,8 +230,8 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 
 - **Dev-запуск**: `npm run dev` (frontend) + backend (local или Docker).
 - **Сборка**: `npm run build`.
-- **Типы**: `tsc -b`.
-- **Линт**: `biome lint .`.
+- **Types**: `npm run typecheck` (`tsc -b`).
+- **Lint and format**: Biome only (`biome.json`): `npm run lint` checks, `npm run format` fixes.
 - **Docker**: `make up-standard`.
 
 ---

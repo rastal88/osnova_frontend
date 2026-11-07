@@ -1,6 +1,5 @@
-import api from '../../api/axios';
 import qs from 'qs';
-
+import api from '../../api/axios';
 
 export const getCurrentUser = async () => {
   const response = await api.get('/auth/users/me', { skipAuthRedirect: true });
@@ -8,15 +7,11 @@ export const getCurrentUser = async () => {
 };
 
 export async function login(email: string, password: string) {
-  const response = await api.post(
-    '/auth/login',
-    qs.stringify({ username: email, password }),
-    {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }
-  );
+  const response = await api.post('/auth/login', qs.stringify({ username: email, password }), {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
   return response.data;
 }
 
@@ -36,7 +31,7 @@ export async function register(email: string, password: string) {
       headers: {
         'Content-Type': 'application/json',
       },
-    }
+    },
   );
   return response.data;
 }

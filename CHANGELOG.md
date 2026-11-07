@@ -49,6 +49,8 @@ All notable changes are documented here. The format follows
   Ant Design themes and CSS variables for custom styles.
 
 ### Changed
+- One tool for lint and format: Biome (`npm run lint`, `npm run format`), configured to the
+  existing code style; `npm run typecheck` added. CI runs lint and type check.
 - Sign-in and sign-up use Ant Design forms in a shared card, follow the theme and show
   per-field server errors.
 - Roboto is a Latin + Cyrillic WOFF2 subset with `font-display: swap` (504 KB → 69 KB).
@@ -71,4 +73,5 @@ All notable changes are documented here. The format follows
 - Production build (removed references to a missing i18n module, fixed `tsconfig`).
 
 ### Removed
+- ESLint and its plugins (replaced by Biome).
 - Unused `@hey-api/client-axios` runtime dependency and the empty `openapi.json`.

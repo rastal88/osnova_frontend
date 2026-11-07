@@ -19,6 +19,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint and format (Biome)
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
       # API types must match the backend schema (osnova_backend/openapi.json)
       - uses: actions/checkout@v4
         with:

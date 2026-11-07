@@ -38,7 +38,9 @@ const ExamplesIndex = () => {
                     </span>
                   }
                   title={t(`index.items.${key}.title`)}
-                  description={<Paragraph type="secondary">{t(`index.items.${key}.description`)}</Paragraph>}
+                  description={
+                    <Paragraph type="secondary">{t(`index.items.${key}.description`)}</Paragraph>
+                  }
                 />
               </Card>
             </Link>

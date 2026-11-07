@@ -39,7 +39,11 @@ function rulesFor(field: FormFieldDescription, t: TFunction<'forms'>): FormRule[
 
   const rules: FormRule[] = [];
   if (field.required) {
-    rules.push({ required: true, whitespace: true, message: t('validation.required') });
+    rules.push({
+      required: true,
+      whitespace: true,
+      message: t('validation.required'),
+    });
   }
   if (field.min_length) {
     rules.push({
@@ -60,7 +64,11 @@ function rulesFor(field: FormFieldDescription, t: TFunction<'forms'>): FormRule[
       field.type === 'email' || field.type === 'tel'
         ? PATTERN_MESSAGES[field.type]
         : 'validation.pattern';
-    rules.push({ pattern: new RegExp(field.pattern), transform: trim, message: t(key) });
+    rules.push({
+      pattern: new RegExp(field.pattern),
+      transform: trim,
+      message: t(key),
+    });
   }
   return rules;
 }
@@ -69,7 +77,9 @@ function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): Reac
   const maxLength = field.max_length ?? undefined;
   switch (field.type) {
     case 'textarea':
-      return <Input.TextArea autoSize={{ minRows: 4, maxRows: 12 }} maxLength={maxLength} showCount />;
+      return (
+        <Input.TextArea autoSize={{ minRows: 4, maxRows: 12 }} maxLength={maxLength} showCount />
+      );
     case 'email':
       return <Input inputMode="email" autoComplete="email" maxLength={maxLength} />;
     case 'tel':

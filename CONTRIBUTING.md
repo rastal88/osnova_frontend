@@ -19,7 +19,8 @@ there (`make up-minimal`).
 
 1. Create a branch from `main`: `feat/…`, `fix/…`, `docs/…`, `chore/…`.
 2. Use [Conventional Commits](https://www.conventionalcommits.org/).
-3. Before pushing: `npm run build` (type check + build).
+3. Before pushing: `npm run lint` (Biome) and `npm run build` (type check + build);
+   `npm run format` fixes formatting.
 4. Open a pull request using the template. CI must be green.
 5. Note user-visible changes in [CHANGELOG.md](CHANGELOG.md) under *Unreleased*.
 

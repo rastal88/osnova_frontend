@@ -1,40 +1,25 @@
-import { Suspense, useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
-  Outlet,
-  Link,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
-import {
-  Layout,
-  Menu,
-  Drawer,
-  Button,
-  Dropdown,
-  Grid,
-} from 'antd';
-import type { MenuProps } from 'antd';
-import {
-  UserOutlined,
   LoginOutlined,
   LogoutOutlined,
-  SettingOutlined,
   MenuOutlined,
+  SettingOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
+import { Button, Drawer, Dropdown, Grid, Layout, Menu } from 'antd';
+import type { MenuProps } from 'antd';
+import { Suspense, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
+import { findActiveNavPath, navigationConfig } from '../../config/navigation';
 import { useAuthStore } from '../../modules/auth';
 import { LEGAL_LINKS } from '../../pages/Legal';
 import { useBootstrapStore } from '../../store/bootstrapStore';
+import { ThemeContext } from '../AppComponent/AppComponent';
+import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
 import CookieBanner from '../CookieBanner/CookieBanner';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import PageState from '../PageState/PageState';
-import ThemeSwitcher from '../AppComponent/ThemeSwitcher';
-import { ThemeContext } from '../AppComponent/AppComponent';
-import {
-  findActiveNavPath,
-  navigationConfig,
-} from '../../config/navigation';
 import './LayoutComponent.css';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -43,8 +28,7 @@ const LayoutComponent = () => {
   const { t } = useTranslation();
   const { isAuthenticated, isLoading, user, logout } = useAuthStore();
   const features = useBootstrapStore((state) => state.config?.features);
-  const appName =
-    useBootstrapStore((state) => state.config?.application.name) ?? 'Osnova';
+  const appName = useBootstrapStore((state) => state.config?.application.name) ?? 'Osnova';
 
   const authEnabled = features?.authentication ?? false;
 
@@ -165,12 +149,7 @@ const LayoutComponent = () => {
           )}
 
           {authEnabled && isAuthenticated && (
-            <Dropdown
-              overlay={profileMenu}
-              placement="bottomRight"
-              trigger={['click']}
-              arrow
-            >
+            <Dropdown overlay={profileMenu} placement="bottomRight" trigger={['click']} arrow>
               <Button
                 type="text"
                 aria-label={t('header.openProfileMenu')}
@@ -183,18 +162,11 @@ const LayoutComponent = () => {
       </Header>
 
       <Layout className="app-body">
-        {showMenu &&
-          !isMobile &&
-          !isTop &&
-          navigationConfig.position === 'left' && (
-            <Sider
-              width={220}
-              theme="light"
-              className="app-sider app-sider-left"
-            >
-              {menu}
-            </Sider>
-          )}
+        {showMenu && !isMobile && !isTop && navigationConfig.position === 'left' && (
+          <Sider width={220} theme="light" className="app-sider app-sider-left">
+            {menu}
+          </Sider>
+        )}
 
         <Content className="app-content">
           {/* Pages suspend while their translations load */}
@@ -203,18 +175,11 @@ const LayoutComponent = () => {
           </Suspense>
         </Content>
 
-        {showMenu &&
-          !isMobile &&
-          !isTop &&
-          navigationConfig.position === 'right' && (
-            <Sider
-              width={220}
-              theme="light"
-              className="app-sider app-sider-right"
-            >
-              {menu}
-            </Sider>
-          )}
+        {showMenu && !isMobile && !isTop && navigationConfig.position === 'right' && (
+          <Sider width={220} theme="light" className="app-sider app-sider-right">
+            {menu}
+          </Sider>
+        )}
       </Layout>
 
       <Footer className="footer">
@@ -235,9 +200,7 @@ const LayoutComponent = () => {
       {showMenu && (
         <Drawer
           title={appName}
-          placement={
-            navigationConfig.position === 'right' ? 'right' : 'left'
-          }
+          placement={navigationConfig.position === 'right' ? 'right' : 'left'}
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
           styles={{ body: { padding: 0 } }}
