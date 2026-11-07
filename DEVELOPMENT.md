@@ -1,102 +1,104 @@
-# Osnova Frontend — инструкция для разработчика
+# Osnova Frontend — developer guide
 
-Этот документ описывает как работать с каркасом фронтенда, как добавлять новые страницы, настраивать навигацию и использовать общие компоненты.
-
-> **Важно**: текущий уровень готовности — минимальный набор (minimal mode). Полную документацию планируется добавить в README.md.
+How to work with the frontend shell: add pages, configure navigation, use the shared
+components, translations, forms and tables. The overview is in [README.md](README.md).
 
 ---
 
-## 1. Каркас и навигация
+## 1. Shell and navigation
 
-### 1.1. Общий каркас
+### 1.1. App shell
 
-Каркас реализован в `src/components/LayoutComponent/LayoutComponent.tsx`.
+The shell is `src/components/LayoutComponent/LayoutComponent.tsx`.
 
-- **Шапка** (`Header`): бренд (слева), меню/триггер (центр), тема + профиль (справа).
-- **Футер** (`Footer`): © год и имя приложения.
-- **Контент**: `<Outlet />` — страницы рендерятся без вложенного каркаса.
-- **Мобильное меню**: при `md < false` в шапке появляется кнопка, которая открывает `Drawer`.
+- **Header**: brand (left), menu or menu button (centre), language, theme and profile (right).
+- **Footer**: © year, app name and links to the legal pages.
+- **Content**: `<Outlet />`; pages render inside the shell without their own frame.
+- **Mobile menu**: below the `md` breakpoint the menu turns into a button that opens a `Drawer`.
 
-Позиция меню задаётся в `navigationConfig`.
+The menu position is set in `navigationConfig`.
 
-### 1.2. Настройка навигации
+### 1.2. Navigation
 
-Файл: `src/config/navigation.ts`
+File: `src/config/navigation.ts`
 
 ```ts
 export const navigationConfig: NavigationConfig = {
-  enabled: true,               // включить/выключить меню
+  enabled: true,               // show the menu at all
   position: 'top',             // 'top' | 'left' | 'right'
-  showBrand: true,             // показывать бренд в шапке
-  showBreadcrumbs: true,       // показывать хлебные крошки (если > 1 уровня)
+  showBrand: true,             // brand in the header
+  showBreadcrumbs: true,       // breadcrumbs (when there is more than one level)
   items: [
     { path: '/', label: 'pages.home', icon: HomeOutlined },
-    { path: '/dashboard', label: 'pages.dashboard', icon: DashboardOutlined, capability: 'authentication' },
-    { path: '/admin', label: 'pages.admin', icon: SettingOutlined, capability: 'admin' },
+    { path: '/dashboard', label: 'pages.dashboard', icon: DashboardOutlined, capability: 'authentication', requiresAuth: true },
+    { path: '/admin', label: 'pages.admin', icon: SettingOutlined, capability: 'admin', requiresAuth: true, roles: ['root', 'moderator'] },
   ],
 };
 
 export const redirects = [
-  { from: '/home', to: '/' },  // редиректы
+  { from: '/home', to: '/' },
 ];
 ```
 
-- **Пункт меню**: `path`, `label` (ключ перевода из `common`), опционально `icon` (Antd Icon компонент), `capability` (кнопка скроется если фича отключена).
-- **Свобода**: чтобы убрать пункт, удалите его из `items` — страница останется доступной по URL.
-- **Редиректы**: добавляйте пары `{from, to}`.
+- **Menu item**: `path`, `label` (a key in the `common` translations), optional `icon`
+  (an Ant Design icon), `capability` (hidden when the capability is off), `requiresAuth`
+  and `roles` (shown only to signed-in users / these roles).
+- Pages are not tied to the menu: remove an item and the page is still reachable by URL.
+- **Redirects**: add `{ from, to }` pairs.
+- **Breadcrumb titles**: `routeTitles` in the same file (path → translation key).
 
-### 1.3. PageContainer — единая рамка страницы
+### 1.3. PageContainer — one frame for every page
 
-Компонент: `src/components/PageContainer/PageContainer.tsx`
+Component: `src/components/PageContainer/PageContainer.tsx`
 
 ```tsx
 import PageContainer from '../../components/PageContainer/PageContainer';
 
 const MyPage = () => (
   <PageContainer
-    title="Заголовок страницы"
-    subtitle="Подзаголовок (опционально)"
-    actions={<Button type="primary">Действие</Button>}
+    title="Page title"
+    subtitle="Optional subtitle"
+    actions={<Button type="primary">Action</Button>}
     loading={isLoading}
     error={hasError}
     forbidden={accessDenied}
     empty={items.length === 0}
-    emptyText="Нет данных"
+    emptyText="No data"
   >
-    <div>Контент страницы...</div>
+    <div>Page content...</div>
   </PageContainer>
 );
 ```
 
-**Пропсы**:
-- `title` — заголовок (h3).
-- `subtitle` — дополнительный текст под заголовком.
-- `actions` — кнопки справа от заголовка.
-- `breadcrumbs` — массив `{title, path}` (если не указан — вычисляется из `routeTitles` в навигации).
-- `loading`, `error`, `forbidden`, `empty`, `emptyText` — состояния.
+**Props:**
+- `title` — heading; a string title also becomes the browser title.
+- `seo` — SEO key of the page (see 2.4).
+- `subtitle` — text under the title.
+- `actions` — buttons to the right of the title.
+- `breadcrumbs` — `{ title, path }[]`; computed from `routeTitles` when omitted.
+- `maxWidth` — content width.
+- `loading`, `error`, `forbidden`, `empty`, `emptyText` — states.
 
-**Состояния** (в приоритете: loading > error > forbidden > empty > content):
-- `loading` — `Spin`.
-- `error` — `Result status="500"` с кнопкой "Try again".
-- `forbidden` — `Result status="403"`.
-- `empty` — `Empty` с кастомным текстом.
-- `not-found` — 404 страница (автоматически при `*` роуте).
+**States** (priority: loading > error > forbidden > empty > content): `loading` shows a
+`Spin`, `error` a 500 result with **Try again**, `forbidden` a 403 result, `empty` an
+`Empty` with your text. Unknown paths show the 404 page.
 
-### 1.4. 404 и ошибка
+### 1.4. 404 and errors
 
-- **Страница 404**: `src/pages/NotFound/NotFound.tsx`. Попадает при неизвестных путях.
-- **Страница ошибки**: `src/pages/Error/Error.tsx`. Попадает при критическом UI-ошибке.
-- **ErrorBoundary**: `src/components/ErrorBoundary/ErrorBoundary.tsx`. Оборачивает весь роутер в `AppComponent`.
+- **404 page**: `src/pages/NotFound/NotFound.tsx`, for unknown paths.
+- **Error page**: `src/pages/Error/Error.tsx`, for a crashed UI.
+- **ErrorBoundary**: `src/components/ErrorBoundary/ErrorBoundary.tsx`, wraps the whole
+  router in `AppComponent`; route errors go to `src/routes/RouteError.tsx`.
 
 ---
 
-## 2. Языки и SEO (B)
+## 2. Languages and SEO
 
 ### 2.1. Translations
 
 - Library: react-i18next. Setup: `src/i18n/index.ts`.
 - Files: `src/locales/<language>/<namespace>.json`. Namespaces: `common` (shell, states,
-  errors), `home`, and one per module (`auth`, `admin`).
+  errors), `home`, `seo`, `forms`, `legal`, `examples` and one per module (`auth`, `admin`).
 - English is the source language: add every key to `en` first. Keys are type-checked
   against the English files, so a typo fails `npm run build`.
 - Only English `common` is in the main bundle; other files are separate chunks loaded
@@ -109,7 +111,8 @@ const { t } = useTranslation('auth');
 ```
 
 **Add a language:** enable it on the backend (`LANGUAGES`), copy `src/locales/en` to
-`src/locales/<code>` and translate, add its Ant Design locale to `src/i18n/antdLocale.ts`.
+`src/locales/<code>` and translate, add its Ant Design locale to `src/i18n/antdLocale.ts`
+and its Open Graph locale to `src/seo/head.js`.
 
 ### 2.2. Language in the URL
 
@@ -125,11 +128,9 @@ const { t } = useTranslation('auth');
 
 ### 2.3. Server errors
 
-The backend returns `{code, message, fields?}` with `message` already translated
-(it receives `Accept-Language`). Use `getErrorMessage(error)` from `src/api/errors.ts`
-to show it; `getApiError(error)` gives the code and per-field errors.
-
----
+The backend returns `{ code, message, fields? }` with `message` already translated
+(every request sends `Accept-Language`). Use `getErrorMessage(error)` from
+`src/api/errors.ts` to show it; `getApiError(error)` gives the code and per-field errors.
 
 ### 2.4. SEO and link previews
 
@@ -156,7 +157,7 @@ Build variables:
 
 ---
 
-## 3. Forms (C)
+## 3. Forms
 
 Forms are described once on the backend (`app/forms.py` in osnova_backend) and rendered here:
 
@@ -169,18 +170,19 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - Field types: `text`, `textarea`, `email`, `tel`, `select`, `checkbox`, `consent`.
   Client rules (required, length, pattern, checked) come from the same description as the
   server ones, so most mistakes are caught before sending.
+- A hidden honeypot field is rendered when the description has one; bots that fill it
+  are answered as usual but their submissions are not delivered.
 - `POST /forms/<name>`: per-field server errors are shown under the fields; any other
   failure shows an alert with **Try again**, which resends the same values. Success
   replaces the form with the server message and **Send another**.
-- `consent` links to `PRIVACY_POLICY_PATH` (`src/utils/constants.ts`, `/privacy`); the
-  page arrives with the legal pages (F).
+- `consent` links to `PRIVACY_POLICY_PATH` (`src/utils/constants.ts`, `/privacy`).
 - Generic texts (validation, retry, sending): `src/locales/<language>/forms.json`.
 - Example page: `src/examples/contact` (`/contact`, lazy-loaded — Ant Design form controls
   are in its own chunk, not in the main bundle).
 
 ---
 
-## 4. Внешний вид и данные (D)
+## 4. Look and data
 
 - **Brand and theme**: colours, radius and font live in `src/config/brand.ts` (light and dark
   palettes). Ant Design themes are built from it (`theme.ts`, default/dark algorithm), and
@@ -188,6 +190,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
   `--color-primary-bg`, `--color-bg`, `--color-surface`, `--color-text`,
   `--color-text-secondary`, `--color-border`, `--color-fill`, `--radius`, `--shadow`...
   Use them instead of hex values; do not override Ant Design classes globally.
+  The chosen theme is kept in `localStorage`.
 - **Font**: Roboto WOFF2 subset (Latin + Cyrillic, ~23 KB per weight), see
   `src/assets/fonts/Roboto/README.md` to add a language or drop the font.
 - **Landing blocks**: `src/components/blocks` — `Hero`, `Services`, `Gallery`, `Pricing`,
@@ -209,85 +212,73 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - **Formatting**: `useFormat()` (`src/i18n/format.ts`) — `date`, `dateTime`, `time`,
   `relative` ("3 days ago"), `number`, `percent`, `compact`, `currency` in the interface
   language, built on `Intl` (no extra libraries). Default currency: `src/config/format.ts`.
-- **Графики**: не подключены (когда понадобятся — одна библиотека).
+- **Charts**: not included; add one library when a project needs them.
 
 ---
 
-## 5. Бэкенд (E)
+## 5. Backend API
 
-Смотреть `osnova_backend`.
-
----
-
-## 6. Юридическое (F)
-
-- **Политика, условия, cookie**: пустые страницы (заглушки) — заполняются владельцем.
-- **Cookie-баннер**: пока нет (нужен при использовании аналитики).
+- Requests go through `src/api/*` (Axios instance in `src/api/axios.ts`); there is no
+  generated runtime client.
+- Types come from the backend schema: after the backend API changes run `make openapi`
+  there, then `npm run generate:client` here and commit `src/api/generated`. CI fails when
+  they are out of date.
 
 ---
 
-## 7. Инфраструктура (G)
+## 6. Legal
 
-- **Dev-запуск**: `npm run dev` (frontend) + backend (local или Docker).
-- **Сборка**: `npm run build`.
+- **Pages** `/privacy`, `/terms`, `/cookies` (`src/pages/Legal`) with placeholder texts in
+  `src/locales/<language>/legal.json`. Fill the owner details in `src/config/legal.ts`;
+  while a value is still in `[brackets]` the pages show a "template" notice. Review the
+  texts for your country and your data processing.
+- **Analytics and cookie banner**: off by default. Set `VITE_ANALYTICS_SCRIPT` (script URL
+  of your provider) and a banner asks for consent; the script loads only after **Accept**
+  (`src/config/analytics.ts`, `src/consent`). The choice is kept in `app_consent` and can be
+  changed on the cookie policy page. Without analytics there is no banner.
+
+---
+
+## 7. Tooling
+
+- **Dev server**: `npm run dev`, with the backend running locally or in Docker; or
+  `make dev-all` in osnova_backend to start both.
+- **Build**: `npm run build` (type check, Vite build, prerender).
 - **Types**: `npm run typecheck` (`tsc -b`).
 - **Lint and format**: Biome only (`biome.json`): `npm run lint` checks, `npm run format` fixes.
 - **Tests**: Vitest, `npm test`. Tests sit next to the code as `*.test.ts` and cover pure logic
   (formatting, table query, navigation, language URLs, API errors); they run in Node, no browser.
-- **Docker**: `make up-standard`.
+- **Docker**: from osnova_backend, `make up-minimal` or `make up-standard`.
 
 ---
 
 ## Examples
 
 `src/examples/` holds pages that show the building blocks in use: `/examples` (index),
-`/examples/data` (formatting and tables), `/examples/landing` (landing blocks), `/contact` (form). They are lazy-loaded. To remove
-them: delete the folder, `exampleRoutes` in `src/routes/routes.tsx`, the Examples / Contact
-items in `src/config/navigation.ts` and their entries in `src/config/prerender.json`.
+`/examples/data` (formatting and tables), `/examples/landing` (landing blocks), `/contact` (form).
+They are lazy-loaded. To remove them: delete the folder, `exampleRoutes` in
+`src/routes/routes.tsx`, the Examples / Contact items in `src/config/navigation.ts` and their
+entries in `src/config/prerender.json`.
 
 ---
 
-## Как добавить новую страницу
+## Add a page
 
-1. Создать `src/pages/MyPage/MyPage.tsx`.
-2. Обернуть контент в `PageContainer`.
-3. Добавить пункт в `navigationConfig.items` (если нужна ссылка в меню).
-4. Добавить маршрут в `routes.tsx` (если нужен отдельный путь, а не внутри `/`).
-5. Протестировать (dev-сервер или `npm run build`).
-
----
-
-## Частые задачи
-
-| Задача | Как сделать |
-|--------|-------------|
-| Убрать меню полностью | `enabled: false` в `navigationConfig`. |
-| Переместить меню влево | `position: 'left'`. |
-| Скрыть пункт по фиче | `capability: 'authentication'` (и т.д.). |
-| Добавить редирект | `redirects.push({ from: '/old', to: '/new' })`. |
-| Показать 404 | `<Navigate to="*" replace />` или `*` роут (уже есть). |
-| Использовать PageContainer | Обернуть `<PageContainer title="...">...</PageContainer>`. |
+1. Create `src/pages/MyPage/MyPage.tsx` and wrap the content in `PageContainer`.
+2. Add a route in `src/routes/routes.tsx` (inside the layout children for the shell).
+3. Add its title key to `routeTitles` and, for a menu link, an item to `navigationConfig.items`.
+4. For a public page with a link preview, add it to `src/config/prerender.json` (see 2.4).
+5. Check it with `npm run dev`, then `npm run lint`, `npm test` and `npm run build`.
 
 ---
 
-## Структура файлов (новые)
+## Common tasks
 
-```
-src/
-├── config/navigation.ts       # конфиг навигации и редиректов
-├── components/
-│   ├── PageContainer/         # единая рамка страницы
-│   ├── PageState/             # состояния: loading/empty/error/403/404
-│   ├── SchemaForm/            # form rendered from its backend description
-│   ├── DataTable/             # table with search, filters, sorting, URL state
-│   ├── Image/                 # <picture> with AVIF / WebP, lazy loading
-│   ├── blocks/                # landing blocks: Hero, Services, Gallery, Pricing...
-│   ├── ErrorBoundary/         # глобальный хендлер ошибок
-│   └── LayoutComponent/       # общий каркас
-├── examples/                  # example pages, safe to delete
-└── pages/
-    ├── NotFound/              # 404
-    └── Error/                 # общая ошибка
-```
-
----
+| Task | How |
+|------|-----|
+| Hide the menu | `enabled: false` in `navigationConfig` |
+| Menu on the left | `position: 'left'` |
+| Hide an item when a capability is off | `capability: 'authentication'` (etc.) |
+| Add a redirect | add `{ from: '/old', to: '/new' }` to `redirects` |
+| Change brand colours | `src/config/brand.ts` |
+| Add a translation key | `src/locales/en/<namespace>.json` first, then other languages |

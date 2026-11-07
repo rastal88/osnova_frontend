@@ -51,6 +51,8 @@ All notable changes are documented here. The format follows
   Ant Design themes and CSS variables for custom styles.
 
 ### Changed
+- README and DEVELOPMENT.md rewritten in English and brought up to date (features, layout,
+  scripts, legal pages and cookie banner, tooling).
 - One tool for lint and format: Biome (`npm run lint`, `npm run format`), configured to the
   existing code style; `npm run typecheck` added. CI runs lint and type check.
 - Sign-in and sign-up use Ant Design forms in a shared card, follow the theme and show
