@@ -116,6 +116,34 @@
   overflow-y: auto;
 }
 
+.app-sider-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-top: 8px;
+}
+
+.app-sider-inner .app-nav-sider {
+  flex: 1;
+}
+
+.app-sider-toggle {
+  align-self: flex-end;
+  width: 40px;
+  height: 40px;
+  margin: 8px 12px;
+  color: var(--color-text-secondary) !important;
+}
+
+.app-sider-right .app-sider-toggle,
+.ant-layout-sider-collapsed .app-sider-toggle {
+  align-self: center;
+}
+
+.app-sider-toggle:hover {
+  color: var(--color-primary) !important;
+}
+
 .app-sider-left {
   border-right: 1px solid var(--color-border);
 }

@@ -29,6 +29,8 @@
   },
   "header": {
     "openMenu": "Open menu",
+    "collapseMenu": "Collapse menu",
+    "expandMenu": "Expand menu",
     "openProfileMenu": "Open profile menu",
     "profile": "Profile",
     "logout": "Log out",

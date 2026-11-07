@@ -1,7 +1,9 @@
 import {
   LoginOutlined,
   LogoutOutlined,
+  MenuFoldOutlined,
   MenuOutlined,
+  MenuUnfoldOutlined,
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -24,6 +26,25 @@ import './LayoutComponent.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 
+// Whether the side menu is collapsed to icons, remembered between visits
+const COLLAPSED_KEY = 'app_menu_collapsed';
+
+function readCollapsed(): boolean {
+  try {
+    return localStorage.getItem(COLLAPSED_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function saveCollapsed(collapsed: boolean) {
+  try {
+    localStorage.setItem(COLLAPSED_KEY, String(collapsed));
+  } catch {
+    // Storage may be unavailable (private mode): the choice lasts until the page closes.
+  }
+}
+
 const LayoutComponent = () => {
   const { t } = useTranslation();
   const { isAuthenticated, isLoading, user, logout } = useAuthStore();
@@ -37,6 +58,12 @@ const LayoutComponent = () => {
   const location = useLocation();
   const screens = Grid.useBreakpoint();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(readCollapsed);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+    saveCollapsed(!collapsed);
+  };
 
   if (authEnabled && isLoading) {
     return null;
@@ -111,6 +138,31 @@ const LayoutComponent = () => {
     />
   );
 
+  const side = navigationConfig.position === 'right' ? 'right' : 'left';
+  const sider = showMenu && !isMobile && !isTop && (
+    <Sider
+      width={220}
+      collapsedWidth={64}
+      collapsible
+      collapsed={collapsed}
+      trigger={null}
+      theme="light"
+      className={`app-sider app-sider-${side}`}
+    >
+      <div className="app-sider-inner">
+        {menu}
+        <Button
+          type="text"
+          icon={(side === 'left') === collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          aria-label={t(collapsed ? 'header.expandMenu' : 'header.collapseMenu')}
+          aria-expanded={!collapsed}
+          onClick={toggleCollapsed}
+          className="app-sider-toggle"
+        />
+      </div>
+    </Sider>
+  );
+
   return (
     <Layout className="app-shell">
       <Header className="app-header">
@@ -162,11 +214,7 @@ const LayoutComponent = () => {
       </Header>
 
       <Layout className="app-body">
-        {showMenu && !isMobile && !isTop && navigationConfig.position === 'left' && (
-          <Sider width={220} theme="light" className="app-sider app-sider-left">
-            {menu}
-          </Sider>
-        )}
+        {side === 'left' && sider}
 
         <Content className="app-content">
           {/* Pages suspend while their translations load */}
@@ -175,11 +223,7 @@ const LayoutComponent = () => {
           </Suspense>
         </Content>
 
-        {showMenu && !isMobile && !isTop && navigationConfig.position === 'right' && (
-          <Sider width={220} theme="light" className="app-sider app-sider-right">
-            {menu}
-          </Sider>
-        )}
+        {side === 'right' && sider}
       </Layout>
 
       <Footer className="footer">

@@ -55,7 +55,7 @@ const ExampleLanding = () => {
     });
 
   const contactButton = (
-    <Button size="large" onClick={() => navigate('/contact')}>
+    <Button size="large" onClick={() => navigate('/examples/contact')}>
       {t('landing.contact')}
     </Button>
   );
@@ -120,7 +120,7 @@ const ExampleLanding = () => {
           action: (
             <Button
               type={'highlighted' in plan ? 'primary' : 'default'}
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate('/examples/contact')}
             >
               {t('landing.pricing.choose')}
             </Button>
@@ -153,7 +153,7 @@ const ExampleLanding = () => {
         title={t('landing.cta.title')}
         text={t('landing.cta.text')}
         actions={
-          <Button size="large" onClick={() => navigate('/contact')}>
+          <Button size="large" onClick={() => navigate('/examples/contact')}>
             {t('landing.contact')}
           </Button>
         }

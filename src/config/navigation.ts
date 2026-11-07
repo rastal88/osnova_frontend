@@ -2,7 +2,6 @@ import {
   AppstoreOutlined,
   DashboardOutlined,
   HomeOutlined,
-  MailOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
 import type { ParseKeys } from 'i18next';
@@ -46,7 +45,7 @@ export interface RouteCrumb {
 
 export const navigationConfig: NavigationConfig = {
   enabled: true,
-  position: 'top',
+  position: 'left',
   showBrand: true,
   showBreadcrumbs: true,
   items: [
@@ -59,11 +58,6 @@ export const navigationConfig: NavigationConfig = {
       path: '/examples',
       label: 'pages.examples',
       icon: AppstoreOutlined,
-    },
-    {
-      path: '/contact',
-      label: 'pages.contact',
-      icon: MailOutlined,
     },
     {
       path: '/dashboard',
@@ -85,10 +79,10 @@ export const navigationConfig: NavigationConfig = {
 
 export const routeTitles: Record<string, LabelKey> = {
   '/': 'pages.home',
-  '/contact': 'pages.contact',
   '/examples': 'pages.examples',
   '/examples/data': 'pages.exampleData',
   '/examples/landing': 'pages.exampleLanding',
+  '/examples/contact': 'pages.contact',
   '/privacy': 'pages.privacy',
   '/terms': 'pages.terms',
   '/cookies': 'pages.cookies',

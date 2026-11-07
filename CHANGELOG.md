@@ -51,6 +51,11 @@ All notable changes are documented here. The format follows
   Ant Design themes and CSS variables for custom styles.
 
 ### Changed
+- Navigation: the menu is on the left by default and collapses to icons (the choice is
+  remembered); the header keeps the brand on the left and language, theme and profile on the
+  right. `top` and `right` positions still work.
+- The contact form example moved to `/examples/contact` and is no longer a menu item; it is
+  reached from the Examples page.
 - README and DEVELOPMENT.md rewritten in English and brought up to date (features, layout,
   scripts, legal pages and cookie banner, tooling).
 - One tool for lint and format: Biome (`npm run lint`, `npm run format`), configured to the

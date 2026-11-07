@@ -22,7 +22,7 @@ profiles and capabilities.
 
 - Routes and UI built from `GET /api/v1/bootstrap`: a disabled capability adds no routes
   and its code is never downloaded
-- App shell: header, footer, mobile menu, menu on top / left / right, breadcrumbs,
+- App shell: header, collapsible side menu (or a top menu), mobile menu, footer, breadcrumbs,
   shared page states (loading, empty, error, forbidden), 404 and error pages
 - Languages in the URL (`/en`, `/ru`) with a switcher; per-page SEO, `hreflang`,
   link previews, `sitemap.xml` and `robots.txt`
