@@ -116,7 +116,8 @@ docker build --build-arg VITE_BASE_URL=/api/v1 --build-arg VITE_SITE_URL=https:/
 
 Usually it runs as part of the whole system from `osnova_backend` (`make up-minimal`,
 `make up-standard`), which passes the site URL, languages and app name from the backend
-`.env`. Build variables: [DEVELOPMENT.md](DEVELOPMENT.md#24-seo-and-link-previews).
+`.env`. Build variables: [DEVELOPMENT.md](DEVELOPMENT.md#24-seo-and-link-previews);
+analytics: `--build-arg VITE_ANALYTICS_SCRIPT=<script URL>`.
 
 ## More
 

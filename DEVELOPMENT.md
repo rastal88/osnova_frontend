@@ -233,7 +233,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
   while a value is still in `[brackets]` the pages show a "template" notice. Review the
   texts for your country and your data processing.
 - **Analytics and cookie banner**: off by default. Set `VITE_ANALYTICS_SCRIPT` (script URL
-  of your provider) and a banner asks for consent; the script loads only after **Accept**
+  of your provider; in Docker the build argument of the same name) and a banner asks for consent; the script loads only after **Accept**
   (`src/config/analytics.ts`, `src/consent`). The choice is kept in `app_consent` and can be
   changed on the cookie policy page. Without analytics there is no banner.
 
