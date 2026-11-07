@@ -109,6 +109,11 @@
   flex: 1;
 }
 
+/* Content and footer column; min-width lets wide tables scroll instead of widening the page */
+.app-main {
+  min-width: 0;
+}
+
 .app-sider {
   position: sticky !important;
   top: 64px;

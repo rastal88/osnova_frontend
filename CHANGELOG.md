@@ -51,6 +51,7 @@ All notable changes are documented here. The format follows
   Ant Design themes and CSS variables for custom styles.
 
 ### Changed
+- Home: removed the repository links under the capabilities card (the buttons above link to both).
 - Node.js 24 LTS (`.nvmrc`, `engines`) for development, CI and the Docker image; Node 20 is
   end-of-life. Dev tools updated: `@hey-api/openapi-ts` 0.99 (`postProcess` replaces
   `format` / `lint` in its config), Vitest 5, sharp 0.35.
@@ -73,6 +74,8 @@ All notable changes are documented here. The format follows
 - Open Graph tags use `property` instead of `name`.
 
 ### Fixed
+- The side menu no longer slides under the header at the bottom of a page: the footer now sits
+  in the content column next to the menu.
 - Ant Design 5 compatibility warning with React 19 (`@ant-design/v5-patch-for-react-19`).
 - Docker image accepts `VITE_ANALYTICS_SCRIPT` as a build argument; before, analytics and the
   cookie banner could not be turned on in Docker builds.
