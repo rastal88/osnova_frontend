@@ -151,16 +151,6 @@ const HomePage = () => {
             </div>
           )}
         </div>
-
-        <div className="welcome-footer">
-          <a href={GITHUB_BACKEND_URL} target="_blank" rel="noreferrer">
-            osnova_backend
-          </a>
-          <span className="welcome-footer-sep">·</span>
-          <a href={GITHUB_FRONTEND_URL} target="_blank" rel="noreferrer">
-            osnova_frontend
-          </a>
-        </div>
       </div>
     </>
   );

@@ -216,28 +216,31 @@ const LayoutComponent = () => {
       <Layout className="app-body">
         {side === 'left' && sider}
 
-        <Content className="app-content">
-          {/* Pages suspend while their translations load */}
-          <Suspense fallback={<PageState kind="loading" />}>
-            <Outlet />
-          </Suspense>
-        </Content>
+        {/* The footer sits next to the side menu, so it never pushes the sticky menu up */}
+        <Layout className="app-main">
+          <Content className="app-content">
+            {/* Pages suspend while their translations load */}
+            <Suspense fallback={<PageState kind="loading" />}>
+              <Outlet />
+            </Suspense>
+          </Content>
+
+          <Footer className="footer">
+            <span>
+              © {new Date().getFullYear()} {appName}
+            </span>
+            <nav className="footer-links" aria-label={t('footer.legal')}>
+              {LEGAL_LINKS.map((link) => (
+                <Link key={link.path} to={link.path}>
+                  {t(`pages.${link.document}`)}
+                </Link>
+              ))}
+            </nav>
+          </Footer>
+        </Layout>
 
         {side === 'right' && sider}
       </Layout>
-
-      <Footer className="footer">
-        <span>
-          © {new Date().getFullYear()} {appName}
-        </span>
-        <nav className="footer-links" aria-label={t('footer.legal')}>
-          {LEGAL_LINKS.map((link) => (
-            <Link key={link.path} to={link.path}>
-              {t(`pages.${link.document}`)}
-            </Link>
-          ))}
-        </nav>
-      </Footer>
 
       <CookieBanner />
 
