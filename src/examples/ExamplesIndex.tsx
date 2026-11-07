@@ -17,7 +17,7 @@ interface ExampleLink {
 
 const EXAMPLES: ExampleLink[] = [
   { path: '/examples/landing', key: 'landing', icon: LayoutOutlined },
-  { path: '/contact', key: 'contact', icon: FormOutlined },
+  { path: '/examples/contact', key: 'contact', icon: FormOutlined },
   { path: '/examples/data', key: 'data', icon: TableOutlined },
 ];
 

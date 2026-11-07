@@ -29,6 +29,8 @@
   },
   "header": {
     "openMenu": "Открыть меню",
+    "collapseMenu": "Свернуть меню",
+    "expandMenu": "Развернуть меню",
     "openProfileMenu": "Открыть меню профиля",
     "profile": "Профиль",
     "logout": "Выйти",

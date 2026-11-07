@@ -11,12 +11,16 @@ components, translations, forms and tables. The overview is in [README.md](READM
 
 The shell is `src/components/LayoutComponent/LayoutComponent.tsx`.
 
-- **Header**: brand (left), menu or menu button (centre), language, theme and profile (right).
+- **Header**: brand on the left (and the menu button on phones); language, theme and
+  profile on the right.
+- **Side menu** (default): on the left, open on desktop; the button at its bottom collapses
+  it to icons, and the choice is kept in `localStorage` (`app_menu_collapsed`).
 - **Footer**: © year, app name and links to the legal pages.
 - **Content**: `<Outlet />`; pages render inside the shell without their own frame.
 - **Mobile menu**: below the `md` breakpoint the menu turns into a button that opens a `Drawer`.
 
-The menu position is set in `navigationConfig`.
+The menu position is set in `navigationConfig`: `left` (default), `right` or `top`
+(a horizontal menu in the header).
 
 ### 1.2. Navigation
 
@@ -25,7 +29,7 @@ File: `src/config/navigation.ts`
 ```ts
 export const navigationConfig: NavigationConfig = {
   enabled: true,               // show the menu at all
-  position: 'top',             // 'top' | 'left' | 'right'
+  position: 'left',            // 'left' | 'right' | 'top'
   showBrand: true,             // brand in the header
   showBreadcrumbs: true,       // breadcrumbs (when there is more than one level)
   items: [
@@ -177,7 +181,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
   replaces the form with the server message and **Send another**.
 - `consent` links to `PRIVACY_POLICY_PATH` (`src/utils/constants.ts`, `/privacy`).
 - Generic texts (validation, retry, sending): `src/locales/<language>/forms.json`.
-- Example page: `src/examples/contact` (`/contact`, lazy-loaded — Ant Design form controls
+- Example page: `src/examples/contact` (`/examples/contact`, lazy-loaded — Ant Design form controls
   are in its own chunk, not in the main bundle).
 
 ---
@@ -255,9 +259,9 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 ## Examples
 
 `src/examples/` holds pages that show the building blocks in use: `/examples` (index),
-`/examples/data` (formatting and tables), `/examples/landing` (landing blocks), `/contact` (form).
+`/examples/data` (formatting and tables), `/examples/landing` (landing blocks), `/examples/contact` (form).
 They are lazy-loaded. To remove them: delete the folder, `exampleRoutes` in
-`src/routes/routes.tsx`, the Examples / Contact items in `src/config/navigation.ts` and their
+`src/routes/routes.tsx`, the Examples item in `src/config/navigation.ts` and their
 entries in `src/config/prerender.json`.
 
 ---
@@ -277,7 +281,7 @@ entries in `src/config/prerender.json`.
 | Task | How |
 |------|-----|
 | Hide the menu | `enabled: false` in `navigationConfig` |
-| Menu on the left | `position: 'left'` |
+| Menu on top | `position: 'top'` |
 | Hide an item when a capability is off | `capability: 'authentication'` (etc.) |
 | Add a redirect | add `{ from: '/old', to: '/new' }` to `redirects` |
 | Change brand colours | `src/config/brand.ts` |
