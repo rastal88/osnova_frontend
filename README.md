@@ -64,7 +64,7 @@ opened is never downloaded. To remove a module, delete its folder and its use in
 
 ## Quick start
 
-Requirements: Node.js 20; the backend from
+Requirements: Node.js 24 (`.nvmrc`); the backend from
 [osnova_backend](https://github.com/rastal88/osnova_backend) running on
 `http://localhost:8000`.
 
