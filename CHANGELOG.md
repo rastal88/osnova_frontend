@@ -6,6 +6,10 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-07
+
+First release: the `minimal` profile.
+
 ### Added
 - Unit tests with Vitest (`npm test`, runs in CI): formatting, table query, navigation,
   language URLs and API errors.
@@ -99,3 +103,6 @@ All notable changes are documented here. The format follows
 ### Security
 - Dependencies with known vulnerabilities updated (`npm audit`: 23 before, none after);
   `js-yaml` inside the API type generator is overridden to a fixed release.
+
+[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/rastal88/osnova_frontend/releases/tag/v0.1.0
