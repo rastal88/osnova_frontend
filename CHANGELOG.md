@@ -65,6 +65,8 @@ All notable changes are documented here. The format follows
 - Open Graph tags use `property` instead of `name`.
 
 ### Fixed
+- Docker image accepts `VITE_ANALYTICS_SCRIPT` as a build argument; before, analytics and the
+  cookie banner could not be turned on in Docker builds.
 - Header on phones: a long site name is cut with an ellipsis instead of covering the
   buttons; tighter spacing and an icon-only sign-in button below 768px.
 - With authentication enabled, guests can open public pages (home, contact, sign-up) by URL:
