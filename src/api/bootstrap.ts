@@ -4,7 +4,7 @@ import type { BootstrapResponse } from './generated';
 export type {
   BootstrapApplication,
   BootstrapFeatures,
-  BootstrapI18N as BootstrapI18n,
+  BootstrapI18n,
   BootstrapLanguage,
   BootstrapResponse,
 } from './generated';

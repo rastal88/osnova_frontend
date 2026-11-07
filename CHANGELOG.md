@@ -51,6 +51,9 @@ All notable changes are documented here. The format follows
   Ant Design themes and CSS variables for custom styles.
 
 ### Changed
+- Node.js 24 LTS (`.nvmrc`, `engines`) for development, CI and the Docker image; Node 20 is
+  end-of-life. Dev tools updated: `@hey-api/openapi-ts` 0.99 (`postProcess` replaces
+  `format` / `lint` in its config), Vitest 5, sharp 0.35.
 - Navigation: the menu is on the left by default and collapses to icons (the choice is
   remembered); the header keeps the brand on the left and language, theme and profile on the
   right. `top` and `right` positions still work.
@@ -70,6 +73,7 @@ All notable changes are documented here. The format follows
 - Open Graph tags use `property` instead of `name`.
 
 ### Fixed
+- Ant Design 5 compatibility warning with React 19 (`@ant-design/v5-patch-for-react-19`).
 - Docker image accepts `VITE_ANALYTICS_SCRIPT` as a build argument; before, analytics and the
   cookie banner could not be turned on in Docker builds.
 - Header on phones: a long site name is cut with an ellipsis instead of covering the
@@ -88,3 +92,7 @@ All notable changes are documented here. The format follows
   added later).
 - ESLint and its plugins (replaced by Biome).
 - Unused `@hey-api/client-axios` runtime dependency and the empty `openapi.json`.
+
+### Security
+- Dependencies with known vulnerabilities updated (`npm audit`: 23 before, none after);
+  `js-yaml` inside the API type generator is overridden to a fixed release.
