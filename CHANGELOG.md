@@ -7,6 +7,8 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Unit tests with Vitest (`npm test`, runs in CI): formatting, table query, navigation,
+  language URLs and API errors.
 - Cookie consent: with `VITE_ANALYTICS_SCRIPT` set, a banner asks for consent and the
   analytics script loads only after "Accept" (`src/config/analytics.ts`, `src/consent`);
   the choice is kept in `app_consent` and can be changed on the cookie policy page.
@@ -73,5 +75,7 @@ All notable changes are documented here. The format follows
 - Production build (removed references to a missing i18n module, fixed `tsconfig`).
 
 ### Removed
+- Playwright and its empty example test (unit tests come first; end-to-end tests can be
+  added later).
 - ESLint and its plugins (replaced by Biome).
 - Unused `@hey-api/client-axios` runtime dependency and the empty `openapi.json`.

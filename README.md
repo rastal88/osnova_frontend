@@ -16,7 +16,7 @@
 - Zustand — управление состоянием
 - Ant Design — UI-компоненты
 - Axios — сетевой слой, React Router — маршрутизация
-- Biome — линтинг и форматирование, Playwright — e2e-тесты
+- Biome — линтинг и форматирование, Vitest — юнит-тесты
 - `@hey-api/openapi-ts` — типы API из `openapi.json` бэкенда (`src/api/generated`)
 
 ## Возможности
@@ -76,6 +76,7 @@ frontend env files must never contain secrets — they belong on the backend.
 | `npm run lint` | Biome: lint, format and import order check |
 | `npm run format` | Biome: fix formatting and safe lint issues |
 | `npm run typecheck` | TypeScript check (`tsc -b`) |
+| `npm test` | Unit tests (Vitest); `npm run test:watch` reruns on changes |
 
 ## Связь с бэкендом
 

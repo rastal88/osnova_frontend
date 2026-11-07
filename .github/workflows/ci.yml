@@ -25,6 +25,9 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
+      - name: Unit tests
+        run: npm test
+
       # API types must match the backend schema (osnova_backend/openapi.json)
       - uses: actions/checkout@v4
         with:

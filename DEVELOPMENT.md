@@ -232,6 +232,8 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - **Сборка**: `npm run build`.
 - **Types**: `npm run typecheck` (`tsc -b`).
 - **Lint and format**: Biome only (`biome.json`): `npm run lint` checks, `npm run format` fixes.
+- **Tests**: Vitest, `npm test`. Tests sit next to the code as `*.test.ts` and cover pure logic
+  (formatting, table query, navigation, language URLs, API errors); they run in Node, no browser.
 - **Docker**: `make up-standard`.
 
 ---
