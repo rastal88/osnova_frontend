@@ -8,13 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { getErrorMessage } from '../../api/errors';
-import {
-  applyQuery,
-  compareValues,
-  lastPage,
-  readQuery,
-  writeQuery,
-} from './query';
+import { applyQuery, compareValues, lastPage, readQuery, writeQuery } from './query';
 import type { RowAccessors, TablePage, TableQuery } from './query';
 import './DataTable.css';
 
@@ -184,7 +178,10 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
       update({
         sort:
           order && columnKey
-            ? { field: String(columnKey), order: order === 'ascend' ? 'asc' : 'desc' }
+            ? {
+                field: String(columnKey),
+                order: order === 'ascend' ? 'asc' : 'desc',
+              }
             : null,
         page: 1,
       });

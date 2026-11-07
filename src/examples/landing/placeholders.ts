@@ -13,5 +13,9 @@ export function placeholderImage(hue: number, width = 800, height = 600): ImageS
 <circle cx="${width * 0.7}" cy="${height * 0.35}" r="${height * 0.22}" fill="#fff" fill-opacity="0.18"/>
 <rect x="${width * 0.12}" y="${height * 0.6}" width="${width * 0.45}" height="${height * 0.18}" rx="16" fill="#fff" fill-opacity="0.22"/>
 </svg>`;
-  return { src: `data:image/svg+xml,${encodeURIComponent(svg)}`, width, height };
+  return {
+    src: `data:image/svg+xml,${encodeURIComponent(svg)}`,
+    width,
+    height,
+  };
 }

@@ -23,7 +23,12 @@ const SITE = import.meta.env.VITE_SITE_URL || window.location.origin;
 const LegalPage = ({ document }: { document: LegalDocument }) => {
   const { t } = useTranslation('legal');
   const format = useFormat();
-  const values = { owner: legal.owner, email: legal.email, address: legal.address, site: SITE };
+  const values = {
+    owner: legal.owner,
+    email: legal.email,
+    address: legal.address,
+    site: SITE,
+  };
   const sections = t(`${document}.sections`, {
     returnObjects: true,
     ...values,
@@ -38,7 +43,12 @@ const LegalPage = ({ document }: { document: LegalDocument }) => {
         </Text>
 
         {!isLegalConfigured() && (
-          <Alert className="legal-page-notice" type="warning" showIcon message={t('templateNotice')} />
+          <Alert
+            className="legal-page-notice"
+            type="warning"
+            showIcon
+            message={t('templateNotice')}
+          />
         )}
 
         <Paragraph className="legal-page-intro">{t(`${document}.intro`, values)}</Paragraph>

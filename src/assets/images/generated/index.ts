@@ -2,14 +2,14 @@
 import type { ImageSource } from '../../../components/Image/Image';
 
 import heroAvif640 from './hero-640.avif';
-import heroWebp640 from './hero-640.webp';
 import heroJpeg640 from './hero-640.jpg';
+import heroWebp640 from './hero-640.webp';
 import heroAvif1280 from './hero-1280.avif';
-import heroWebp1280 from './hero-1280.webp';
 import heroJpeg1280 from './hero-1280.jpg';
+import heroWebp1280 from './hero-1280.webp';
 import heroAvif1920 from './hero-1920.avif';
-import heroWebp1920 from './hero-1920.webp';
 import heroJpeg1920 from './hero-1920.jpg';
+import heroWebp1920 from './hero-1920.webp';
 
 export const hero: ImageSource = {
   src: heroJpeg1920,

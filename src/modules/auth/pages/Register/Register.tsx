@@ -75,7 +75,9 @@ const Register = () => {
             { required: true, message: t('forms:validation.required') },
             {
               min: PASSWORD_MIN_LENGTH,
-              message: t('forms:validation.minLength', { min: PASSWORD_MIN_LENGTH }),
+              message: t('forms:validation.minLength', {
+                min: PASSWORD_MIN_LENGTH,
+              }),
             },
           ]}
         >

@@ -1,26 +1,20 @@
-import { useEffect } from 'react';
 import { Alert, Button, Spin } from 'antd';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useBootstrapStore } from '../../store/bootstrapStore';
 import { useAuthStore } from '../../modules/auth';
+import { useBootstrapStore } from '../../store/bootstrapStore';
 import './BootstrapComponent.css';
 
 interface BootstrapComponentProps {
   children: React.ReactNode;
 }
 
-const BootstrapComponent = ({
-  children,
-}: BootstrapComponentProps) => {
+const BootstrapComponent = ({ children }: BootstrapComponentProps) => {
   const { t } = useTranslation();
   const initialize = useBootstrapStore((state) => state.initialize);
-  const isInitialized = useBootstrapStore(
-    (state) => state.isInitialized,
-  );
-  const isLoading = useBootstrapStore(
-    (state) => state.isLoading,
-  );
+  const isInitialized = useBootstrapStore((state) => state.isInitialized);
+  const isLoading = useBootstrapStore((state) => state.isLoading);
   const error = useBootstrapStore((state) => state.error);
   const config = useBootstrapStore((state) => state.config);
 
@@ -53,11 +47,7 @@ const BootstrapComponent = ({
           type="error"
           showIcon
           action={
-            <Button
-              size="small"
-              danger
-              onClick={() => void initialize()}
-            >
+            <Button size="small" danger onClick={() => void initialize()}>
               {t('bootstrap.retry')}
             </Button>
           }

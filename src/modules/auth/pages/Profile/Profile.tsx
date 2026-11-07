@@ -1,5 +1,5 @@
-import { Card, Descriptions, Button, Avatar } from 'antd';
-import { UserOutlined, EditOutlined } from '@ant-design/icons';
+import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Card, Descriptions } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import PageContainer from '../../../../components/PageContainer/PageContainer';

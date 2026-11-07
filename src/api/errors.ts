@@ -4,7 +4,10 @@ import i18n from '../i18n';
 import type { ErrorResponse as ApiError } from './generated';
 
 /** Error body returned by the backend: `message` is already in the user's language. */
-export type { ErrorResponse as ApiError, FieldError as ApiFieldError } from './generated';
+export type {
+  ErrorResponse as ApiError,
+  FieldError as ApiFieldError,
+} from './generated';
 
 export function getApiError(error: unknown): ApiError | null {
   if (!axios.isAxiosError(error)) return null;

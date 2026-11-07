@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import { Outlet, Link } from 'react-router-dom';
 import { Button, Layout, Menu } from 'antd';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuthStore } from '../../auth/authStore';
-import LanguageSwitcher from '../../../components/LanguageSwitcher/LanguageSwitcher';
-import ThemeSwitcher from '../../../components/AppComponent/ThemeSwitcher';
+import { Link, Outlet } from 'react-router-dom';
 import { ThemeContext } from '../../../components/AppComponent/AppComponent';
+import ThemeSwitcher from '../../../components/AppComponent/ThemeSwitcher';
+import LanguageSwitcher from '../../../components/LanguageSwitcher/LanguageSwitcher';
+import { useAuthStore } from '../../auth/authStore';
 
 const { Header, Content, Footer } = Layout;
 
@@ -15,7 +15,13 @@ const AdminLayout = () => {
   const { themeName, setThemeName } = useContext(ThemeContext);
   return (
     <Layout>
-      <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <div style={{ flex: 1 }}>
           <Menu mode="horizontal">
             <Menu.Item key="dashboard">
@@ -39,7 +45,9 @@ const AdminLayout = () => {
         <Outlet />
       </Content>
 
-      <Footer style={{ textAlign: 'center' }}>© {new Date().getFullYear()} Osnova {t('footer')}</Footer>
+      <Footer style={{ textAlign: 'center' }}>
+        © {new Date().getFullYear()} Osnova {t('footer')}
+      </Footer>
     </Layout>
   );
 };

@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 
-import {
-  getBootstrap,
-  type BootstrapResponse,
-} from '../api/bootstrap';
+import { type BootstrapResponse, getBootstrap } from '../api/bootstrap';
 import { setupLanguage } from '../i18n/language';
 
 interface BootstrapStore {

@@ -14,10 +14,7 @@ const ErrorPage = ({ onRetry }: ErrorPageProps) => {
     <PageState
       kind="error"
       action={
-        <Button
-          type="primary"
-          onClick={onRetry ?? (() => window.location.reload())}
-        >
+        <Button type="primary" onClick={onRetry ?? (() => window.location.reload())}>
           {t('state.tryAgain')}
         </Button>
       }

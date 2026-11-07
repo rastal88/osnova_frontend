@@ -16,7 +16,10 @@ export { useAuthStore } from './authStore';
 /** Standalone pages outside the main layout. */
 export const authPublicRoutes: RouteObject[] = [
   { path: '/login', element: lazyElement(() => import('./pages/Login/Login')) },
-  { path: '/register', element: lazyElement(() => import('./pages/Register/Register')) },
+  {
+    path: '/register',
+    element: lazyElement(() => import('./pages/Register/Register')),
+  },
 ];
 
 /** Pages rendered inside the main layout, for any signed-in user. */

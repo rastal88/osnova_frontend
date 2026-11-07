@@ -59,9 +59,17 @@ export function buildHead(input) {
     meta('property', 'og:url', url);
     link({ rel: 'canonical', href: url });
     for (const other of languages) {
-      link({ rel: 'alternate', hreflang: other, href: pageUrl(siteUrl, other, path) });
+      link({
+        rel: 'alternate',
+        hreflang: other,
+        href: pageUrl(siteUrl, other, path),
+      });
     }
-    link({ rel: 'alternate', hreflang: 'x-default', href: pageUrl(siteUrl, defaultLanguage, path) });
+    link({
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: pageUrl(siteUrl, defaultLanguage, path),
+    });
   }
 
   return { title, tags };

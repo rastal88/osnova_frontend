@@ -12,5 +12,5 @@ applyConsent();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AppComponent />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

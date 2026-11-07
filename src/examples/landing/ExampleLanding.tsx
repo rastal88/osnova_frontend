@@ -12,13 +12,16 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { hero } from '../../assets/images/generated';
-import { Cta, Faq, Gallery, Hero, Pricing, Reviews, Services } from '../../components/blocks';
 import Seo from '../../components/Seo/Seo';
+import { Cta, Faq, Gallery, Hero, Pricing, Reviews, Services } from '../../components/blocks';
 import { DEFAULT_CURRENCY } from '../../config/format';
 import { useFormat } from '../../i18n/format';
 import { placeholderImage } from './placeholders';
 
-const SERVICES: [key: 'fast' | 'secure' | 'languages' | 'mobile' | 'api' | 'support', icon: ComponentType][] = [
+const SERVICES: [
+  key: 'fast' | 'secure' | 'languages' | 'mobile' | 'api' | 'support',
+  icon: ComponentType,
+][] = [
   ['fast', ThunderboltOutlined],
   ['secure', SafetyOutlined],
   ['languages', GlobalOutlined],
@@ -45,7 +48,11 @@ const ExampleLanding = () => {
   const navigate = useNavigate();
   const format = useFormat();
   const price = (value: number) =>
-    format.number(value, { style: 'currency', currency: DEFAULT_CURRENCY, maximumFractionDigits: 0 });
+    format.number(value, {
+      style: 'currency',
+      currency: DEFAULT_CURRENCY,
+      maximumFractionDigits: 0,
+    });
 
   const contactButton = (
     <Button size="large" onClick={() => navigate('/contact')}>
@@ -105,7 +112,9 @@ const ExampleLanding = () => {
           description: t(`landing.pricing.plans.${plan.key}.description`),
           price: price(plan.price),
           period: t('landing.pricing.period'),
-          features: t(`landing.pricing.plans.${plan.key}.features`, { returnObjects: true }),
+          features: t(`landing.pricing.plans.${plan.key}.features`, {
+            returnObjects: true,
+          }),
           highlighted: 'highlighted' in plan,
           badge: 'highlighted' in plan ? t('landing.pricing.popular') : undefined,
           action: (

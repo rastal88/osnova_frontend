@@ -1,13 +1,9 @@
-import type { CSSProperties, ReactNode } from 'react';
 import { Breadcrumb, Space, Typography } from 'antd';
+import type { CSSProperties, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
-import {
-  getBreadcrumbs,
-  navigationConfig,
-  type BreadcrumbItem,
-} from '../../config/navigation';
+import { type BreadcrumbItem, getBreadcrumbs, navigationConfig } from '../../config/navigation';
 import PageState from '../PageState/PageState';
 import Seo from '../Seo/Seo';
 import type { SeoPage } from '../Seo/Seo';
@@ -68,9 +64,7 @@ const PageContainer = ({
     content = <PageState kind="empty" description={emptyText} />;
   }
 
-  const style: CSSProperties = maxWidth
-    ? { maxWidth, marginInline: 'auto' }
-    : {};
+  const style: CSSProperties = maxWidth ? { maxWidth, marginInline: 'auto' } : {};
 
   return (
     <div className="page-container" style={style}>

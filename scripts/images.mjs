@@ -48,12 +48,23 @@ async function optimise(file) {
       const encoded =
         format === 'png'
           ? resized.clone().png({ compressionLevel: 9 })
-          : resized.clone()[format]({ quality: QUALITY[format], mozjpeg: format === 'jpeg' });
+          : resized.clone()[format]({
+              quality: QUALITY[format],
+              mozjpeg: format === 'jpeg',
+            });
       await encoded.toFile(join(outDir, fileName));
       variants.push({ width, format, fileName });
     }
   }
-  return { name, id: camelCase(name), widths, fallback, width: widths.at(-1), height: height(widths.at(-1)), variants };
+  return {
+    name,
+    id: camelCase(name),
+    widths,
+    fallback,
+    width: widths.at(-1),
+    height: height(widths.at(-1)),
+    variants,
+  };
 }
 
 function renderIndex(images) {
@@ -87,7 +98,9 @@ function renderIndex(images) {
   return [...lines, '', ...exports].join('\n');
 }
 
-const files = (await readdir(sourceDir)).filter((file) => INPUT.has(extname(file).toLowerCase())).sort();
+const files = (await readdir(sourceDir))
+  .filter((file) => INPUT.has(extname(file).toLowerCase()))
+  .sort();
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
 

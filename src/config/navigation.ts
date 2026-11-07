@@ -103,14 +103,9 @@ export const routeTitles: Record<string, LabelKey> = {
   '/admin/other': 'pages.other',
 };
 
-export const redirects: { from: string; to: string }[] = [
-  { from: '/home', to: '/' },
-];
+export const redirects: { from: string; to: string }[] = [{ from: '/home', to: '/' }];
 
-export function findActiveNavPath(
-  pathname: string,
-  items: NavItem[],
-): string | undefined {
+export function findActiveNavPath(pathname: string, items: NavItem[]): string | undefined {
   return items
     .filter((item) =>
       item.path === '/'

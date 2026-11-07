@@ -1,6 +1,6 @@
-import type React from 'react';
+import { BulbFilled, BulbOutlined } from '@ant-design/icons';
 import { Switch } from 'antd';
-import { BulbOutlined, BulbFilled } from '@ant-design/icons';
+import type React from 'react';
 
 import type { ThemeMode } from '../../config/brand';
 
@@ -9,10 +9,7 @@ interface ThemeSwitcherProps {
   onChange: (val: ThemeMode) => void;
 }
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
-  value,
-  onChange,
-}) => {
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ value, onChange }) => {
   return (
     <Switch
       checked={value === 'dark'}

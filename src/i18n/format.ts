@@ -46,9 +46,13 @@ export function createFormatters(language: string): Formatters {
     timeStyle: 'short',
   });
   const timeFormat = new Intl.DateTimeFormat(language, { timeStyle: 'short' });
-  const relativeFormat = new Intl.RelativeTimeFormat(language, { numeric: 'auto' });
+  const relativeFormat = new Intl.RelativeTimeFormat(language, {
+    numeric: 'auto',
+  });
   const numberFormat = new Intl.NumberFormat(language);
-  const compactFormat = new Intl.NumberFormat(language, { notation: 'compact' });
+  const compactFormat = new Intl.NumberFormat(language, {
+    notation: 'compact',
+  });
 
   return {
     language,
@@ -58,8 +62,10 @@ export function createFormatters(language: string): Formatters {
     time: (value) => timeFormat.format(toDate(value)),
     relative: (value, now = Date.now()) => {
       const diff = toDate(value).getTime() - toDate(now).getTime();
-      const [unit, size] =
-        RELATIVE_UNITS.find(([, unitSize]) => Math.abs(diff) >= unitSize) ?? ['second', SECOND];
+      const [unit, size] = RELATIVE_UNITS.find(([, unitSize]) => Math.abs(diff) >= unitSize) ?? [
+        'second',
+        SECOND,
+      ];
       return relativeFormat.format(Math.round(diff / size), unit);
     },
     number: (value, options) =>

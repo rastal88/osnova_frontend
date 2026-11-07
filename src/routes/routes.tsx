@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 
 import type { BootstrapFeatures } from '../api/bootstrap';

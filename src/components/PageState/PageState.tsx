@@ -1,16 +1,11 @@
-import type { ReactNode } from 'react';
 import { Button, Empty, Result, Spin } from 'antd';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { localizedPath } from '../../i18n/language';
 import './PageState.css';
 
-export type PageStateKind =
-  | 'loading'
-  | 'empty'
-  | 'error'
-  | 'forbidden'
-  | 'not-found';
+export type PageStateKind = 'loading' | 'empty' | 'error' | 'forbidden' | 'not-found';
 
 interface PageStateProps {
   kind: PageStateKind;
