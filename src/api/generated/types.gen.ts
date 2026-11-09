@@ -145,9 +145,9 @@ export type BodyResetResetPasswordApiV1AuthResetPasswordPost = {
 };
 
 /**
- * Body_upload_file_api_v1_file_flow_upload_post
+ * Body_upload_file_api_v1_files_post
  */
-export type BodyUploadFileApiV1FileFlowUploadPost = {
+export type BodyUploadFileApiV1FilesPost = {
     /**
      * File
      */
@@ -384,6 +384,50 @@ export type EntityUpdate = {
     params?: {
         [key: string]: unknown;
     } | null;
+};
+
+/**
+ * FilePage
+ */
+export type FilePage = {
+    /**
+     * Items
+     */
+    items: Array<FileRead>;
+    /**
+     * Total
+     */
+    total: number;
+};
+
+/**
+ * FileRead
+ */
+export type FileRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Content Type
+     */
+    content_type: string;
+    /**
+     * Size
+     */
+    size: number;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Url
+     */
+    url: string;
 };
 
 /**
@@ -1717,51 +1761,123 @@ export type UpdateSettingsApiV1AdminSettingsNamePutResponses = {
 
 export type UpdateSettingsApiV1AdminSettingsNamePutResponse = UpdateSettingsApiV1AdminSettingsNamePutResponses[keyof UpdateSettingsApiV1AdminSettingsNamePutResponses];
 
-export type UploadFileApiV1FileFlowUploadPostData = {
-    body: BodyUploadFileApiV1FileFlowUploadPost;
+export type ListFilesApiV1FilesGetData = {
+    body?: never;
     path?: never;
-    query?: never;
-    url: '/api/v1/file_flow/upload';
+    query?: {
+        /**
+         * Q
+         *
+         * Part of the file name
+         */
+        q?: string;
+        /**
+         * Page
+         */
+        page?: number;
+        /**
+         * Size
+         */
+        size?: number;
+    };
+    url: '/api/v1/files';
 };
 
-export type UploadFileApiV1FileFlowUploadPostErrors = {
+export type ListFilesApiV1FilesGetErrors = {
     /**
      * Validation Error
      */
     422: ErrorResponse;
 };
 
-export type UploadFileApiV1FileFlowUploadPostError = UploadFileApiV1FileFlowUploadPostErrors[keyof UploadFileApiV1FileFlowUploadPostErrors];
+export type ListFilesApiV1FilesGetError = ListFilesApiV1FilesGetErrors[keyof ListFilesApiV1FilesGetErrors];
 
-export type UploadFileApiV1FileFlowUploadPostResponses = {
+export type ListFilesApiV1FilesGetResponses = {
     /**
      * Successful Response
      */
-    200: unknown;
+    200: FilePage;
 };
 
-export type DownloadFileApiV1FileFlowDownloadStoredNameGetData = {
-    body?: never;
-    path: {
-        /**
-         * Stored Name
-         */
-        stored_name: string;
-    };
+export type ListFilesApiV1FilesGetResponse = ListFilesApiV1FilesGetResponses[keyof ListFilesApiV1FilesGetResponses];
+
+export type UploadFileApiV1FilesPostData = {
+    body: BodyUploadFileApiV1FilesPost;
+    path?: never;
     query?: never;
-    url: '/api/v1/file_flow/download/{stored_name}';
+    url: '/api/v1/files';
 };
 
-export type DownloadFileApiV1FileFlowDownloadStoredNameGetErrors = {
+export type UploadFileApiV1FilesPostErrors = {
     /**
      * Validation Error
      */
     422: ErrorResponse;
 };
 
-export type DownloadFileApiV1FileFlowDownloadStoredNameGetError = DownloadFileApiV1FileFlowDownloadStoredNameGetErrors[keyof DownloadFileApiV1FileFlowDownloadStoredNameGetErrors];
+export type UploadFileApiV1FilesPostError = UploadFileApiV1FilesPostErrors[keyof UploadFileApiV1FilesPostErrors];
 
-export type DownloadFileApiV1FileFlowDownloadStoredNameGetResponses = {
+export type UploadFileApiV1FilesPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: FileRead;
+};
+
+export type UploadFileApiV1FilesPostResponse = UploadFileApiV1FilesPostResponses[keyof UploadFileApiV1FilesPostResponses];
+
+export type DeleteFileApiV1FilesFileIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * File Id
+         */
+        file_id: string;
+    };
+    query?: never;
+    url: '/api/v1/files/{file_id}';
+};
+
+export type DeleteFileApiV1FilesFileIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteFileApiV1FilesFileIdDeleteError = DeleteFileApiV1FilesFileIdDeleteErrors[keyof DeleteFileApiV1FilesFileIdDeleteErrors];
+
+export type DeleteFileApiV1FilesFileIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteFileApiV1FilesFileIdDeleteResponse = DeleteFileApiV1FilesFileIdDeleteResponses[keyof DeleteFileApiV1FilesFileIdDeleteResponses];
+
+export type DownloadFileApiV1FilesFileIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * File Id
+         */
+        file_id: string;
+    };
+    query?: never;
+    url: '/api/v1/files/{file_id}';
+};
+
+export type DownloadFileApiV1FilesFileIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DownloadFileApiV1FilesFileIdGetError = DownloadFileApiV1FilesFileIdGetErrors[keyof DownloadFileApiV1FilesFileIdGetErrors];
+
+export type DownloadFileApiV1FilesFileIdGetResponses = {
     /**
      * Successful Response
      */

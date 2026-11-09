@@ -4,6 +4,7 @@ import type admin from '../locales/en/admin.json';
 import type auth from '../locales/en/auth.json';
 import type common from '../locales/en/common.json';
 import type examples from '../locales/en/examples.json';
+import type files from '../locales/en/files.json';
 import type forms from '../locales/en/forms.json';
 import type home from '../locales/en/home.json';
 import type legal from '../locales/en/legal.json';
@@ -20,6 +21,7 @@ declare module 'i18next' {
       admin: typeof admin;
       forms: typeof forms;
       examples: typeof examples;
+      files: typeof files;
       seo: typeof seo;
       legal: typeof legal;
     };

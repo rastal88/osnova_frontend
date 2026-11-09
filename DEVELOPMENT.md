@@ -44,6 +44,12 @@ With `authentication` on, the app has three areas in the same shell:
 - **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
   form / status filters, a drawer with the answers under their translated labels
   (`GET /admin/leads/forms`), mark done / new, delete.
+- **My files** (`/files`, `src/modules/files`): the client-area page of the `files`
+  capability — drag-and-drop upload with progress, the user's files in a server-side
+  `DataTable` with search, download links, delete. Files are private on the backend (owner
+  and admins); limits come from `FILES_MAX_SIZE_MB` / `FILES_ALLOWED_TYPES` and their errors
+  are shown per file. Remove the module: delete the folder and `filesRoutes` in
+  `src/routes/routes.tsx`.
 - **Admin → Channels** (`/admin/channels`): lead delivery channels — configurable entities of
   the group `lead_channels` (`/admin/entities`). The add / edit form is generated from the
   type description (`SchemaFields` with `namePrefix="params"`); secrets come as `********`
@@ -135,7 +141,7 @@ const MyPage = () => (
 
 - Library: react-i18next. Setup: `src/i18n/index.ts`.
 - Files: `src/locales/<language>/<namespace>.json`. Namespaces: `common` (shell, states,
-  errors), `home`, `seo`, `forms`, `legal`, `examples` and one per module (`auth`, `admin`).
+  errors), `home`, `seo`, `forms`, `legal`, `examples` and one per module (`auth`, `admin`, `files`).
 - English is the source language: add every key to `en` first. Keys are type-checked
   against the English files, so a typo fails `npm run build`.
 - Only English `common` is in the main bundle; other files are separate chunks loaded
