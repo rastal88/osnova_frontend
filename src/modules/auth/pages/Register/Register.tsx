@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getErrorMessage } from '../../../../api/errors';
 import { setServerFieldErrors } from '../../../../utils/formErrors';
 import { login, register } from '../../api';
+import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
 
@@ -32,7 +33,7 @@ const Register = () => {
       await register(email, password);
       await login(email, password);
       const user = await fetchUser();
-      navigate(user?.role === 'root' || user?.role === 'moderator' ? '/admin' : '/');
+      navigate(landingPath(user));
     } catch (err: unknown) {
       if (!setServerFieldErrors(form, err, ['email', 'password'])) {
         setError(getErrorMessage(err));

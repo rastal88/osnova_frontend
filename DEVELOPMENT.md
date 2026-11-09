@@ -22,6 +22,25 @@ The shell is `src/components/LayoutComponent/LayoutComponent.tsx`.
 The menu position is set in `navigationConfig`: `left` (default), `right` or `top`
 (a horizontal menu in the header).
 
+### 1.1a. Areas: public, client, admin
+
+With `authentication` on, the app has three areas in the same shell:
+
+| Area | Pages | Who |
+|---|---|---|
+| public | home, examples, legal, sign-in | everyone |
+| client | `/dashboard`, `/profile`, the project's own pages | any signed-in user |
+| admin | `/admin/*` (`src/modules/admin`) | `root`, `moderator` (needs `admin`) |
+
+- The backend decides: `GET /auth/users/me` returns `areas`, e.g. `["admin", "client"]`.
+  After sign-in the user lands on the first one (`landingPath`, `src/modules/auth/areas.ts`).
+- Guard a page with `<ProtectedRoute area="client">` or `area="admin"`: guests go to
+  `/login`, users without the area go to their own start page.
+- The user menu has a switch to the other area when the user has two.
+- The admin area passes its own menu to the shell: `adminNavItems` in
+  `src/modules/admin/navigation.ts`. Add an item there for a new admin section, and its
+  route to `adminRoute.children` in `src/modules/admin/index.tsx`.
+
 ### 1.2. Navigation
 
 File: `src/config/navigation.ts`
@@ -34,8 +53,7 @@ export const navigationConfig: NavigationConfig = {
   showBreadcrumbs: true,       // breadcrumbs (when there is more than one level)
   items: [
     { path: '/', label: 'pages.home', icon: HomeOutlined },
-    { path: '/dashboard', label: 'pages.dashboard', icon: DashboardOutlined, capability: 'authentication', requiresAuth: true },
-    { path: '/admin', label: 'pages.admin', icon: SettingOutlined, capability: 'admin', requiresAuth: true, roles: ['root', 'moderator'] },
+    { path: '/dashboard', label: 'pages.dashboard', icon: DashboardOutlined, capability: 'authentication', requiresAuth: true, area: 'client' },
   ],
 };
 
@@ -46,7 +64,7 @@ export const redirects = [
 
 - **Menu item**: `path`, `label` (a key in the `common` translations), optional `icon`
   (an Ant Design icon), `capability` (hidden when the capability is off), `requiresAuth`
-  and `roles` (shown only to signed-in users / these roles).
+  and `area` (shown only to signed-in users / users who have this area).
 - Pages are not tied to the menu: remove an item and the page is still reachable by URL.
 - **Redirects**: add `{ from, to }` pairs.
 - **Breadcrumb titles**: `routeTitles` in the same file (path → translation key).
@@ -269,7 +287,9 @@ entries in `src/config/prerender.json`.
 ## Add a page
 
 1. Create `src/pages/MyPage/MyPage.tsx` and wrap the content in `PageContainer`.
-2. Add a route in `src/routes/routes.tsx` (inside the layout children for the shell).
+2. Add a route in `src/routes/routes.tsx` (inside the layout children for the shell);
+   for signed-in users wrap it in `<ProtectedRoute area="client">`, for the admin area
+   add it to `src/modules/admin` instead (see 1.1a).
 3. Add its title key to `routeTitles` and, for a menu link, an item to `navigationConfig.items`.
 4. For a public page with a link preview, add it to `src/config/prerender.json` (see 2.4).
 5. Check it with `npm run dev`, then `npm run lint`, `npm test` and `npm run build`.

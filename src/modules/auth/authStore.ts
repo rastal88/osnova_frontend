@@ -1,19 +1,13 @@
 import { create } from 'zustand';
+
+import type { UserRead } from '../../api/generated';
 import { getCurrentUser, logout } from './api';
 
-type Role = 'user' | 'root' | 'moderator';
-
-interface User {
-  id: string;
-  email: string;
-  role: Role;
-}
-
 interface AuthStore {
-  user: User | null;
+  user: UserRead | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  fetchUser: () => Promise<User | null>;
+  fetchUser: () => Promise<UserRead | null>;
   logout: () => Promise<void>;
 }
 

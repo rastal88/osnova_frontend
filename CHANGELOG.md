@@ -6,6 +6,26 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Areas: the user's `areas` from the backend decide the landing page after sign-in
+  (`root` / `moderator` → `/admin`, others → `/dashboard`), the guards
+  (`<ProtectedRoute area="...">`) and a switch between the admin and client areas in the
+  user menu.
+- Admin overview with real user counters (`/admin/overview`); client dashboard shows data
+  from `/client/summary`.
+- `PageContainer` `noindex` prop; account and admin pages use it.
+- Role names translated.
+
+### Changed
+- The admin area uses the main shell with its own menu (`src/modules/admin/navigation.ts`);
+  `AdminLayout` removed. The Admin item left the main menu (use the user menu switch).
+- Menu items take `area` instead of `roles`; `visibleNavItems` filters them.
+- User menu built from Ant Design menu items (keyboard accessible).
+- API types regenerated: `/client/*` and `/admin/*` paths, `UserRead.areas`.
+
+### Removed
+- Unused `src/types/api.ts` and `getAdminUsers` (the users list returns in the admin users stage).
+
 ## [0.1.0] - 2026-11-07
 
 First release: the `minimal` profile.

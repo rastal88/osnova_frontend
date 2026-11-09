@@ -32,8 +32,9 @@ profiles and capabilities.
   dates, numbers and money; optimised images (AVIF / WebP)
 - Landing blocks: hero, services, gallery, pricing, reviews, FAQ, call to action
 - Legal pages (privacy, terms, cookies) as placeholders; a cookie banner when analytics is on
-- With `authentication` on the backend: sign-in, sign-up, profile, protected routes;
-  with `admin`: the `/admin` section for `root` and `moderator`
+- With `authentication` on the backend: sign-in, sign-up, the client area (dashboard,
+  profile); with `admin`: the admin area for `root` and `moderator` in the same shell,
+  landing by role after sign-in and a switch between the areas in the user menu
 
 ## Layout
 

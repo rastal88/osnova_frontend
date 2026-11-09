@@ -1,28 +1,30 @@
 /**
- * Admin module — the /admin section for ROOT and MODERATOR roles.
+ * Admin module — the /admin area for the ROOT and MODERATOR roles.
  * Enabled by the `admin` capability from /bootstrap. Requires the auth module.
+ *
+ * The admin area uses the same shell as the rest of the app with its own menu
+ * (./navigation.ts); access comes from the user's `areas`.
  */
-import { Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 
+import LayoutComponent from '../../components/LayoutComponent/LayoutComponent';
+import NotFound from '../../pages/NotFound/NotFound';
+import RouteError from '../../routes/RouteError';
 import { lazyElement } from '../../routes/lazy';
 import { ProtectedRoute, profileElement } from '../auth';
-
-export const ADMIN_ROLES = ['root', 'moderator'];
+import { adminNavItems } from './navigation';
 
 export const adminRoute: RouteObject = {
   path: '/admin',
   element: (
-    <ProtectedRoute roles={ADMIN_ROLES}>
-      {lazyElement(() => import('./AdminLayout/AdminLayout'))}
+    <ProtectedRoute area="admin">
+      <LayoutComponent navItems={adminNavItems} />
     </ProtectedRoute>
   ),
+  errorElement: <RouteError />,
   children: [
-    { index: true, element: <Navigate to="/admin/dashboard" replace /> },
-    {
-      path: 'dashboard',
-      element: lazyElement(() => import('./pages/Dashboard/Dashboard')),
-    },
+    { index: true, element: lazyElement(() => import('./pages/Dashboard/Dashboard')) },
     { path: 'profile', element: profileElement },
+    { path: '*', element: <NotFound /> },
   ],
 };

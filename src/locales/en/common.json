@@ -9,7 +9,6 @@
     "admin": "Admin",
     "overview": "Overview",
     "users": "Users",
-    "other": "Other",
     "examples": "Examples",
     "exampleData": "Data and tables",
     "exampleLanding": "Landing page",
@@ -34,7 +33,9 @@
     "openProfileMenu": "Open profile menu",
     "profile": "Profile",
     "logout": "Log out",
-    "language": "Language"
+    "language": "Language",
+    "toAdmin": "Admin area",
+    "toClient": "My account"
   },
   "state": {
     "empty": "Nothing here yet",

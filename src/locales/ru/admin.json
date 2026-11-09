@@ -1,14 +1,8 @@
 {
-  "menu": {
-    "dashboard": "Панель",
-    "profile": "Профиль"
-  },
-  "logout": "Выйти",
-  "footer": "Админка",
-  "dashboard": {
-    "title": "Админ-панель",
+  "overview": {
+    "title": "Обзор",
+    "subtitle": "Админка",
     "users": "Пользователи",
-    "orders": "Заказы",
-    "revenue": "Доход"
+    "activeUsers": "Активные пользователи"
   }
 }

@@ -9,7 +9,6 @@
     "admin": "Админка",
     "overview": "Обзор",
     "users": "Пользователи",
-    "other": "Прочее",
     "examples": "Примеры",
     "exampleData": "Данные и таблицы",
     "exampleLanding": "Лендинг",
@@ -34,7 +33,9 @@
     "openProfileMenu": "Открыть меню профиля",
     "profile": "Профиль",
     "logout": "Выйти",
-    "language": "Язык"
+    "language": "Язык",
+    "toAdmin": "Админка",
+    "toClient": "Личный кабинет"
   },
   "state": {
     "empty": "Здесь пока пусто",

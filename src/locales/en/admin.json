@@ -1,14 +1,8 @@
 {
-  "menu": {
-    "dashboard": "Dashboard",
-    "profile": "Profile"
-  },
-  "logout": "Log out",
-  "footer": "Admin",
-  "dashboard": {
-    "title": "Admin panel",
+  "overview": {
+    "title": "Overview",
+    "subtitle": "Admin area",
     "users": "Users",
-    "orders": "Orders",
-    "revenue": "Revenue"
+    "activeUsers": "Active users"
   }
 }
