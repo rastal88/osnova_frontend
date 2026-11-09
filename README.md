@@ -37,7 +37,8 @@ profiles and capabilities.
   landing by role after sign-in and a switch between the areas in the user menu;
   Admin → Settings generated from the backend (site name, contacts, languages);
   Admin → Users: search, filters, block / unblock, change role; Admin → Leads: form
-  submissions with search, filters, details, status and delete
+  submissions with search, filters, details, status, delete and delivery results; Admin →
+  Channels: email / Telegram / webhook delivery set up and tested in the admin
 
 ## Layout
 
