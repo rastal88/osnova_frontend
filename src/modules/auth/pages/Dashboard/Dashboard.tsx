@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { ClientSummary } from '../../../../api/generated';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { getClientSummary } from '../../api';
+import VerifyEmailNotice from '../../components/VerifyEmailNotice';
 
 const { Paragraph } = Typography;
 
@@ -28,6 +29,7 @@ const Dashboard = () => {
       loading={!summary && !error}
       error={error}
     >
+      <VerifyEmailNotice />
       <Card>
         <Paragraph>{t('dashboard.placeholder')}</Paragraph>
         {summary && (

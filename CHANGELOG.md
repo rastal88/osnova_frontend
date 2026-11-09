@@ -7,6 +7,12 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Pages for links from emails: `/verify-email` (confirms once, also when the page renders
+  twice), `/forgot-password` (same answer for any address) and `/reset-password` (a used or
+  expired link offers a new one). **Forgot password?** on the sign-in page.
+- A notice with **Send again** on the dashboard and profile until the email is confirmed;
+  the profile shows the email status.
+- `PasswordFields`: password and repeat fields shared by sign-up and reset.
 - Admin → Users: a server-side table (`GET /admin/users`) with search by email, role and
   status filters, sorting and pages kept in the URL; block / unblock with confirmation and a
   role select for root. Actions appear only where the backend allows them.

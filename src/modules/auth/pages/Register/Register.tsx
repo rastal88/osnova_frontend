@@ -9,14 +9,13 @@ import { login, register } from '../../api';
 import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
+import PasswordFields from '../../components/PasswordFields';
 
 interface RegisterValues {
   email: string;
   password: string;
   repeatPassword: string;
 }
-
-const PASSWORD_MIN_LENGTH = 8;
 
 const Register = () => {
   const { t } = useTranslation(['auth', 'forms']);
@@ -69,37 +68,7 @@ const Register = () => {
         >
           <Input inputMode="email" autoComplete="email" />
         </Form.Item>
-        <Form.Item
-          name="password"
-          label={t('password')}
-          rules={[
-            { required: true, message: t('forms:validation.required') },
-            {
-              min: PASSWORD_MIN_LENGTH,
-              message: t('forms:validation.minLength', {
-                min: PASSWORD_MIN_LENGTH,
-              }),
-            },
-          ]}
-        >
-          <Input.Password autoComplete="new-password" />
-        </Form.Item>
-        <Form.Item
-          name="repeatPassword"
-          label={t('register.repeatPassword')}
-          dependencies={['password']}
-          rules={[
-            { required: true, message: t('forms:validation.required') },
-            ({ getFieldValue }) => ({
-              validator: (_, value) =>
-                !value || getFieldValue('password') === value
-                  ? Promise.resolve()
-                  : Promise.reject(new Error(t('register.passwordsMismatch'))),
-            }),
-          ]}
-        >
-          <Input.Password autoComplete="new-password" />
-        </Form.Item>
+        <PasswordFields />
         <Button type="primary" htmlType="submit" block loading={sending}>
           {t('register.submit')}
         </Button>
