@@ -41,6 +41,9 @@ With `authentication` on, the app has three areas in the same shell:
   `/reset-password?token=` (from **Forgot password?** on the sign-in page,
   `/forgot-password`); these standalone pages live in `src/modules/auth/pages`. Until the
   email is confirmed, the dashboard and profile show a notice with **Send again**.
+- **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
+  form / status filters, a drawer with the answers under their translated labels
+  (`GET /admin/leads/forms`), mark done / new, delete.
 - **Admin → Users** (`/admin/users`): server-side `DataTable` over `GET /admin/users` with
   search, role / status filters, sorting; block / unblock and the role select are shown
   only where the backend allows them (`src/modules/admin/pages/Users/permissions.ts`).

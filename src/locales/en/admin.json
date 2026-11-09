@@ -33,5 +33,30 @@
     "blockConfirm": "Block {{email}}? They will lose access at once.",
     "unblockConfirm": "Unblock {{email}}?",
     "saved": "Saved"
+  },
+  "leads": {
+    "title": "Leads",
+    "subtitle": "Form submissions from the site",
+    "search": "Search in submissions",
+    "columns": {
+      "received": "Received",
+      "form": "Form",
+      "summary": "Submission",
+      "status": "Status"
+    },
+    "status": {
+      "new": "New",
+      "done": "Done"
+    },
+    "open": "Open",
+    "markDone": "Mark done",
+    "markNew": "Mark new",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this submission? Its data will be removed for good.",
+    "saved": "Saved",
+    "language": "Language",
+    "yes": "Yes",
+    "no": "No",
+    "deleted": "Deleted"
   }
 }

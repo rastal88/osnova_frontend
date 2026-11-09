@@ -24,6 +24,7 @@ export const adminRoute: RouteObject = {
   errorElement: <RouteError />,
   children: [
     { index: true, element: lazyElement(() => import('./pages/Dashboard/Dashboard')) },
+    { path: 'leads', element: lazyElement(() => import('./pages/Leads/Leads')) },
     { path: 'users', element: lazyElement(() => import('./pages/Users/Users')) },
     { path: 'settings', element: lazyElement(() => import('./pages/Settings/Settings')) },
     { path: 'profile', element: profileElement },
