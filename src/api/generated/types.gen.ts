@@ -373,6 +373,62 @@ export type HealthResponse = {
 };
 
 /**
+ * LeadPage
+ */
+export type LeadPage = {
+    /**
+     * Items
+     */
+    items: Array<LeadRead>;
+    /**
+     * Total
+     */
+    total: number;
+};
+
+/**
+ * LeadRead
+ */
+export type LeadRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Form
+     */
+    form: string;
+    /**
+     * Data
+     */
+    data: {
+        [key: string]: unknown;
+    };
+    /**
+     * Language
+     */
+    language: string;
+    /**
+     * Status
+     */
+    status: 'new' | 'done';
+    /**
+     * Created At
+     */
+    created_at: string;
+};
+
+/**
+ * LeadUpdate
+ */
+export type LeadUpdate = {
+    /**
+     * Status
+     */
+    status: 'new' | 'done';
+};
+
+/**
  * Role
  */
 export type Role = 'root' | 'moderator' | 'user';
@@ -1144,6 +1200,140 @@ export type UpdateUserApiV1AdminUsersUserIdPatchResponses = {
 };
 
 export type UpdateUserApiV1AdminUsersUserIdPatchResponse = UpdateUserApiV1AdminUsersUserIdPatchResponses[keyof UpdateUserApiV1AdminUsersUserIdPatchResponses];
+
+export type LeadFormsApiV1AdminLeadsFormsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/leads/forms';
+};
+
+export type LeadFormsApiV1AdminLeadsFormsGetResponses = {
+    /**
+     * Response Lead Forms Api V1 Admin Leads Forms Get
+     *
+     * Successful Response
+     */
+    200: Array<FormDescription>;
+};
+
+export type LeadFormsApiV1AdminLeadsFormsGetResponse = LeadFormsApiV1AdminLeadsFormsGetResponses[keyof LeadFormsApiV1AdminLeadsFormsGetResponses];
+
+export type ListLeadsApiV1AdminLeadsGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Q
+         *
+         * Text anywhere in the submitted data
+         */
+        q?: string;
+        /**
+         * Page
+         */
+        page?: number;
+        /**
+         * Size
+         */
+        size?: number;
+        /**
+         * Sort
+         */
+        sort?: 'created_at' | '-created_at' | 'form' | '-form' | 'status' | '-status';
+        /**
+         * Form
+         *
+         * Comma-separated form names
+         */
+        form?: string | null;
+        /**
+         * Status
+         *
+         * Comma-separated: new, done
+         */
+        status?: string | null;
+    };
+    url: '/api/v1/admin/leads';
+};
+
+export type ListLeadsApiV1AdminLeadsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ListLeadsApiV1AdminLeadsGetError = ListLeadsApiV1AdminLeadsGetErrors[keyof ListLeadsApiV1AdminLeadsGetErrors];
+
+export type ListLeadsApiV1AdminLeadsGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: LeadPage;
+};
+
+export type ListLeadsApiV1AdminLeadsGetResponse = ListLeadsApiV1AdminLeadsGetResponses[keyof ListLeadsApiV1AdminLeadsGetResponses];
+
+export type DeleteLeadApiV1AdminLeadsLeadIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Lead Id
+         */
+        lead_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/leads/{lead_id}';
+};
+
+export type DeleteLeadApiV1AdminLeadsLeadIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteLeadApiV1AdminLeadsLeadIdDeleteError = DeleteLeadApiV1AdminLeadsLeadIdDeleteErrors[keyof DeleteLeadApiV1AdminLeadsLeadIdDeleteErrors];
+
+export type DeleteLeadApiV1AdminLeadsLeadIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteLeadApiV1AdminLeadsLeadIdDeleteResponse = DeleteLeadApiV1AdminLeadsLeadIdDeleteResponses[keyof DeleteLeadApiV1AdminLeadsLeadIdDeleteResponses];
+
+export type UpdateLeadApiV1AdminLeadsLeadIdPatchData = {
+    body: LeadUpdate;
+    path: {
+        /**
+         * Lead Id
+         */
+        lead_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/leads/{lead_id}';
+};
+
+export type UpdateLeadApiV1AdminLeadsLeadIdPatchErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type UpdateLeadApiV1AdminLeadsLeadIdPatchError = UpdateLeadApiV1AdminLeadsLeadIdPatchErrors[keyof UpdateLeadApiV1AdminLeadsLeadIdPatchErrors];
+
+export type UpdateLeadApiV1AdminLeadsLeadIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: LeadRead;
+};
+
+export type UpdateLeadApiV1AdminLeadsLeadIdPatchResponse = UpdateLeadApiV1AdminLeadsLeadIdPatchResponses[keyof UpdateLeadApiV1AdminLeadsLeadIdPatchResponses];
 
 export type ListSettingsApiV1AdminSettingsGetData = {
     body?: never;

@@ -36,7 +36,8 @@ profiles and capabilities.
   reset by email, the client area (dashboard, profile); with `admin`: the admin area for `root` and `moderator` in the same shell,
   landing by role after sign-in and a switch between the areas in the user menu;
   Admin → Settings generated from the backend (site name, contacts, languages);
-  Admin → Users: search, filters, block / unblock, change role
+  Admin → Users: search, filters, block / unblock, change role; Admin → Leads: form
+  submissions with search, filters, details, status and delete
 
 ## Layout
 

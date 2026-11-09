@@ -2,6 +2,7 @@ import { Button, Popconfirm, Select, Tag, Typography, message } from 'antd';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { utc } from '../../../../api/dates';
 import { getErrorMessage } from '../../../../api/errors';
 import type { AdminUser, Role } from '../../../../api/generated';
 import DataTable from '../../../../components/DataTable/DataTable';
@@ -10,7 +11,7 @@ import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
 import { useAuthStore } from '../../../auth';
 import { type UserChanges, getUsers, updateUser } from '../../api';
-import { canChangeRole, canManage, utc } from './permissions';
+import { canChangeRole, canManage } from './permissions';
 
 const { Text } = Typography;
 

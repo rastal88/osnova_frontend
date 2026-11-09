@@ -18,8 +18,3 @@ export function canManage(me: Account | null, user: Account): boolean {
 export function canChangeRole(me: Account | null, user: Account): boolean {
   return canManage(me, user) && me?.role === 'root';
 }
-
-/** The backend sends UTC times without an offset; mark them as UTC before formatting. */
-export function utc(value: string): string {
-  return /(Z|[+-]\d{2}:?\d{2})$/.test(value) ? value : `${value}Z`;
-}

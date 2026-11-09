@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { canChangeRole, canManage, utc } from './permissions';
+import { canChangeRole, canManage } from './permissions';
 
 const root = { id: 'r', role: 'root' as const };
 const moderator = { id: 'm', role: 'moderator' as const };
@@ -28,13 +28,5 @@ describe('canChangeRole', () => {
   it('is for root only', () => {
     expect(canChangeRole(root, user)).toBe(true);
     expect(canChangeRole(moderator, user)).toBe(false);
-  });
-});
-
-describe('utc', () => {
-  it('adds the UTC marker only when there is no offset', () => {
-    expect(utc('2026-11-09T19:48:32')).toBe('2026-11-09T19:48:32Z');
-    expect(utc('2026-11-09T19:48:32Z')).toBe('2026-11-09T19:48:32Z');
-    expect(utc('2026-11-09T19:48:32+03:00')).toBe('2026-11-09T19:48:32+03:00');
   });
 });

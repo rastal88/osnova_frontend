@@ -7,6 +7,10 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Admin → Leads: stored form submissions in a server-side table (received, form, a short
+  summary, status) with search and filters in the URL; a drawer shows every answer under its
+  translated label (option labels, yes / no) with **Mark done / new** and **Delete**.
+- `utc()` in `src/api/dates.ts` for backend times (moved from the users page).
 - Pages for links from emails: `/verify-email` (confirms once, also when the page renders
   twice), `/forgot-password` (same answer for any address) and `/reset-password` (a used or
   expired link offers a new one). **Forgot password?** on the sign-in page.
