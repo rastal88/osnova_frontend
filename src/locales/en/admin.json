@@ -57,6 +57,32 @@
     "language": "Language",
     "yes": "Yes",
     "no": "No",
-    "deleted": "Deleted"
+    "deleted": "Deleted",
+    "deliveries": "Delivery",
+    "noDeliveries": "Not sent anywhere: no channel was enabled.",
+    "delivery": {
+      "sent": "Sent",
+      "failed": "Failed"
+    }
+  },
+  "channels": {
+    "title": "Delivery channels",
+    "subtitle": "Where new leads are sent",
+    "add": "Add channel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "saved": "Saved",
+    "enabled": "Enabled",
+    "test": "Test",
+    "testSent": "Test message sent through {{name}}",
+    "testFailed": "The channel did not accept the message",
+    "deleteConfirm": "Delete {{name}}?",
+    "name": "Name",
+    "nameRequired": "Enter a name",
+    "empty": "No channels yet: leads are only kept in the admin.",
+    "readOnly": "Only root can change the channels.",
+    "hint": "Every new lead is sent to each enabled channel. Use Test after setting one up.",
+    "secretHint": "Leave ******** to keep the saved token or secret."
   }
 }

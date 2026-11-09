@@ -11,8 +11,9 @@ import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
 import { deleteLead, getLeadForms, getLeads, updateLead } from '../../api';
 import { formatValue, leadSummary } from './leadText';
+import './Leads.css';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const STATUSES: LeadRead['status'][] = ['new', 'done'];
 
@@ -177,6 +178,33 @@ const Leads = () => {
               {t(`leads.status.${open.status}`)}
             </Descriptions.Item>
           </Descriptions>
+        )}
+        {open && (
+          <div className="lead-deliveries">
+            <Title level={5}>{t('leads.deliveries')}</Title>
+            {Object.keys(open.deliveries).length === 0 ? (
+              <Text type="secondary">{t('leads.noDeliveries')}</Text>
+            ) : (
+              <Space direction="vertical" style={{ width: '100%' }}>
+                {Object.entries(open.deliveries).map(([id, item]) => (
+                  <div key={id}>
+                    <Space wrap>
+                      <Text strong>{item.channel}</Text>
+                      <Tag color={item.status === 'sent' ? 'green' : 'red'}>
+                        {t(`leads.delivery.${item.status}`)}
+                      </Tag>
+                      <Text type="secondary">{format.dateTime(utc(item.at))}</Text>
+                    </Space>
+                    {item.error && (
+                      <Text type="danger" className="lead-delivery-error">
+                        {item.error}
+                      </Text>
+                    )}
+                  </div>
+                ))}
+              </Space>
+            )}
+          </div>
         )}
       </Drawer>
     </PageContainer>
