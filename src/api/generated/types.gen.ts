@@ -621,6 +621,58 @@ export type LeadUpdate = {
 };
 
 /**
+ * NotificationPage
+ */
+export type NotificationPage = {
+    /**
+     * Items
+     */
+    items: Array<NotificationRead>;
+    /**
+     * Total
+     */
+    total: number;
+    /**
+     * Unread
+     */
+    unread: number;
+};
+
+/**
+ * NotificationRead
+ */
+export type NotificationRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Kind
+     */
+    kind: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Body
+     */
+    body: string;
+    /**
+     * Link
+     */
+    link: string | null;
+    /**
+     * Read
+     */
+    read: boolean;
+    /**
+     * Created At
+     */
+    created_at: string;
+};
+
+/**
  * Role
  */
 export type Role = 'root' | 'moderator' | 'user';
@@ -647,6 +699,16 @@ export type SettingsGroupDescription = {
     values: {
         [key: string]: unknown;
     };
+};
+
+/**
+ * UnreadCount
+ */
+export type UnreadCount = {
+    /**
+     * Unread
+     */
+    unread: number;
 };
 
 /**
@@ -1883,3 +1945,133 @@ export type DownloadFileApiV1FilesFileIdGetResponses = {
      */
     200: unknown;
 };
+
+export type ListNotificationsApiV1NotificationsGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page
+         */
+        page?: number;
+        /**
+         * Size
+         */
+        size?: number;
+        /**
+         * Unread Only
+         */
+        unread_only?: boolean;
+    };
+    url: '/api/v1/notifications';
+};
+
+export type ListNotificationsApiV1NotificationsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ListNotificationsApiV1NotificationsGetError = ListNotificationsApiV1NotificationsGetErrors[keyof ListNotificationsApiV1NotificationsGetErrors];
+
+export type ListNotificationsApiV1NotificationsGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: NotificationPage;
+};
+
+export type ListNotificationsApiV1NotificationsGetResponse = ListNotificationsApiV1NotificationsGetResponses[keyof ListNotificationsApiV1NotificationsGetResponses];
+
+export type UnreadCountApiV1NotificationsUnreadGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/notifications/unread';
+};
+
+export type UnreadCountApiV1NotificationsUnreadGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: UnreadCount;
+};
+
+export type UnreadCountApiV1NotificationsUnreadGetResponse = UnreadCountApiV1NotificationsUnreadGetResponses[keyof UnreadCountApiV1NotificationsUnreadGetResponses];
+
+export type MarkAllReadApiV1NotificationsReadPostData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/notifications/read';
+};
+
+export type MarkAllReadApiV1NotificationsReadPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: UnreadCount;
+};
+
+export type MarkAllReadApiV1NotificationsReadPostResponse = MarkAllReadApiV1NotificationsReadPostResponses[keyof MarkAllReadApiV1NotificationsReadPostResponses];
+
+export type MarkReadApiV1NotificationsNotificationIdReadPostData = {
+    body?: never;
+    path: {
+        /**
+         * Notification Id
+         */
+        notification_id: string;
+    };
+    query?: never;
+    url: '/api/v1/notifications/{notification_id}/read';
+};
+
+export type MarkReadApiV1NotificationsNotificationIdReadPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type MarkReadApiV1NotificationsNotificationIdReadPostError = MarkReadApiV1NotificationsNotificationIdReadPostErrors[keyof MarkReadApiV1NotificationsNotificationIdReadPostErrors];
+
+export type MarkReadApiV1NotificationsNotificationIdReadPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: NotificationRead;
+};
+
+export type MarkReadApiV1NotificationsNotificationIdReadPostResponse = MarkReadApiV1NotificationsNotificationIdReadPostResponses[keyof MarkReadApiV1NotificationsNotificationIdReadPostResponses];
+
+export type DeleteNotificationApiV1NotificationsNotificationIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Notification Id
+         */
+        notification_id: string;
+    };
+    query?: never;
+    url: '/api/v1/notifications/{notification_id}';
+};
+
+export type DeleteNotificationApiV1NotificationsNotificationIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteNotificationApiV1NotificationsNotificationIdDeleteError = DeleteNotificationApiV1NotificationsNotificationIdDeleteErrors[keyof DeleteNotificationApiV1NotificationsNotificationIdDeleteErrors];
+
+export type DeleteNotificationApiV1NotificationsNotificationIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteNotificationApiV1NotificationsNotificationIdDeleteResponse = DeleteNotificationApiV1NotificationsNotificationIdDeleteResponses[keyof DeleteNotificationApiV1NotificationsNotificationIdDeleteResponses];

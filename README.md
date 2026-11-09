@@ -39,7 +39,8 @@ profiles and capabilities.
   Admin → Users: search, filters, block / unblock, change role; Admin → Leads: form
   submissions with search, filters, details, status, delete and delivery results; Admin →
   Channels: email / Telegram / webhook delivery set up and tested in the admin; with `files`:
-  "My files" in the client area (drag-and-drop upload, search, download, delete)
+  "My files" in the client area (drag-and-drop upload, search, download, delete); with
+  `notifications`: the bell in the header (unread count, latest items, mark read)
 
 ## Layout
 
@@ -56,7 +57,8 @@ src/
 ├── modules/      # optional modules, one folder each
 │   ├── auth/     # sign-in, sign-up, profile, ProtectedRoute   ← authentication
 │   ├── admin/    # /admin section for root / moderator         ← admin
-│   └── files/    # "My files": upload, list, download, delete   ← files
+│   ├── files/    # "My files": upload, list, download, delete   ← files
+│   └── notifications/ # the bell in the header                ← notifications
 ├── pages/        # core pages: Home, legal pages, 404, error
 ├── routes/       # router built from capabilities, lazyElement()
 ├── seo/          # SEO tags shared by the app and the prerender script
