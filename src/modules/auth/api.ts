@@ -1,6 +1,6 @@
 import qs from 'qs';
 import api from '../../api/axios';
-import type { ClientSummary, UserRead } from '../../api/generated';
+import type { ClientSummary, OAuth2AuthorizeResponse, UserRead } from '../../api/generated';
 
 export const getCurrentUser = async (): Promise<UserRead> => {
   const response = await api.get<UserRead>('/auth/users/me', { skipAuthRedirect: true });
@@ -60,4 +60,15 @@ export async function forgotPassword(email: string) {
 
 export async function resetPassword(token: string, password: string) {
   await api.post('/auth/reset-password', { token, password }, { skipAuthRedirect: true });
+}
+
+/** Where to send the browser to sign in with a provider (also sets the CSRF cookie). */
+export async function getOAuthUrl(provider: string): Promise<string> {
+  const response = await api.get<OAuth2AuthorizeResponse>(`/auth/${provider}/authorize`);
+  return response.data.authorization_url;
+}
+
+/** Finishes the provider sign-in with the query string the provider sent back. */
+export async function finishOAuth(provider: string, search: string) {
+  await api.get(`/auth/${provider}/callback${search}`, { skipAuthRedirect: true });
 }

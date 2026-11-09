@@ -7,6 +7,10 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Sign-in with Google: a **Continue with Google** button on the sign-in and sign-up pages
+  for every provider in `/bootstrap` `auth_providers`, and the page
+  `/oauth/<provider>/callback` that finishes the sign-in (once, also in Strict Mode) and opens
+  the user's start page; a cancelled or failed sign-in is explained with a way back.
 - Notifications module (`src/modules/notifications`, `notifications` capability): a bell in
   the header with the unread count (refreshed every minute while the page is visible and when
   it becomes visible again), the latest notifications, open-and-mark-read, **Mark all read**;

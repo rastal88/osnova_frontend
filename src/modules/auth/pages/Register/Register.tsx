@@ -9,6 +9,7 @@ import { login, register } from '../../api';
 import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
+import OAuthButtons from '../../components/OAuthButtons';
 import PasswordFields from '../../components/PasswordFields';
 
 interface RegisterValues {
@@ -52,6 +53,7 @@ const Register = () => {
         </>
       }
     >
+      <OAuthButtons onError={setError} />
       <Form<RegisterValues>
         form={form}
         layout="vertical"

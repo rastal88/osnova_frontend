@@ -37,6 +37,11 @@ With `authentication` on, the app has three areas in the same shell:
 - Guard a page with `<ProtectedRoute area="client">` or `area="admin"`: guests go to
   `/login`, users without the area go to their own start page.
 - The user menu has a switch to the other area when the user has two.
+- **Sign-in with Google** (and other providers): the sign-in and sign-up pages show a
+  button for every provider in `/bootstrap` `auth_providers` (`OAuthButtons`). The provider
+  returns to `/oauth/<provider>/callback` (no language prefix needed), which finishes the
+  sign-in on the backend and opens the user's start page; a cancel or an error is shown with
+  **Back to sign in**. Backend setup: README of osnova_backend → Sign-in with Google.
 - **Email links:** the backend sends links to `/verify-email?token=` (after sign-up) and
   `/reset-password?token=` (from **Forgot password?** on the sign-in page,
   `/forgot-password`); these standalone pages live in `src/modules/auth/pages`. Until the
