@@ -60,6 +60,7 @@ const Login = () => {
           name="password"
           label={t('password')}
           rules={[{ required: true, message: t('forms:validation.required') }]}
+          extra={<Link to="/forgot-password">{t('login.forgot')}</Link>}
         >
           <Input.Password autoComplete="current-password" />
         </Form.Item>

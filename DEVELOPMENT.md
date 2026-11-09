@@ -37,6 +37,10 @@ With `authentication` on, the app has three areas in the same shell:
 - Guard a page with `<ProtectedRoute area="client">` or `area="admin"`: guests go to
   `/login`, users without the area go to their own start page.
 - The user menu has a switch to the other area when the user has two.
+- **Email links:** the backend sends links to `/verify-email?token=` (after sign-up) and
+  `/reset-password?token=` (from **Forgot password?** on the sign-in page,
+  `/forgot-password`); these standalone pages live in `src/modules/auth/pages`. Until the
+  email is confirmed, the dashboard and profile show a notice with **Send again**.
 - **Admin → Users** (`/admin/users`): server-side `DataTable` over `GET /admin/users` with
   search, role / status filters, sorting; block / unblock and the role select are shown
   only where the backend allows them (`src/modules/admin/pages/Users/permissions.ts`).

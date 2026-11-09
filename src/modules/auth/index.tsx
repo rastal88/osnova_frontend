@@ -23,6 +23,19 @@ export const authPublicRoutes: RouteObject[] = [
     path: '/register',
     element: lazyElement(() => import('./pages/Register/Register')),
   },
+  // Links from emails (the backend sends them to FRONTEND_URL/<language>/...)
+  {
+    path: '/verify-email',
+    element: lazyElement(() => import('./pages/VerifyEmail/VerifyEmail')),
+  },
+  {
+    path: '/forgot-password',
+    element: lazyElement(() => import('./pages/ForgotPassword/ForgotPassword')),
+  },
+  {
+    path: '/reset-password',
+    element: lazyElement(() => import('./pages/ResetPassword/ResetPassword')),
+  },
 ];
 
 /** Client area: pages inside the main layout for any signed-in user. */
