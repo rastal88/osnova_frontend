@@ -34,7 +34,8 @@ profiles and capabilities.
 - Legal pages (privacy, terms, cookies) as placeholders; a cookie banner when analytics is on
 - With `authentication` on the backend: sign-in, sign-up, the client area (dashboard,
   profile); with `admin`: the admin area for `root` and `moderator` in the same shell,
-  landing by role after sign-in and a switch between the areas in the user menu
+  landing by role after sign-in and a switch between the areas in the user menu;
+  Admin → Settings generated from the backend (site name, contacts, languages)
 
 ## Layout
 

@@ -189,7 +189,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 
 - `GET /forms/<name>` returns the title, submit label and fields (labels already in the
   current language); the form reloads it when the language changes.
-- Field types: `text`, `textarea`, `email`, `tel`, `select`, `checkbox`, `consent`.
+- Field types: `text`, `textarea`, `email`, `tel`, `select`, `multiselect`, `checkbox`, `consent`.
   Client rules (required, length, pattern, checked) come from the same description as the
   server ones, so most mistakes are caught before sending.
 - A hidden honeypot field is rendered when the description has one; bots that fill it
@@ -201,6 +201,19 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 - Generic texts (validation, retry, sending): `src/locales/<language>/forms.json`.
 - Example page: `src/examples/contact` (`/examples/contact`, lazy-loaded — Ant Design form controls
   are in its own chunk, not in the main bundle).
+- `SchemaFields` renders just the fields of a description inside your own Ant Design `Form`
+  (the admin settings page uses it with its own save button).
+
+### 3.1. Settings in the admin
+
+**Admin → Settings** (`/admin/settings`, `src/modules/admin/pages/Settings`) is generated
+from `GET /admin/settings`: one card per settings group of the backend (`app/settings.py`),
+its fields in the same format as a form. A new setting on the backend appears here without
+frontend code. Only `root` saves; `moderator` sees the values read-only.
+
+After a save the app re-reads `/bootstrap` (`useBootstrapStore.refresh`), so the site name,
+contacts (footer) and languages change at once; if the current language was turned off,
+the page opens in the default one.
 
 ---
 

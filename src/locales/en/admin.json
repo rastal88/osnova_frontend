@@ -4,5 +4,12 @@
     "subtitle": "Admin area",
     "users": "Users",
     "activeUsers": "Active users"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Changes apply to the whole site",
+    "save": "Save",
+    "saved": "Saved",
+    "readOnly": "Only root can change the settings."
   }
 }

@@ -16,7 +16,7 @@ const BootstrapComponent = ({ children }: BootstrapComponentProps) => {
   const isInitialized = useBootstrapStore((state) => state.isInitialized);
   const isLoading = useBootstrapStore((state) => state.isLoading);
   const error = useBootstrapStore((state) => state.error);
-  const config = useBootstrapStore((state) => state.config);
+  const authEnabled = useBootstrapStore((state) => state.config?.features.authentication);
 
   const fetchUser = useAuthStore((state) => state.fetchUser);
 
@@ -24,11 +24,12 @@ const BootstrapComponent = ({ children }: BootstrapComponentProps) => {
     void initialize();
   }, [initialize]);
 
+  // Only on start: a later bootstrap refresh (new site settings) keeps the signed-in user
   useEffect(() => {
-    if (isInitialized && config?.features.authentication) {
+    if (isInitialized && authEnabled) {
       void fetchUser();
     }
-  }, [isInitialized, config, fetchUser]);
+  }, [isInitialized, authEnabled, fetchUser]);
 
   if (isLoading) {
     return (

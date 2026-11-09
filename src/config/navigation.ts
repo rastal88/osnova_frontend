@@ -81,6 +81,7 @@ export const routeTitles: Record<string, LabelKey> = {
   '/register': 'pages.register',
   '/admin': 'pages.admin',
   '/admin/profile': 'pages.profile',
+  '/admin/settings': 'pages.settings',
   '/admin/users': 'pages.users',
 };
 

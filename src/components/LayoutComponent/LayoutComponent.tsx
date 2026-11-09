@@ -60,7 +60,8 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
   const { t } = useTranslation();
   const { isAuthenticated, isLoading, user, logout } = useAuthStore();
   const features = useBootstrapStore((state) => state.config?.features);
-  const appName = useBootstrapStore((state) => state.config?.application.name) ?? 'Osnova';
+  const application = useBootstrapStore((state) => state.config?.application);
+  const appName = application?.name ?? 'Osnova';
 
   const authEnabled = features?.authentication ?? false;
 
@@ -237,6 +238,19 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
             <span>
               © {new Date().getFullYear()} {appName}
             </span>
+            {/* Contacts from Admin → Settings → Site */}
+            {(application?.contact_email || application?.contact_phone) && (
+              <address className="footer-links" aria-label={t('footer.contacts')}>
+                {application.contact_email && (
+                  <a href={`mailto:${application.contact_email}`}>{application.contact_email}</a>
+                )}
+                {application.contact_phone && (
+                  <a href={`tel:${application.contact_phone.replace(/[^\d+]/g, '')}`}>
+                    {application.contact_phone}
+                  </a>
+                )}
+              </address>
+            )}
             <nav className="footer-links" aria-label={t('footer.legal')}>
               {LEGAL_LINKS.map((link) => (
                 <Link key={link.path} to={link.path}>
