@@ -150,6 +150,14 @@ export type BootstrapApplication = {
      * Version
      */
     version: string;
+    /**
+     * Contact Email
+     */
+    contact_email: string;
+    /**
+     * Contact Phone
+     */
+    contact_phone: string;
 };
 
 /**
@@ -267,7 +275,7 @@ export type FormFieldDescription = {
     /**
      * Type
      */
-    type: 'text' | 'textarea' | 'email' | 'tel' | 'select' | 'checkbox' | 'consent';
+    type: 'text' | 'textarea' | 'email' | 'tel' | 'select' | 'multiselect' | 'checkbox' | 'consent';
     /**
      * Label
      */
@@ -332,6 +340,30 @@ export type HealthResponse = {
  * Role
  */
 export type Role = 'root' | 'moderator' | 'user';
+
+/**
+ * SettingsGroupDescription
+ */
+export type SettingsGroupDescription = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Fields
+     */
+    fields: Array<FormFieldDescription>;
+    /**
+     * Values
+     */
+    values: {
+        [key: string]: unknown;
+    };
+};
 
 /**
  * UserCreate
@@ -1008,6 +1040,59 @@ export type ListUsersApiV1AdminUsersGetResponses = {
 };
 
 export type ListUsersApiV1AdminUsersGetResponse = ListUsersApiV1AdminUsersGetResponses[keyof ListUsersApiV1AdminUsersGetResponses];
+
+export type ListSettingsApiV1AdminSettingsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/settings';
+};
+
+export type ListSettingsApiV1AdminSettingsGetResponses = {
+    /**
+     * Response List Settings Api V1 Admin Settings Get
+     *
+     * Successful Response
+     */
+    200: Array<SettingsGroupDescription>;
+};
+
+export type ListSettingsApiV1AdminSettingsGetResponse = ListSettingsApiV1AdminSettingsGetResponses[keyof ListSettingsApiV1AdminSettingsGetResponses];
+
+export type UpdateSettingsApiV1AdminSettingsNamePutData = {
+    /**
+     * Payload
+     */
+    body: {
+        [key: string]: unknown;
+    };
+    path: {
+        /**
+         * Name
+         */
+        name: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/settings/{name}';
+};
+
+export type UpdateSettingsApiV1AdminSettingsNamePutErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type UpdateSettingsApiV1AdminSettingsNamePutError = UpdateSettingsApiV1AdminSettingsNamePutErrors[keyof UpdateSettingsApiV1AdminSettingsNamePutErrors];
+
+export type UpdateSettingsApiV1AdminSettingsNamePutResponses = {
+    /**
+     * Successful Response
+     */
+    200: SettingsGroupDescription;
+};
+
+export type UpdateSettingsApiV1AdminSettingsNamePutResponse = UpdateSettingsApiV1AdminSettingsNamePutResponses[keyof UpdateSettingsApiV1AdminSettingsNamePutResponses];
 
 export type UploadFileApiV1FileFlowUploadPostData = {
     body: BodyUploadFileApiV1FileFlowUploadPost;

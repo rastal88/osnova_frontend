@@ -186,6 +186,7 @@
 }
 
 .footer-links {
+  font-style: normal;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

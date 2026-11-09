@@ -14,7 +14,8 @@
     "exampleLanding": "Лендинг",
     "privacy": "Политика конфиденциальности",
     "terms": "Условия использования",
-    "cookies": "Политика cookies"
+    "cookies": "Политика cookies",
+    "settings": "Настройки"
   },
   "cookieBanner": {
     "label": "Согласие на cookies",
@@ -24,7 +25,8 @@
     "decline": "Отклонить"
   },
   "footer": {
-    "legal": "Правовая информация"
+    "legal": "Правовая информация",
+    "contacts": "Контакты"
   },
   "header": {
     "openMenu": "Открыть меню",

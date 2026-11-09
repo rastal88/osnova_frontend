@@ -14,7 +14,8 @@
     "exampleLanding": "Landing page",
     "privacy": "Privacy policy",
     "terms": "Terms of use",
-    "cookies": "Cookie policy"
+    "cookies": "Cookie policy",
+    "settings": "Settings"
   },
   "cookieBanner": {
     "label": "Cookie consent",
@@ -24,7 +25,8 @@
     "decline": "Decline"
   },
   "footer": {
-    "legal": "Legal"
+    "legal": "Legal",
+    "contacts": "Contacts"
   },
   "header": {
     "openMenu": "Open menu",

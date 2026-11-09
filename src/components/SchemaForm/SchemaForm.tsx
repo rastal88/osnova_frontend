@@ -27,6 +27,10 @@ const PATTERN_MESSAGES = {
 
 /** Client rules mirror the server ones, so most mistakes are caught before sending. */
 function rulesFor(field: FormFieldDescription, t: TFunction<'forms'>): FormRule[] {
+  if (field.type === 'multiselect') {
+    const min = Math.max(field.min_length ?? 0, field.required ? 1 : 0);
+    return min ? [{ type: 'array', min, message: t('validation.chooseAtLeast', { min }) }] : [];
+  }
   if (field.type === 'checkbox' || field.type === 'consent') {
     if (!field.required) return [];
     return [
@@ -86,6 +90,8 @@ function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): Reac
       return <Input inputMode="tel" autoComplete="tel" maxLength={maxLength} />;
     case 'select':
       return <Select options={field.options} allowClear={!field.required} />;
+    case 'multiselect':
+      return <Select mode="multiple" options={field.options} />;
     case 'checkbox':
       return <Checkbox>{field.label}</Checkbox>;
     case 'consent':
@@ -102,6 +108,26 @@ function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): Reac
       return <Input maxLength={maxLength} />;
   }
 }
+
+/** The form items for a list of described fields: use inside an Ant Design `Form`. */
+export const SchemaFields = ({ fields }: { fields: FormFieldDescription[] }) => {
+  const { t } = useTranslation('forms');
+  return fields.map((field) => {
+    const isCheckbox = field.type === 'checkbox' || field.type === 'consent';
+    return (
+      <Form.Item
+        key={field.name}
+        name={field.name}
+        label={isCheckbox ? undefined : field.label}
+        required={field.required}
+        rules={rulesFor(field, t)}
+        valuePropName={isCheckbox ? 'checked' : 'value'}
+      >
+        {renderControl(field, t)}
+      </Form.Item>
+    );
+  });
+};
 
 interface SchemaFormProps {
   /** Form name on the backend: GET/POST /forms/<name> */
@@ -208,21 +234,7 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
         scrollToFirstError
         requiredMark="optional"
       >
-        {description.fields.map((field) => {
-          const isCheckbox = field.type === 'checkbox' || field.type === 'consent';
-          return (
-            <Form.Item
-              key={field.name}
-              name={field.name}
-              label={isCheckbox ? undefined : field.label}
-              required={field.required}
-              rules={rulesFor(field, t)}
-              valuePropName={isCheckbox ? 'checked' : 'value'}
-            >
-              {renderControl(field, t)}
-            </Form.Item>
-          );
-        })}
+        <SchemaFields fields={description.fields} />
 
         {/* Off-screen, not display:none: bots skip fields that are obviously hidden */}
         <div className="schema-form-honeypot" aria-hidden="true">

@@ -6,7 +6,8 @@
     "pattern": "Invalid format.",
     "email": "Enter a valid email address.",
     "phone": "Enter a valid phone number.",
-    "mustBeChecked": "Please check this box to continue."
+    "mustBeChecked": "Please check this box to continue.",
+    "chooseAtLeast": "Choose at least {{min}}."
   },
   "privacyPolicy": "privacy policy",
   "sending": "Sending…",

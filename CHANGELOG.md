@@ -7,6 +7,13 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Admin → Settings: one card per backend settings group, rendered from its description;
+  saving (root only) re-reads `/bootstrap`, so the site name, footer contacts and
+  languages change without a reload. Moderators see the settings read-only.
+- `SchemaFields` (fields of a description inside any Ant Design form) and the `multiselect`
+  field type.
+- Site contacts (email, phone) in the footer when they are set.
+- `useBootstrapStore.refresh()`: re-reads `/bootstrap` in place.
 - Areas: the user's `areas` from the backend decide the landing page after sign-in
   (`root` / `moderator` → `/admin`, others → `/dashboard`), the guards
   (`<ProtectedRoute area="...">`) and a switch between the admin and client areas in the
@@ -17,6 +24,7 @@ All notable changes are documented here. The format follows
 - Role names translated.
 
 ### Changed
+- The signed-in user is fetched once on start, not on every bootstrap change.
 - The admin area uses the main shell with its own menu (`src/modules/admin/navigation.ts`);
   `AdminLayout` removed. The Admin item left the main menu (use the user menu switch).
 - Menu items take `area` instead of `roles`; `visibleNavItems` filters them.
