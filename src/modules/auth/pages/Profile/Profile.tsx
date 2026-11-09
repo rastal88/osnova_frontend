@@ -12,6 +12,7 @@ const Profile = () => {
   return (
     <PageContainer
       title={t('profile.title')}
+      noindex
       actions={<Button icon={<EditOutlined />}>{t('profile.edit')}</Button>}
     >
       <Card>
@@ -22,7 +23,9 @@ const Profile = () => {
 
         <Descriptions bordered column={1}>
           <Descriptions.Item label={t('email')}>{user?.email}</Descriptions.Item>
-          <Descriptions.Item label={t('profile.role')}>{user?.role}</Descriptions.Item>
+          <Descriptions.Item label={t('profile.role')}>
+            {user && t(`roles.${user.role}`)}
+          </Descriptions.Item>
         </Descriptions>
       </Card>
     </PageContainer>

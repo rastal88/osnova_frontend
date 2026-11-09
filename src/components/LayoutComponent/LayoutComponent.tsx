@@ -5,6 +5,7 @@ import {
   MenuOutlined,
   MenuUnfoldOutlined,
   SettingOutlined,
+  SwapOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Button, Drawer, Dropdown, Grid, Layout, Menu } from 'antd';
@@ -13,8 +14,13 @@ import { Suspense, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { findActiveNavPath, navigationConfig } from '../../config/navigation';
-import { useAuthStore } from '../../modules/auth';
+import {
+  type NavItem,
+  findActiveNavPath,
+  navigationConfig,
+  visibleNavItems,
+} from '../../config/navigation';
+import { AREA_HOME, areaOfPath, otherArea, useAuthStore } from '../../modules/auth';
 import { LEGAL_LINKS } from '../../pages/Legal';
 import { useBootstrapStore } from '../../store/bootstrapStore';
 import { ThemeContext } from '../AppComponent/AppComponent';
@@ -45,7 +51,12 @@ function saveCollapsed(collapsed: boolean) {
   }
 }
 
-const LayoutComponent = () => {
+interface LayoutProps {
+  /** Menu of this area; the admin area passes its own */
+  navItems?: NavItem[];
+}
+
+const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: LayoutProps) => {
   const { t } = useTranslation();
   const { isAuthenticated, isLoading, user, logout } = useAuthStore();
   const features = useBootstrapStore((state) => state.config?.features);
@@ -71,12 +82,9 @@ const LayoutComponent = () => {
 
   // Public pages stay public: guests see them with a sign-in button,
   // private pages are guarded by ProtectedRoute.
-  const navItems = navigationConfig.items.filter(
-    (item) =>
-      (!item.capability || Boolean(features?.[item.capability])) &&
-      (!item.requiresAuth || isAuthenticated) &&
-      (!item.roles || (user !== null && item.roles.includes(user.role))),
-  );
+  const navItems = visibleNavItems(areaItems, features, isAuthenticated ? user : null);
+  const area = areaOfPath(location.pathname);
+  const switchTo = user ? otherArea(location.pathname, user.areas) : undefined;
 
   const menuItems: MenuProps['items'] = navItems.map((item) => {
     const Icon = item.icon;
@@ -105,28 +113,28 @@ const LayoutComponent = () => {
     navigate('/login');
   };
 
-  const profileMenu = (
-    <div className="profile-menu">
-      <Button
-        type="text"
-        icon={<SettingOutlined />}
-        className="profile-menu-item"
-        onClick={() => navigate('/profile')}
-      >
-        {t('header.profile')}
-      </Button>
-
-      <Button
-        danger
-        type="text"
-        icon={<LogoutOutlined />}
-        className="profile-menu-item profile-menu-logout"
-        onClick={() => void handleLogout()}
-      >
-        {t('header.logout')}
-      </Button>
-    </div>
-  );
+  // User menu: profile of the current area, switch to the other area (admin roles), sign out
+  const profileMenu: MenuProps = {
+    items: [
+      { key: 'profile', icon: <SettingOutlined />, label: t('header.profile') },
+      ...(switchTo
+        ? [
+            {
+              key: 'switch',
+              icon: <SwapOutlined />,
+              label: t(switchTo === 'admin' ? 'header.toAdmin' : 'header.toClient'),
+            },
+          ]
+        : []),
+      { type: 'divider' as const },
+      { key: 'logout', icon: <LogoutOutlined />, label: t('header.logout'), danger: true },
+    ],
+    onClick: ({ key }) => {
+      if (key === 'profile') navigate(area === 'admin' ? '/admin/profile' : '/profile');
+      if (key === 'switch' && switchTo) navigate(AREA_HOME[switchTo]);
+      if (key === 'logout') void handleLogout();
+    },
+  };
 
   const menu = (
     <Menu
@@ -178,7 +186,7 @@ const LayoutComponent = () => {
           )}
 
           {navigationConfig.showBrand && (
-            <Link to="/" className="app-brand">
+            <Link to={area === 'admin' ? AREA_HOME.admin : '/'} className="app-brand">
               {appName}
             </Link>
           )}
@@ -201,7 +209,7 @@ const LayoutComponent = () => {
           )}
 
           {authEnabled && isAuthenticated && (
-            <Dropdown overlay={profileMenu} placement="bottomRight" trigger={['click']} arrow>
+            <Dropdown menu={profileMenu} placement="bottomRight" trigger={['click']} arrow>
               <Button
                 type="text"
                 aria-label={t('header.openProfileMenu')}

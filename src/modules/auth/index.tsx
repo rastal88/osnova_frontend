@@ -12,6 +12,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 export { default as ProtectedRoute } from './components/ProtectedRoute';
 export { useAuthStore } from './authStore';
+export { AREA_HOME, type Area, areaOfPath, landingPath, otherArea } from './areas';
+
+export const profileElement = lazyElement(() => import('./pages/Profile/Profile'));
 
 /** Standalone pages outside the main layout. */
 export const authPublicRoutes: RouteObject[] = [
@@ -22,20 +25,18 @@ export const authPublicRoutes: RouteObject[] = [
   },
 ];
 
-/** Pages rendered inside the main layout, for any signed-in user. */
+/** Client area: pages inside the main layout for any signed-in user. */
 export const authLayoutRoutes: RouteObject[] = [
   {
     path: 'dashboard',
     element: (
-      <ProtectedRoute>{lazyElement(() => import('./pages/Dashboard/Dashboard'))}</ProtectedRoute>
+      <ProtectedRoute area="client">
+        {lazyElement(() => import('./pages/Dashboard/Dashboard'))}
+      </ProtectedRoute>
     ),
   },
   {
     path: 'profile',
-    element: (
-      <ProtectedRoute>{lazyElement(() => import('./pages/Profile/Profile'))}</ProtectedRoute>
-    ),
+    element: <ProtectedRoute area="client">{profileElement}</ProtectedRoute>,
   },
 ];
-
-export const profileElement = lazyElement(() => import('./pages/Profile/Profile'));

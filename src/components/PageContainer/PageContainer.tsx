@@ -15,6 +15,8 @@ interface PageContainerProps {
   title?: ReactNode;
   /** SEO texts from the `seo` namespace; otherwise a string title is used */
   seo?: SeoPage;
+  /** Private page (account, admin): keep it out of search engines */
+  noindex?: boolean;
   subtitle?: ReactNode;
   actions?: ReactNode;
   breadcrumbs?: BreadcrumbItem[];
@@ -30,6 +32,7 @@ interface PageContainerProps {
 const PageContainer = ({
   title,
   seo,
+  noindex,
   subtitle,
   actions,
   breadcrumbs,
@@ -68,7 +71,11 @@ const PageContainer = ({
 
   return (
     <div className="page-container" style={style}>
-      {seo ? <Seo page={seo} /> : typeof title === 'string' && <Seo title={title} />}
+      {seo ? (
+        <Seo page={seo} noindex={noindex} />
+      ) : (
+        typeof title === 'string' && <Seo title={title} noindex={noindex} />
+      )}
       {showBreadcrumbs && (
         <Breadcrumb
           className="page-container-breadcrumbs"

@@ -1,31 +1,66 @@
-import { DollarOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Statistic, Typography } from 'antd';
+import { CheckCircleOutlined, TeamOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Statistic } from 'antd';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Seo from '../../../../components/Seo/Seo';
+import type { AdminOverview, Role } from '../../../../api/generated';
+import PageContainer from '../../../../components/PageContainer/PageContainer';
+import { getOverview } from '../../api';
 
-const { Title } = Typography;
+const ROLES: Role[] = ['root', 'moderator', 'user'];
 
 const AdminDashboard = () => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation(['admin', 'auth']);
+  const [overview, setOverview] = useState<AdminOverview | null>(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    getOverview()
+      .then(setOverview)
+      .catch(() => setError(true));
+  }, []);
 
   return (
-    <Card>
-      <Seo title={t('dashboard.title')} noindex />
-      <Title level={3}>{t('dashboard.title')}</Title>
-
-      <Row gutter={16}>
-        <Col span={8}>
-          <Statistic title={t('dashboard.users')} value={1128} prefix={<UserOutlined />} />
-        </Col>
-        <Col span={8}>
-          <Statistic title={t('dashboard.orders')} value={93} prefix={<ShoppingCartOutlined />} />
-        </Col>
-        <Col span={8}>
-          <Statistic title={t('dashboard.revenue')} value={5683} prefix={<DollarOutlined />} />
-        </Col>
-      </Row>
-    </Card>
+    <PageContainer
+      title={t('overview.title')}
+      subtitle={t('overview.subtitle')}
+      noindex
+      loading={!overview && !error}
+      error={error}
+    >
+      {overview && (
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic
+                title={t('overview.users')}
+                value={overview.users}
+                prefix={<TeamOutlined />}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic
+                title={t('overview.activeUsers')}
+                value={overview.active_users}
+                prefix={<CheckCircleOutlined />}
+              />
+            </Card>
+          </Col>
+          {ROLES.map((role) => (
+            <Col key={role} xs={24} sm={8}>
+              <Card>
+                <Statistic
+                  title={t(`auth:roles.${role}`)}
+                  value={overview.users_by_role[role] ?? 0}
+                />
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      )}
+    </PageContainer>
   );
 };
 

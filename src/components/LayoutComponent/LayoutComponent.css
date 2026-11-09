@@ -172,37 +172,6 @@
   min-height: calc(100vh - 64px - 70px);
 }
 
-.profile-menu {
-  background: var(--color-surface);
-  padding: 8px;
-  border-radius: 10px;
-  min-width: 200px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.profile-menu-item {
-  width: 100%;
-  text-align: left;
-  padding: 10px 12px;
-  border-radius: 6px;
-  font-weight: 500;
-  color: var(--color-text) !important;
-  transition: all 0.2s ease;
-}
-
-.profile-menu-item:hover {
-  background: var(--color-fill) !important;
-  color: var(--color-primary) !important;
-}
-
-.profile-menu-logout:hover {
-  background: color-mix(in srgb, var(--color-error) 10%, transparent) !important;
-  color: var(--color-error) !important;
-}
-
 .footer {
   display: flex;
   flex-wrap: wrap;

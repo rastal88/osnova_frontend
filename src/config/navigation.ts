@@ -1,13 +1,9 @@
-import {
-  AppstoreOutlined,
-  DashboardOutlined,
-  HomeOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
+import { AppstoreOutlined, DashboardOutlined, HomeOutlined } from '@ant-design/icons';
 import type { ParseKeys } from 'i18next';
 import type { ComponentType } from 'react';
 
 import type { BootstrapFeatures } from '../api/bootstrap';
+import type { Area } from '../api/generated';
 
 export type Capability = keyof BootstrapFeatures;
 export type MenuPosition = 'top' | 'left' | 'right';
@@ -20,9 +16,9 @@ export interface NavItem {
   label: LabelKey;
   icon?: ComponentType;
   capability?: Capability;
-  /** Shown only to signed-in users (and only to these roles, when set) */
+  /** Shown only to signed-in users (and only to those who have this area, when set) */
   requiresAuth?: boolean;
-  roles?: string[];
+  area?: Area;
 }
 
 export interface NavigationConfig {
@@ -65,14 +61,7 @@ export const navigationConfig: NavigationConfig = {
       icon: DashboardOutlined,
       capability: 'authentication',
       requiresAuth: true,
-    },
-    {
-      path: '/admin',
-      label: 'pages.admin',
-      icon: SettingOutlined,
-      capability: 'admin',
-      requiresAuth: true,
-      roles: ['root', 'moderator'],
+      area: 'client',
     },
   ],
 };
@@ -91,13 +80,25 @@ export const routeTitles: Record<string, LabelKey> = {
   '/login': 'pages.login',
   '/register': 'pages.register',
   '/admin': 'pages.admin',
-  '/admin/dashboard': 'pages.overview',
   '/admin/profile': 'pages.profile',
   '/admin/users': 'pages.users',
-  '/admin/other': 'pages.other',
 };
 
 export const redirects: { from: string; to: string }[] = [{ from: '/home', to: '/' }];
+
+/** Menu items for the current capabilities and user (guests see only public ones). */
+export function visibleNavItems(
+  items: NavItem[],
+  features: BootstrapFeatures | undefined,
+  user: { areas: Area[] } | null,
+): NavItem[] {
+  return items.filter(
+    (item) =>
+      (!item.capability || Boolean(features?.[item.capability])) &&
+      (!item.requiresAuth || user !== null) &&
+      (!item.area || Boolean(user?.areas.includes(item.area))),
+  );
+}
 
 export function findActiveNavPath(pathname: string, items: NavItem[]): string | undefined {
   return items

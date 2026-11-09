@@ -5,6 +5,56 @@ export type ClientOptions = {
 };
 
 /**
+ * AdminOverview
+ */
+export type AdminOverview = {
+    /**
+     * Users
+     */
+    users: number;
+    /**
+     * Active Users
+     */
+    active_users: number;
+    /**
+     * Users By Role
+     */
+    users_by_role: {
+        [key in Role]?: number;
+    };
+};
+
+/**
+ * AdminUser
+ */
+export type AdminUser = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Email
+     */
+    email: string;
+    role: Role;
+    /**
+     * Is Active
+     */
+    is_active: boolean;
+    /**
+     * Is Verified
+     */
+    is_verified: boolean;
+};
+
+/**
+ * Area
+ *
+ * Parts of the interface: the public area needs no sign-in and is not listed.
+ */
+export type Area = 'admin' | 'client';
+
+/**
  * Body_auth_cookie_login_api_v1_auth_login_post
  */
 export type BodyAuthCookieLoginApiV1AuthLoginPost = {
@@ -170,6 +220,17 @@ export type BootstrapResponse = {
 };
 
 /**
+ * ClientSummary
+ */
+export type ClientSummary = {
+    /**
+     * Email
+     */
+    email: string;
+    role: Role;
+};
+
+/**
  * FormDescription
  */
 export type FormDescription = {
@@ -323,6 +384,12 @@ export type UserRead = {
      */
     is_verified?: boolean;
     role: Role;
+    /**
+     * Areas
+     *
+     * Areas the user can open; the frontend lands on the first one after sign-in.
+     */
+    readonly areas: Array<Area>;
 };
 
 /**
@@ -389,6 +456,33 @@ export type ErrorResponse = {
      * Request Id
      */
     request_id?: string | null;
+};
+
+/**
+ * UserRead
+ */
+export type UserReadWritable = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Email
+     */
+    email: string;
+    /**
+     * Is Active
+     */
+    is_active?: boolean;
+    /**
+     * Is Superuser
+     */
+    is_superuser?: boolean;
+    /**
+     * Is Verified
+     */
+    is_verified?: boolean;
+    role: Role;
 };
 
 export type BootstrapApiV1BootstrapGetData = {
@@ -865,47 +959,55 @@ export type UsersPatchUserApiV1AuthUsersIdPatchResponses = {
 
 export type UsersPatchUserApiV1AuthUsersIdPatchResponse = UsersPatchUserApiV1AuthUsersIdPatchResponses[keyof UsersPatchUserApiV1AuthUsersIdPatchResponses];
 
-export type UserProfileApiV1UserFlowMainGetData = {
+export type ClientSummaryApiV1ClientSummaryGetData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/v1/user_flow/main';
+    url: '/api/v1/client/summary';
 };
 
-export type UserProfileApiV1UserFlowMainGetResponses = {
+export type ClientSummaryApiV1ClientSummaryGetResponses = {
     /**
      * Successful Response
      */
-    200: unknown;
+    200: ClientSummary;
 };
 
-export type AdminDashboardApiV1AdminFlowMainGetData = {
+export type ClientSummaryApiV1ClientSummaryGetResponse = ClientSummaryApiV1ClientSummaryGetResponses[keyof ClientSummaryApiV1ClientSummaryGetResponses];
+
+export type AdminOverviewApiV1AdminOverviewGetData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/v1/admin_flow/main';
+    url: '/api/v1/admin/overview';
 };
 
-export type AdminDashboardApiV1AdminFlowMainGetResponses = {
+export type AdminOverviewApiV1AdminOverviewGetResponses = {
     /**
      * Successful Response
      */
-    200: unknown;
+    200: AdminOverview;
 };
 
-export type ListAllUsersApiV1AdminFlowUsersGetData = {
+export type AdminOverviewApiV1AdminOverviewGetResponse = AdminOverviewApiV1AdminOverviewGetResponses[keyof AdminOverviewApiV1AdminOverviewGetResponses];
+
+export type ListUsersApiV1AdminUsersGetData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/v1/admin_flow/users';
+    url: '/api/v1/admin/users';
 };
 
-export type ListAllUsersApiV1AdminFlowUsersGetResponses = {
+export type ListUsersApiV1AdminUsersGetResponses = {
     /**
+     * Response List Users Api V1 Admin Users Get
+     *
      * Successful Response
      */
-    200: unknown;
+    200: Array<AdminUser>;
 };
+
+export type ListUsersApiV1AdminUsersGetResponse = ListUsersApiV1AdminUsersGetResponses[keyof ListUsersApiV1AdminUsersGetResponses];
 
 export type UploadFileApiV1FileFlowUploadPostData = {
     body: BodyUploadFileApiV1FileFlowUploadPost;

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getErrorMessage } from '../../../../api/errors';
 import { login } from '../../api';
+import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
 
@@ -26,7 +27,7 @@ const Login = () => {
     try {
       await login(email, password);
       const user = await fetchUser();
-      navigate(user?.role === 'root' || user?.role === 'moderator' ? '/admin' : '/');
+      navigate(landingPath(user));
     } catch (err: unknown) {
       setError(getErrorMessage(err));
     } finally {
