@@ -1,0 +1,10 @@
+{
+  "title": "Notifications",
+  "open": "Notifications",
+  "openUnread_one": "Notifications, {{count}} unread",
+  "openUnread_other": "Notifications, {{count}} unread",
+  "readAll": "Mark all read",
+  "empty": "No notifications yet",
+  "failed": "Could not load notifications.",
+  "retry": "Try again"
+}

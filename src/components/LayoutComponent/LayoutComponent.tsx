@@ -21,6 +21,7 @@ import {
   visibleNavItems,
 } from '../../config/navigation';
 import { AREA_HOME, areaOfPath, otherArea, useAuthStore } from '../../modules/auth';
+import { NotificationBell } from '../../modules/notifications';
 import { LEGAL_LINKS } from '../../pages/Legal';
 import { useBootstrapStore } from '../../store/bootstrapStore';
 import { ThemeContext } from '../AppComponent/AppComponent';
@@ -198,6 +199,8 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
         <div className="app-header-actions">
           <LanguageSwitcher />
           <ThemeSwitcher value={themeName} onChange={setThemeName} />
+
+          {features?.notifications && isAuthenticated && <NotificationBell />}
 
           {authEnabled && !isAuthenticated && (
             <Button

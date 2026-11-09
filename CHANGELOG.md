@@ -7,6 +7,10 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Notifications module (`src/modules/notifications`, `notifications` capability): a bell in
+  the header with the unread count (refreshed every minute while the page is visible and when
+  it becomes visible again), the latest notifications, open-and-mark-read, **Mark all read**;
+  lazy-loaded, with an accessible label that includes the count.
 - Files module (`src/modules/files`, `files` capability): **My files** in the client area —
   drag-and-drop upload of several files with progress, a server-side table with search,
   size and upload time, download links, delete with confirmation; a menu item for

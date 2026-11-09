@@ -8,6 +8,7 @@ import type files from '../locales/en/files.json';
 import type forms from '../locales/en/forms.json';
 import type home from '../locales/en/home.json';
 import type legal from '../locales/en/legal.json';
+import type notifications from '../locales/en/notifications.json';
 import type seo from '../locales/en/seo.json';
 
 // Keys are checked against the English files at compile time.
@@ -24,6 +25,7 @@ declare module 'i18next' {
       files: typeof files;
       seo: typeof seo;
       legal: typeof legal;
+      notifications: typeof notifications;
     };
   }
 }

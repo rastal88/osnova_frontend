@@ -44,6 +44,10 @@ With `authentication` on, the app has three areas in the same shell:
 - **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
   form / status filters, a drawer with the answers under their translated labels
   (`GET /admin/leads/forms`), mark done / new, delete.
+- **Notifications** (`src/modules/notifications`, `notifications` capability): the bell in
+  the header for signed-in users — unread count (asked every minute while the page is
+  visible, `polling.ts`), the latest notifications in the backend's language, a click opens
+  the notification's link and marks it read, **Mark all read**. The bell is lazy-loaded.
 - **My files** (`/files`, `src/modules/files`): the client-area page of the `files`
   capability — drag-and-drop upload with progress, the user's files in a server-side
   `DataTable` with search, download links, delete. Files are private on the backend (owner
@@ -141,7 +145,7 @@ const MyPage = () => (
 
 - Library: react-i18next. Setup: `src/i18n/index.ts`.
 - Files: `src/locales/<language>/<namespace>.json`. Namespaces: `common` (shell, states,
-  errors), `home`, `seo`, `forms`, `legal`, `examples` and one per module (`auth`, `admin`, `files`).
+  errors), `home`, `seo`, `forms`, `legal`, `examples` and one per module (`auth`, `admin`, `files`, `notifications`).
 - English is the source language: add every key to `en` first. Keys are type-checked
   against the English files, so a typo fails `npm run build`.
 - Only English `common` is in the main bundle; other files are separate chunks loaded
