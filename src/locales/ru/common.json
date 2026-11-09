@@ -17,7 +17,8 @@
     "cookies": "Политика cookies",
     "settings": "Настройки",
     "leads": "Заявки",
-    "channels": "Каналы"
+    "channels": "Каналы",
+    "files": "Мои файлы"
   },
   "cookieBanner": {
     "label": "Согласие на cookies",

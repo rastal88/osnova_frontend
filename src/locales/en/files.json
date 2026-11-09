@@ -1,0 +1,15 @@
+{
+  "title": "My files",
+  "subtitle": "Only you and the administrators can open them",
+  "drop": "Click or drop files here to upload",
+  "dropHint": "Several files at once are fine",
+  "uploaded": "{{name}} uploaded",
+  "search": "Search by name",
+  "columns": {
+    "name": "Name",
+    "size": "Size",
+    "uploaded": "Uploaded"
+  },
+  "delete": "Delete",
+  "deleteConfirm": "Delete {{name}}? It cannot be restored."
+}

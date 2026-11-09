@@ -7,6 +7,10 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Files module (`src/modules/files`, `files` capability): **My files** in the client area —
+  drag-and-drop upload of several files with progress, a server-side table with search,
+  size and upload time, download links, delete with confirmation; a menu item for
+  signed-in users. `formatSize` with unit tests.
 - Admin → Channels: lead delivery channels (email, Telegram, webhook) — list with on / off
   switches, add and edit in a form generated from the type, **Test** (shows the receiver's
   error), delete. Read-only for moderators. Enter submits the form.

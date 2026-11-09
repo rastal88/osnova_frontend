@@ -1,4 +1,9 @@
-import { AppstoreOutlined, DashboardOutlined, HomeOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  DashboardOutlined,
+  FolderOutlined,
+  HomeOutlined,
+} from '@ant-design/icons';
 import type { ParseKeys } from 'i18next';
 import type { ComponentType } from 'react';
 
@@ -63,6 +68,14 @@ export const navigationConfig: NavigationConfig = {
       requiresAuth: true,
       area: 'client',
     },
+    {
+      path: '/files',
+      label: 'pages.files',
+      icon: FolderOutlined,
+      capability: 'files',
+      requiresAuth: true,
+      area: 'client',
+    },
   ],
 };
 
@@ -77,6 +90,7 @@ export const routeTitles: Record<string, LabelKey> = {
   '/cookies': 'pages.cookies',
   '/dashboard': 'pages.dashboard',
   '/profile': 'pages.profile',
+  '/files': 'pages.files',
   '/login': 'pages.login',
   '/register': 'pages.register',
   '/admin': 'pages.admin',

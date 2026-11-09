@@ -10,6 +10,7 @@ import { exampleRoutes } from '../examples';
 import { languageFromPath } from '../i18n/language';
 import { adminRoute } from '../modules/admin';
 import { authLayoutRoutes, authPublicRoutes } from '../modules/auth';
+import { filesRoutes } from '../modules/files';
 import Home from '../pages/Home/Home';
 import { legalRoutes } from '../pages/Legal';
 import NotFound from '../pages/NotFound/NotFound';
@@ -31,6 +32,7 @@ const createAppRouter = (features: BootstrapFeatures, language: string) => {
   if (features.authentication) {
     routes.push(...authPublicRoutes);
     layoutChildren.push(...authLayoutRoutes);
+    if (features.files) layoutChildren.push(...filesRoutes);
   }
 
   routes.push({
