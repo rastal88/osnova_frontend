@@ -45,6 +45,42 @@ export type AdminUser = {
      * Is Verified
      */
     is_verified: boolean;
+    /**
+     * Date Created
+     */
+    date_created: string | null;
+    /**
+     * Last Login
+     */
+    last_login: string | null;
+};
+
+/**
+ * AdminUserPage
+ */
+export type AdminUserPage = {
+    /**
+     * Items
+     */
+    items: Array<AdminUser>;
+    /**
+     * Total
+     */
+    total: number;
+};
+
+/**
+ * AdminUserUpdate
+ */
+export type AdminUserUpdate = {
+    /**
+     * Is Active
+     */
+    is_active?: boolean | null;
+    /**
+     * Role
+     */
+    role?: 'user' | 'moderator' | null;
 };
 
 /**
@@ -1026,20 +1062,88 @@ export type AdminOverviewApiV1AdminOverviewGetResponse = AdminOverviewApiV1Admin
 export type ListUsersApiV1AdminUsersGetData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Q
+         *
+         * Part of the email
+         */
+        q?: string;
+        /**
+         * Page
+         */
+        page?: number;
+        /**
+         * Size
+         */
+        size?: number;
+        /**
+         * Sort
+         */
+        sort?: 'email' | '-email' | 'role' | '-role' | 'date_created' | '-date_created' | 'last_login' | '-last_login';
+        /**
+         * Role
+         *
+         * Comma-separated roles
+         */
+        role?: string | null;
+        /**
+         * Status
+         *
+         * Comma-separated: active, blocked
+         */
+        status?: string | null;
+    };
     url: '/api/v1/admin/users';
 };
 
+export type ListUsersApiV1AdminUsersGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ListUsersApiV1AdminUsersGetError = ListUsersApiV1AdminUsersGetErrors[keyof ListUsersApiV1AdminUsersGetErrors];
+
 export type ListUsersApiV1AdminUsersGetResponses = {
     /**
-     * Response List Users Api V1 Admin Users Get
-     *
      * Successful Response
      */
-    200: Array<AdminUser>;
+    200: AdminUserPage;
 };
 
 export type ListUsersApiV1AdminUsersGetResponse = ListUsersApiV1AdminUsersGetResponses[keyof ListUsersApiV1AdminUsersGetResponses];
+
+export type UpdateUserApiV1AdminUsersUserIdPatchData = {
+    body: AdminUserUpdate;
+    path: {
+        /**
+         * User Id
+         */
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/users/{user_id}';
+};
+
+export type UpdateUserApiV1AdminUsersUserIdPatchErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type UpdateUserApiV1AdminUsersUserIdPatchError = UpdateUserApiV1AdminUsersUserIdPatchErrors[keyof UpdateUserApiV1AdminUsersUserIdPatchErrors];
+
+export type UpdateUserApiV1AdminUsersUserIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: AdminUser;
+};
+
+export type UpdateUserApiV1AdminUsersUserIdPatchResponse = UpdateUserApiV1AdminUsersUserIdPatchResponses[keyof UpdateUserApiV1AdminUsersUserIdPatchResponses];
 
 export type ListSettingsApiV1AdminSettingsGetData = {
     body?: never;
