@@ -7,6 +7,10 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Admin → Users: a server-side table (`GET /admin/users`) with search by email, role and
+  status filters, sorting and pages kept in the URL; block / unblock with confirmation and a
+  role select for root. Actions appear only where the backend allows them.
+- `DataTable` `refreshKey` prop: reloads the current page of remote data.
 - Admin → Settings: one card per backend settings group, rendered from its description;
   saving (root only) re-reads `/bootstrap`, so the site name, footer contacts and
   languages change without a reload. Moderators see the settings read-only.

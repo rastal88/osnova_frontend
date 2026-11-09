@@ -45,6 +45,8 @@ export type DataTableProps<T> = Source<T> & {
   searchPlaceholder?: string;
   /** Extra controls next to the search box */
   toolbar?: ReactNode;
+  /** Remote data: a new value fetches the current page again (e.g. after a row changed) */
+  refreshKey?: unknown;
 };
 
 const SEARCH_DELAY_MS = 300;
@@ -61,6 +63,7 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
     urlPrefix = '',
     searchPlaceholder,
     toolbar,
+    refreshKey,
   } = props;
   const { t, i18n } = useTranslation();
   const [params, setParams] = useSearchParams();
@@ -125,7 +128,7 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `attempt` triggers a retry
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `attempt` and `refreshKey` trigger a reload
   useEffect(() => {
     const fetch = fetchRef.current;
     if (!fetch) return;
@@ -147,7 +150,7 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
     return () => {
       active = false;
     };
-  }, [queryKey, attempt]);
+  }, [queryKey, attempt, refreshKey]);
 
   const page = localPage ?? remotePage ?? { items: [], total: 0 };
   const current = Math.min(query.page, lastPage(page.total, query.pageSize));

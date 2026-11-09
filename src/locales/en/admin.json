@@ -11,5 +11,27 @@
     "save": "Save",
     "saved": "Saved",
     "readOnly": "Only root can change the settings."
+  },
+  "users": {
+    "title": "Users",
+    "subtitle": "Search, block and change roles",
+    "search": "Search by email",
+    "columns": {
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "created": "Signed up",
+      "lastLogin": "Last sign-in",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "blocked": "Blocked"
+    },
+    "block": "Block",
+    "unblock": "Unblock",
+    "blockConfirm": "Block {{email}}? They will lose access at once.",
+    "unblockConfirm": "Unblock {{email}}?",
+    "saved": "Saved"
   }
 }

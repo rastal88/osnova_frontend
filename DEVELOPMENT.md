@@ -37,6 +37,9 @@ With `authentication` on, the app has three areas in the same shell:
 - Guard a page with `<ProtectedRoute area="client">` or `area="admin"`: guests go to
   `/login`, users without the area go to their own start page.
 - The user menu has a switch to the other area when the user has two.
+- **Admin → Users** (`/admin/users`): server-side `DataTable` over `GET /admin/users` with
+  search, role / status filters, sorting; block / unblock and the role select are shown
+  only where the backend allows them (`src/modules/admin/pages/Users/permissions.ts`).
 - The admin area passes its own menu to the shell: `adminNavItems` in
   `src/modules/admin/navigation.ts`. Add an item there for a new admin section, and its
   route to `adminRoute.children` in `src/modules/admin/index.tsx`.
@@ -242,6 +245,8 @@ the page opens in the default one.
   - `data={rows}`: everything runs in the browser (`searchable`, `sortable`, `filters` on columns).
   - `fetch={(query) => api...}`: the server gets `{ page, pageSize, search, sort, filters }`
     and returns `{ items, total }`; the table shows a loader and an error with retry.
+    A new `refreshKey` value fetches the current page again (e.g. after a row was changed).
+    The backend lists use the same URL names (see `getUsers` in `src/modules/admin/api.ts`).
   - Column `key` is the field name and the URL parameter, so `q`, `page`, `size`, `sort` are reserved.
     Define columns with `useMemo`.
 - **Formatting**: `useFormat()` (`src/i18n/format.ts`) — `date`, `dateTime`, `time`,
