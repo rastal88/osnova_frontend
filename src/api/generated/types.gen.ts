@@ -261,6 +261,10 @@ export type BootstrapResponse = {
     profile: 'minimal' | 'standard' | 'scalable';
     i18n: BootstrapI18n;
     features: BootstrapFeatures;
+    /**
+     * Auth Providers
+     */
+    auth_providers: Array<string>;
 };
 
 /**
@@ -670,6 +674,16 @@ export type NotificationRead = {
      * Created At
      */
     created_at: string;
+};
+
+/**
+ * OAuth2AuthorizeResponse
+ */
+export type OAuth2AuthorizeResponse = {
+    /**
+     * Authorization Url
+     */
+    authorization_url: string;
 };
 
 /**
@@ -1336,6 +1350,80 @@ export type UsersPatchUserApiV1AuthUsersIdPatchResponses = {
 };
 
 export type UsersPatchUserApiV1AuthUsersIdPatchResponse = UsersPatchUserApiV1AuthUsersIdPatchResponses[keyof UsersPatchUserApiV1AuthUsersIdPatchResponses];
+
+export type OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Scopes
+         */
+        scopes?: Array<string>;
+    };
+    url: '/api/v1/auth/google/authorize';
+};
+
+export type OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetError = OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetErrors[keyof OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetErrors];
+
+export type OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: OAuth2AuthorizeResponse;
+};
+
+export type OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetResponse = OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetResponses[keyof OauthGoogleCookieAuthorizeApiV1AuthGoogleAuthorizeGetResponses];
+
+export type OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Code
+         */
+        code?: string | null;
+        /**
+         * Code Verifier
+         */
+        code_verifier?: string | null;
+        /**
+         * State
+         */
+        state?: string | null;
+        /**
+         * Error
+         */
+        error?: string | null;
+    };
+    url: '/api/v1/auth/google/callback';
+};
+
+export type OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetErrors = {
+    /**
+     * Bad Request
+     */
+    400: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetError = OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetErrors[keyof OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetErrors];
+
+export type OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
 
 export type ClientSummaryApiV1ClientSummaryGetData = {
     body?: never;

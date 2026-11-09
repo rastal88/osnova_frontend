@@ -36,6 +36,11 @@ export const authPublicRoutes: RouteObject[] = [
     path: '/reset-password',
     element: lazyElement(() => import('./pages/ResetPassword/ResetPassword')),
   },
+  // Sign-in with an external provider returns here (backend: app/modules/auth/oauth.py)
+  {
+    path: '/oauth/:provider/callback',
+    element: lazyElement(() => import('./pages/OAuthCallback/OAuthCallback')),
+  },
 ];
 
 /** Client area: pages inside the main layout for any signed-in user. */

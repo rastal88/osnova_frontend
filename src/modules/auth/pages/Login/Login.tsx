@@ -8,6 +8,7 @@ import { login } from '../../api';
 import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
+import OAuthButtons from '../../components/OAuthButtons';
 
 interface LoginValues {
   email: string;
@@ -45,6 +46,7 @@ const Login = () => {
         </>
       }
     >
+      <OAuthButtons onError={setError} />
       <Form<LoginValues> layout="vertical" requiredMark={false} onFinish={handleLogin}>
         <Form.Item
           name="email"
