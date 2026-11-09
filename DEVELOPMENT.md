@@ -44,6 +44,11 @@ With `authentication` on, the app has three areas in the same shell:
 - **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
   form / status filters, a drawer with the answers under their translated labels
   (`GET /admin/leads/forms`), mark done / new, delete.
+- **Admin → Channels** (`/admin/channels`): lead delivery channels — configurable entities of
+  the group `lead_channels` (`/admin/entities`). The add / edit form is generated from the
+  type description (`SchemaFields` with `namePrefix="params"`); secrets come as `********`
+  and are kept when sent back. Root adds, edits, turns on / off, tests and deletes; the lead
+  drawer shows the delivery result per channel.
 - **Admin → Users** (`/admin/users`): server-side `DataTable` over `GET /admin/users` with
   search, role / status filters, sorting; block / unblock and the role select are shown
   only where the backend allows them (`src/modules/admin/pages/Users/permissions.ts`).
@@ -199,7 +204,7 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 
 - `GET /forms/<name>` returns the title, submit label and fields (labels already in the
   current language); the form reloads it when the language changes.
-- Field types: `text`, `textarea`, `email`, `tel`, `select`, `multiselect`, `checkbox`, `consent`.
+- Field types: `text`, `textarea`, `email`, `tel`, `password`, `select`, `multiselect`, `checkbox`, `consent`.
   Client rules (required, length, pattern, checked) come from the same description as the
   server ones, so most mistakes are caught before sending.
 - A hidden honeypot field is rendered when the description has one; bots that fill it

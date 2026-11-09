@@ -264,6 +264,20 @@ export type BootstrapResponse = {
 };
 
 /**
+ * ChannelTestResult
+ */
+export type ChannelTestResult = {
+    /**
+     * Ok
+     */
+    ok: boolean;
+    /**
+     * Error
+     */
+    error: string | null;
+};
+
+/**
  * ClientSummary
  */
 export type ClientSummary = {
@@ -272,6 +286,104 @@ export type ClientSummary = {
      */
     email: string;
     role: Role;
+};
+
+/**
+ * EntityCreate
+ */
+export type EntityCreate = {
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Enabled
+     */
+    enabled?: boolean;
+    /**
+     * Params
+     */
+    params?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * EntityRead
+ */
+export type EntityRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Enabled
+     */
+    enabled: boolean;
+    /**
+     * Params
+     */
+    params: {
+        [key: string]: unknown;
+    };
+    /**
+     * Created At
+     */
+    created_at: string;
+};
+
+/**
+ * EntityTypeDescription
+ */
+export type EntityTypeDescription = {
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Group
+     */
+    group: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Fields
+     */
+    fields: Array<FormFieldDescription>;
+};
+
+/**
+ * EntityUpdate
+ */
+export type EntityUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Enabled
+     */
+    enabled?: boolean | null;
+    /**
+     * Params
+     */
+    params?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 /**
@@ -311,7 +423,7 @@ export type FormFieldDescription = {
     /**
      * Type
      */
-    type: 'text' | 'textarea' | 'email' | 'tel' | 'select' | 'multiselect' | 'checkbox' | 'consent';
+    type: 'text' | 'textarea' | 'email' | 'tel' | 'password' | 'select' | 'multiselect' | 'checkbox' | 'consent';
     /**
      * Label
      */
@@ -373,6 +485,36 @@ export type HealthResponse = {
 };
 
 /**
+ * LeadDelivery
+ */
+export type LeadDelivery = {
+    /**
+     * Channel
+     */
+    channel: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Status
+     */
+    status: 'sent' | 'failed';
+    /**
+     * Error
+     */
+    error: string | null;
+    /**
+     * Final
+     */
+    final?: boolean;
+    /**
+     * At
+     */
+    at: string;
+};
+
+/**
  * LeadPage
  */
 export type LeadPage = {
@@ -416,6 +558,12 @@ export type LeadRead = {
      * Created At
      */
     created_at: string;
+    /**
+     * Deliveries
+     */
+    deliveries: {
+        [key: string]: LeadDelivery;
+    };
 };
 
 /**
@@ -1201,6 +1349,157 @@ export type UpdateUserApiV1AdminUsersUserIdPatchResponses = {
 
 export type UpdateUserApiV1AdminUsersUserIdPatchResponse = UpdateUserApiV1AdminUsersUserIdPatchResponses[keyof UpdateUserApiV1AdminUsersUserIdPatchResponses];
 
+export type ListTypesApiV1AdminEntitiesTypesGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Group
+         */
+        group?: string | null;
+    };
+    url: '/api/v1/admin/entities/types';
+};
+
+export type ListTypesApiV1AdminEntitiesTypesGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ListTypesApiV1AdminEntitiesTypesGetError = ListTypesApiV1AdminEntitiesTypesGetErrors[keyof ListTypesApiV1AdminEntitiesTypesGetErrors];
+
+export type ListTypesApiV1AdminEntitiesTypesGetResponses = {
+    /**
+     * Response List Types Api V1 Admin Entities Types Get
+     *
+     * Successful Response
+     */
+    200: Array<EntityTypeDescription>;
+};
+
+export type ListTypesApiV1AdminEntitiesTypesGetResponse = ListTypesApiV1AdminEntitiesTypesGetResponses[keyof ListTypesApiV1AdminEntitiesTypesGetResponses];
+
+export type ListEntitiesApiV1AdminEntitiesGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Group
+         *
+         * Only types of this group
+         */
+        group?: string | null;
+    };
+    url: '/api/v1/admin/entities';
+};
+
+export type ListEntitiesApiV1AdminEntitiesGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ListEntitiesApiV1AdminEntitiesGetError = ListEntitiesApiV1AdminEntitiesGetErrors[keyof ListEntitiesApiV1AdminEntitiesGetErrors];
+
+export type ListEntitiesApiV1AdminEntitiesGetResponses = {
+    /**
+     * Response List Entities Api V1 Admin Entities Get
+     *
+     * Successful Response
+     */
+    200: Array<EntityRead>;
+};
+
+export type ListEntitiesApiV1AdminEntitiesGetResponse = ListEntitiesApiV1AdminEntitiesGetResponses[keyof ListEntitiesApiV1AdminEntitiesGetResponses];
+
+export type CreateEntityApiV1AdminEntitiesPostData = {
+    body: EntityCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/entities';
+};
+
+export type CreateEntityApiV1AdminEntitiesPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type CreateEntityApiV1AdminEntitiesPostError = CreateEntityApiV1AdminEntitiesPostErrors[keyof CreateEntityApiV1AdminEntitiesPostErrors];
+
+export type CreateEntityApiV1AdminEntitiesPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: EntityRead;
+};
+
+export type CreateEntityApiV1AdminEntitiesPostResponse = CreateEntityApiV1AdminEntitiesPostResponses[keyof CreateEntityApiV1AdminEntitiesPostResponses];
+
+export type DeleteEntityApiV1AdminEntitiesEntityIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Entity Id
+         */
+        entity_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/entities/{entity_id}';
+};
+
+export type DeleteEntityApiV1AdminEntitiesEntityIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteEntityApiV1AdminEntitiesEntityIdDeleteError = DeleteEntityApiV1AdminEntitiesEntityIdDeleteErrors[keyof DeleteEntityApiV1AdminEntitiesEntityIdDeleteErrors];
+
+export type DeleteEntityApiV1AdminEntitiesEntityIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteEntityApiV1AdminEntitiesEntityIdDeleteResponse = DeleteEntityApiV1AdminEntitiesEntityIdDeleteResponses[keyof DeleteEntityApiV1AdminEntitiesEntityIdDeleteResponses];
+
+export type UpdateEntityApiV1AdminEntitiesEntityIdPutData = {
+    body: EntityUpdate;
+    path: {
+        /**
+         * Entity Id
+         */
+        entity_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/entities/{entity_id}';
+};
+
+export type UpdateEntityApiV1AdminEntitiesEntityIdPutErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type UpdateEntityApiV1AdminEntitiesEntityIdPutError = UpdateEntityApiV1AdminEntitiesEntityIdPutErrors[keyof UpdateEntityApiV1AdminEntitiesEntityIdPutErrors];
+
+export type UpdateEntityApiV1AdminEntitiesEntityIdPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: EntityRead;
+};
+
+export type UpdateEntityApiV1AdminEntitiesEntityIdPutResponse = UpdateEntityApiV1AdminEntitiesEntityIdPutResponses[keyof UpdateEntityApiV1AdminEntitiesEntityIdPutResponses];
+
 export type LeadFormsApiV1AdminLeadsFormsGetData = {
     body?: never;
     path?: never;
@@ -1218,6 +1517,36 @@ export type LeadFormsApiV1AdminLeadsFormsGetResponses = {
 };
 
 export type LeadFormsApiV1AdminLeadsFormsGetResponse = LeadFormsApiV1AdminLeadsFormsGetResponses[keyof LeadFormsApiV1AdminLeadsFormsGetResponses];
+
+export type TestChannelApiV1AdminLeadsChannelsChannelIdTestPostData = {
+    body?: never;
+    path: {
+        /**
+         * Channel Id
+         */
+        channel_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/leads/channels/{channel_id}/test';
+};
+
+export type TestChannelApiV1AdminLeadsChannelsChannelIdTestPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type TestChannelApiV1AdminLeadsChannelsChannelIdTestPostError = TestChannelApiV1AdminLeadsChannelsChannelIdTestPostErrors[keyof TestChannelApiV1AdminLeadsChannelsChannelIdTestPostErrors];
+
+export type TestChannelApiV1AdminLeadsChannelsChannelIdTestPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: ChannelTestResult;
+};
+
+export type TestChannelApiV1AdminLeadsChannelsChannelIdTestPostResponse = TestChannelApiV1AdminLeadsChannelsChannelIdTestPostResponses[keyof TestChannelApiV1AdminLeadsChannelsChannelIdTestPostResponses];
 
 export type ListLeadsApiV1AdminLeadsGetData = {
     body?: never;

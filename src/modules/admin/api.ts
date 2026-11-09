@@ -4,6 +4,9 @@ import type {
   AdminOverview,
   AdminUser,
   AdminUserPage,
+  ChannelTestResult,
+  EntityRead,
+  EntityTypeDescription,
   FormDescription,
   LeadPage,
   LeadRead,
@@ -74,4 +77,42 @@ export async function updateLead(id: string, status: LeadRead['status']): Promis
 
 export async function deleteLead(id: string) {
   await api.delete(`/admin/leads/${id}`);
+}
+
+/** Configurable entities of one group (e.g. "lead_channels") and their types. */
+export async function getEntityTypes(group: string): Promise<EntityTypeDescription[]> {
+  const response = await api.get<EntityTypeDescription[]>('/admin/entities/types', {
+    params: { group },
+  });
+  return response.data;
+}
+
+export async function getEntities(group: string): Promise<EntityRead[]> {
+  const response = await api.get<EntityRead[]>('/admin/entities', { params: { group } });
+  return response.data;
+}
+
+export interface EntityValues {
+  name: string;
+  enabled?: boolean;
+  params?: FormValues;
+}
+
+export async function createEntity(type: string, values: EntityValues): Promise<EntityRead> {
+  const response = await api.post<EntityRead>('/admin/entities', { type, ...values });
+  return response.data;
+}
+
+export async function updateEntity(id: string, values: Partial<EntityValues>): Promise<EntityRead> {
+  const response = await api.put<EntityRead>(`/admin/entities/${id}`, values);
+  return response.data;
+}
+
+export async function deleteEntity(id: string) {
+  await api.delete(`/admin/entities/${id}`);
+}
+
+export async function testChannel(id: string): Promise<ChannelTestResult> {
+  const response = await api.post<ChannelTestResult>(`/admin/leads/channels/${id}/test`);
+  return response.data;
 }

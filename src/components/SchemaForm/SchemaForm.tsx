@@ -88,6 +88,9 @@ function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): Reac
       return <Input inputMode="email" autoComplete="email" maxLength={maxLength} />;
     case 'tel':
       return <Input inputMode="tel" autoComplete="tel" maxLength={maxLength} />;
+    case 'password':
+      // A token or key, not the user's own password: keep the browser from filling it
+      return <Input.Password autoComplete="off" maxLength={maxLength} />;
     case 'select':
       return <Select options={field.options} allowClear={!field.required} />;
     case 'multiselect':
@@ -109,15 +112,21 @@ function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): Reac
   }
 }
 
+interface SchemaFieldsProps {
+  fields: FormFieldDescription[];
+  /** Nest the values under this name, e.g. "params" → { params: { chat_id } } */
+  namePrefix?: string;
+}
+
 /** The form items for a list of described fields: use inside an Ant Design `Form`. */
-export const SchemaFields = ({ fields }: { fields: FormFieldDescription[] }) => {
+export const SchemaFields = ({ fields, namePrefix }: SchemaFieldsProps) => {
   const { t } = useTranslation('forms');
   return fields.map((field) => {
     const isCheckbox = field.type === 'checkbox' || field.type === 'consent';
     return (
       <Form.Item
         key={field.name}
-        name={field.name}
+        name={namePrefix ? [namePrefix, field.name] : field.name}
         label={isCheckbox ? undefined : field.label}
         required={field.required}
         rules={rulesFor(field, t)}

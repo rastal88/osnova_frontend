@@ -7,6 +7,12 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Admin → Channels: lead delivery channels (email, Telegram, webhook) — list with on / off
+  switches, add and edit in a form generated from the type, **Test** (shows the receiver's
+  error), delete. Read-only for moderators. Enter submits the form.
+- The lead drawer shows the delivery result per channel (sent / failed, time, error).
+- `SchemaFields` `namePrefix` for nested values; `password` field type.
+- Per-field server errors for nested fields (`params.chat_id`) appear under the right field.
 - Admin → Leads: stored form submissions in a server-side table (received, form, a short
   summary, status) with search and filters in the URL; a drawer shows every answer under its
   translated label (option labels, yes / no) with **Mark done / new** and **Delete**.
