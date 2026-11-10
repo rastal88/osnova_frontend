@@ -1,0 +1,22 @@
+.profile {
+  width: 100%;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.profile-name {
+  margin: 0;
+}
+
+.profile-email {
+  color: var(--color-text-secondary);
+}
+
+.profile-danger {
+  border-color: var(--color-error);
+}

@@ -6,6 +6,16 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Profile: the user manages the account — name; password (current one asked; other devices
+  are signed out); email (confirmed again); **Sign out everywhere**; **Delete account** with a
+  confirmation (password, or the email for accounts that sign in only with Google; root cannot).
+  Server errors appear under the right field. All in the lazy profile chunk.
+- `useAuthStore` `setUser` / `clear`; account calls in `src/modules/auth/api.ts`.
+
+### Changed
+- API types regenerated (`/auth/me/*`, `name`).
+
 ## [0.2.0] - 2026-11-10
 
 The `standard` profile: sign-in and areas, admin (overview, users, leads, settings,

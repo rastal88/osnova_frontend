@@ -47,6 +47,9 @@ With `authentication` on, the app has three areas in the same shell:
   `/reset-password?token=` (from **Forgot password?** on the sign-in page,
   `/forgot-password`); these standalone pages live in `src/modules/auth/pages`. Until the
   email is confirmed, the profile shows a notice with **Send again**.
+- **Profile** (`/profile`, the same for every role): name, password, email, sign out
+  everywhere, delete account (`src/modules/auth/pages/Profile`); each change asks for the
+  current password (backend `/auth/me/*`).
 - **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
   form / status filters, a drawer with the answers under their translated labels
   (`GET /admin/leads/forms`), mark done / new, delete.

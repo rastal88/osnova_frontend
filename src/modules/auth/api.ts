@@ -1,6 +1,12 @@
 import qs from 'qs';
 import api from '../../api/axios';
-import type { OAuth2AuthorizeResponse, UserRead } from '../../api/generated';
+import type {
+  AccountDelete,
+  EmailChange,
+  OAuth2AuthorizeResponse,
+  PasswordChange,
+  UserRead,
+} from '../../api/generated';
 
 export const getCurrentUser = async (): Promise<UserRead> => {
   const response = await api.get<UserRead>('/auth/users/me', { skipAuthRedirect: true });
@@ -66,4 +72,32 @@ export async function getOAuthUrl(provider: string): Promise<string> {
 /** Finishes the provider sign-in with the query string the provider sent back. */
 export async function finishOAuth(provider: string, search: string) {
   await api.get(`/auth/${provider}/callback${search}`, { skipAuthRedirect: true });
+}
+
+// The signed-in user's own account (backend: app/modules/auth/account.py).
+// Each change asks for the current password.
+
+export async function updateName(name: string): Promise<UserRead> {
+  const response = await api.patch<UserRead>('/auth/users/me', { name });
+  return response.data;
+}
+
+/** Other sessions end; this browser gets a new cookie. */
+export async function changePassword(data: PasswordChange) {
+  await api.post('/auth/me/password', data, { skipAuthRedirect: true });
+}
+
+/** The new email has to be confirmed again. */
+export async function changeEmail(data: EmailChange): Promise<UserRead> {
+  const response = await api.post<UserRead>('/auth/me/email', data, { skipAuthRedirect: true });
+  return response.data;
+}
+
+/** Ends every session of the user, this one included. */
+export async function signOutEverywhere() {
+  await api.post('/auth/me/sign-out-everywhere');
+}
+
+export async function deleteAccount(data: AccountDelete) {
+  await api.delete('/auth/me', { data, skipAuthRedirect: true });
 }
