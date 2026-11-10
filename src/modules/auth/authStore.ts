@@ -8,6 +8,10 @@ interface AuthStore {
   isAuthenticated: boolean;
   isLoading: boolean;
   fetchUser: () => Promise<UserRead | null>;
+  /** After the user changed their own account */
+  setUser: (user: UserRead) => void;
+  /** The session ended on the server (sign out everywhere, account deleted) */
+  clear: () => void;
   logout: () => Promise<void>;
 }
 
@@ -27,6 +31,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
       return null;
     }
   },
+
+  setUser: (user) => set({ user, isAuthenticated: true }),
+
+  clear: () => set({ user: null, isAuthenticated: false }),
 
   logout: async () => {
     await logout();

@@ -5,6 +5,22 @@ export type ClientOptions = {
 };
 
 /**
+ * AccountDelete
+ *
+ * The current password, or the account's email for provider-only accounts.
+ */
+export type AccountDelete = {
+    /**
+     * Password
+     */
+    password?: string | null;
+    /**
+     * Email
+     */
+    email?: string | null;
+};
+
+/**
  * AdminOverview
  */
 export type AdminOverview = {
@@ -36,6 +52,10 @@ export type AdminUser = {
      * Email
      */
     email: string;
+    /**
+     * Name
+     */
+    name?: string | null;
     role: Role;
     /**
      * Is Active
@@ -283,6 +303,20 @@ export type ChannelTestResult = {
      * Error
      */
     error: string | null;
+};
+
+/**
+ * EmailChange
+ */
+export type EmailChange = {
+    /**
+     * Password
+     */
+    password: string;
+    /**
+     * Email
+     */
+    email: string;
 };
 
 /**
@@ -714,6 +748,20 @@ export type OAuth2AuthorizeResponse = {
 };
 
 /**
+ * PasswordChange
+ */
+export type PasswordChange = {
+    /**
+     * Current Password
+     */
+    current_password: string;
+    /**
+     * New Password
+     */
+    new_password: string;
+};
+
+/**
  * ReadyResponse
  */
 export type ReadyResponse = {
@@ -792,6 +840,10 @@ export type UserCreate = {
      * Is Verified
      */
     is_verified?: boolean | null;
+    /**
+     * Name
+     */
+    name?: string | null;
 };
 
 /**
@@ -820,6 +872,10 @@ export type UserRead = {
     is_verified?: boolean;
     role: Role;
     /**
+     * Name
+     */
+    name?: string | null;
+    /**
      * Areas
      *
      * Areas the user can open; the frontend lands on the first one after sign-in.
@@ -840,28 +896,15 @@ export type UserSummary = {
 
 /**
  * UserUpdate
+ *
+ * PATCH /auth/users/me: only the name. Password and email change through
+ * /auth/me*, which ask for the current password.
  */
 export type UserUpdate = {
     /**
-     * Password
+     * Name
      */
-    password?: string | null;
-    /**
-     * Email
-     */
-    email?: string | null;
-    /**
-     * Is Active
-     */
-    is_active?: boolean | null;
-    /**
-     * Is Superuser
-     */
-    is_superuser?: boolean | null;
-    /**
-     * Is Verified
-     */
-    is_verified?: boolean | null;
+    name?: string | null;
 };
 
 /**
@@ -929,6 +972,10 @@ export type UserReadWritable = {
      */
     is_verified?: boolean;
     role: Role;
+    /**
+     * Name
+     */
+    name?: string | null;
 };
 
 export type BootstrapApiV1BootstrapGetData = {
@@ -1052,6 +1099,97 @@ export type SubmitFormApiV1FormsNamePostResponses = {
 };
 
 export type SubmitFormApiV1FormsNamePostResponse = SubmitFormApiV1FormsNamePostResponses[keyof SubmitFormApiV1FormsNamePostResponses];
+
+export type ChangePasswordApiV1AuthMePasswordPostData = {
+    body: PasswordChange;
+    path?: never;
+    query?: never;
+    url: '/api/v1/auth/me/password';
+};
+
+export type ChangePasswordApiV1AuthMePasswordPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ChangePasswordApiV1AuthMePasswordPostError = ChangePasswordApiV1AuthMePasswordPostErrors[keyof ChangePasswordApiV1AuthMePasswordPostErrors];
+
+export type ChangePasswordApiV1AuthMePasswordPostResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type ChangePasswordApiV1AuthMePasswordPostResponse = ChangePasswordApiV1AuthMePasswordPostResponses[keyof ChangePasswordApiV1AuthMePasswordPostResponses];
+
+export type ChangeEmailApiV1AuthMeEmailPostData = {
+    body: EmailChange;
+    path?: never;
+    query?: never;
+    url: '/api/v1/auth/me/email';
+};
+
+export type ChangeEmailApiV1AuthMeEmailPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ChangeEmailApiV1AuthMeEmailPostError = ChangeEmailApiV1AuthMeEmailPostErrors[keyof ChangeEmailApiV1AuthMeEmailPostErrors];
+
+export type ChangeEmailApiV1AuthMeEmailPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: UserRead;
+};
+
+export type ChangeEmailApiV1AuthMeEmailPostResponse = ChangeEmailApiV1AuthMeEmailPostResponses[keyof ChangeEmailApiV1AuthMeEmailPostResponses];
+
+export type SignOutEverywhereApiV1AuthMeSignOutEverywherePostData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/auth/me/sign-out-everywhere';
+};
+
+export type SignOutEverywhereApiV1AuthMeSignOutEverywherePostResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type SignOutEverywhereApiV1AuthMeSignOutEverywherePostResponse = SignOutEverywhereApiV1AuthMeSignOutEverywherePostResponses[keyof SignOutEverywhereApiV1AuthMeSignOutEverywherePostResponses];
+
+export type DeleteAccountApiV1AuthMeDeleteData = {
+    body: AccountDelete;
+    path?: never;
+    query?: never;
+    url: '/api/v1/auth/me';
+};
+
+export type DeleteAccountApiV1AuthMeDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteAccountApiV1AuthMeDeleteError = DeleteAccountApiV1AuthMeDeleteErrors[keyof DeleteAccountApiV1AuthMeDeleteErrors];
+
+export type DeleteAccountApiV1AuthMeDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteAccountApiV1AuthMeDeleteResponse = DeleteAccountApiV1AuthMeDeleteResponses[keyof DeleteAccountApiV1AuthMeDeleteResponses];
 
 export type AuthCookieLoginApiV1AuthLoginPostData = {
     body: BodyAuthCookieLoginApiV1AuthLoginPost;
@@ -1543,7 +1681,7 @@ export type ListUsersApiV1AdminUsersGetData = {
         /**
          * Q
          *
-         * Part of the email
+         * Part of the email or the name
          */
         q?: string;
         /**
