@@ -1730,6 +1730,58 @@ export type ListUsersApiV1AdminUsersGetResponses = {
 
 export type ListUsersApiV1AdminUsersGetResponse = ListUsersApiV1AdminUsersGetResponses[keyof ListUsersApiV1AdminUsersGetResponses];
 
+export type ExportUsersApiV1AdminUsersExportGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Q
+         *
+         * Part of the email or the name
+         */
+        q?: string;
+        /**
+         * Sort
+         */
+        sort?: 'email' | '-email' | 'role' | '-role' | 'date_created' | '-date_created' | 'last_login' | '-last_login';
+        /**
+         * Role
+         *
+         * Comma-separated roles
+         */
+        role?: string | null;
+        /**
+         * Status
+         *
+         * Comma-separated: active, blocked
+         */
+        status?: string | null;
+        /**
+         * Delimiter
+         *
+         * Default: by the request language
+         */
+        delimiter?: 'comma' | 'semicolon' | null;
+    };
+    url: '/api/v1/admin/users/export';
+};
+
+export type ExportUsersApiV1AdminUsersExportGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ExportUsersApiV1AdminUsersExportGetError = ExportUsersApiV1AdminUsersExportGetErrors[keyof ExportUsersApiV1AdminUsersExportGetErrors];
+
+export type ExportUsersApiV1AdminUsersExportGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
 export type UpdateUserApiV1AdminUsersUserIdPatchData = {
     body: AdminUserUpdate;
     path: {
@@ -2046,6 +2098,58 @@ export type ListLeadsApiV1AdminLeadsGetResponses = {
 };
 
 export type ListLeadsApiV1AdminLeadsGetResponse = ListLeadsApiV1AdminLeadsGetResponses[keyof ListLeadsApiV1AdminLeadsGetResponses];
+
+export type ExportLeadsApiV1AdminLeadsExportGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Q
+         *
+         * Text anywhere in the submitted data
+         */
+        q?: string;
+        /**
+         * Sort
+         */
+        sort?: 'created_at' | '-created_at' | 'form' | '-form' | 'status' | '-status';
+        /**
+         * Form
+         *
+         * Comma-separated form names
+         */
+        form?: string | null;
+        /**
+         * Status
+         *
+         * Comma-separated: new, done
+         */
+        status?: string | null;
+        /**
+         * Delimiter
+         *
+         * Default: by the request language
+         */
+        delimiter?: 'comma' | 'semicolon' | null;
+    };
+    url: '/api/v1/admin/leads/export';
+};
+
+export type ExportLeadsApiV1AdminLeadsExportGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ExportLeadsApiV1AdminLeadsExportGetError = ExportLeadsApiV1AdminLeadsExportGetErrors[keyof ExportLeadsApiV1AdminLeadsExportGetErrors];
+
+export type ExportLeadsApiV1AdminLeadsExportGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
 
 export type DeleteLeadApiV1AdminLeadsLeadIdDeleteData = {
     body?: never;

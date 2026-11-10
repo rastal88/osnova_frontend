@@ -1,4 +1,5 @@
 import api from '../../api/axios';
+import { downloadFile } from '../../api/download';
 import type { FormValues } from '../../api/forms';
 import type {
   AdminOverview,
@@ -14,6 +15,7 @@ import type {
   SettingsGroupDescription,
 } from '../../api/generated';
 import type { TableQuery } from '../../components/DataTable/DataTable';
+import { exportParams, listParams } from '../../components/DataTable/query';
 
 export async function getOverview(): Promise<AdminOverview> {
   const response = await api.get<AdminOverview>('/admin/overview');
@@ -43,21 +45,20 @@ export interface UserChanges {
   role?: 'user' | 'moderator';
 }
 
-/** The DataTable query in the backend list format: q, page, size, sort, filters. */
-function tableParams(query: TableQuery): Record<string, string | number> {
-  const params: Record<string, string | number> = { page: query.page, size: query.pageSize };
-  if (query.search.trim()) params.q = query.search.trim();
-  if (query.sort) params.sort = `${query.sort.order === 'desc' ? '-' : ''}${query.sort.field}`;
-  for (const [key, values] of Object.entries(query.filters)) {
-    if (values.length) params[key] = values.join(',');
-  }
-  return params;
+/** "users-2026-01-31.csv", as the backend names the file. */
+function csvName(name: string): string {
+  return `${name}-${new Date().toISOString().slice(0, 10)}.csv`;
 }
 
 /** One page of users; the query is the DataTable one. */
 export async function getUsers(query: TableQuery): Promise<AdminUserPage> {
-  const response = await api.get<AdminUserPage>('/admin/users', { params: tableParams(query) });
+  const response = await api.get<AdminUserPage>('/admin/users', { params: listParams(query) });
   return response.data;
+}
+
+/** Every user the list shows with this query, as a CSV file. */
+export function exportUsers(query: TableQuery): Promise<void> {
+  return downloadFile('/admin/users/export', exportParams(query), csvName('users'));
 }
 
 export async function updateUser(id: string, changes: UserChanges): Promise<AdminUser> {
@@ -72,8 +73,13 @@ export async function getLeadForms(): Promise<FormDescription[]> {
 
 /** One page of leads; the query is the DataTable one. */
 export async function getLeads(query: TableQuery): Promise<LeadPage> {
-  const response = await api.get<LeadPage>('/admin/leads', { params: tableParams(query) });
+  const response = await api.get<LeadPage>('/admin/leads', { params: listParams(query) });
   return response.data;
+}
+
+/** Every lead the list shows with this query, as a CSV file. */
+export function exportLeads(query: TableQuery): Promise<void> {
+  return downloadFile('/admin/leads/export', exportParams(query), csvName('leads'));
 }
 
 export async function updateLead(id: string, status: LeadRead['status']): Promise<LeadRead> {
