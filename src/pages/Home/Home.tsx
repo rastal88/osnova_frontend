@@ -71,7 +71,7 @@ const HomePage = () => {
             <Tag color="blue" className="welcome-profile-tag">
               {t('profile', { name: PROFILE_TITLES[profile] })}
             </Tag>
-            <Tag className="welcome-version-tag">v{config?.application.version ?? '1.0.0'}</Tag>
+            {config && <Tag className="welcome-version-tag">v{config.application.version}</Tag>}
           </div>
 
           <Title level={1} className="welcome-title">
@@ -85,16 +85,19 @@ const HomePage = () => {
           </Paragraph>
 
           <Space size="middle" wrap className="welcome-actions">
-            <Button
-              type="primary"
-              size="large"
-              icon={<ReadOutlined />}
-              href={API_DOCS_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('apiDocs')}
-            </Button>
+            {/* The backend serves /docs only in development (DEBUG) */}
+            {config?.api_docs && (
+              <Button
+                type="primary"
+                size="large"
+                icon={<ReadOutlined />}
+                href={API_DOCS_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t('apiDocs')}
+              </Button>
+            )}
             <Button
               size="large"
               icon={<GithubOutlined />}

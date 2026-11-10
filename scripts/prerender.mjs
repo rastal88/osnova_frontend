@@ -79,10 +79,11 @@ async function seoTexts(language) {
 }
 
 function renderPage(template, language, head) {
+  // Functions, not strings: a "$&" or "$'" in a title would be read as a pattern
   return template
-    .replace(/<html lang="[^"]*"/, `<html lang="${language}"`)
-    .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(head.title)}</title>`)
-    .replace('</head>', `  ${renderTags(head.tags)}\n  </head>`);
+    .replace(/<html lang="[^"]*"/, () => `<html lang="${language}"`)
+    .replace(/<title>[^<]*<\/title>/, () => `<title>${escapeHtml(head.title)}</title>`)
+    .replace('</head>', () => `  ${renderTags(head.tags)}\n  </head>`);
 }
 
 function sitemap(siteUrl, pages, languages, defaultLanguage) {

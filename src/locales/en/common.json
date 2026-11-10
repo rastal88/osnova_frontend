@@ -59,6 +59,7 @@
     "retry": "Retry"
   },
   "errors": {
+    "tooLarge": "The request is too large, e.g. a file over the size limit.",
     "network": "Unable to reach the server. Check your connection and try again.",
     "unknown": "Something went wrong. Please try again."
   },

@@ -1,5 +1,6 @@
 import { DeleteOutlined, InboxOutlined } from '@ant-design/icons';
 import { Button, Popconfirm, Progress, Typography, Upload, message } from 'antd';
+import type { RcFile } from 'antd/es/upload';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,8 @@ import './MyFiles.css';
 const { Text } = Typography;
 
 interface Uploading {
+  /** One per upload: two files may have the same name */
+  uid: string;
   name: string;
   percent: number;
 }
@@ -29,12 +32,12 @@ const MyFiles = () => {
   // Changing it makes the table fetch the current page again
   const [version, setVersion] = useState(0);
 
-  const upload = async (file: File) => {
+  const upload = async (file: File, uid: string) => {
     const progress = (percent: number) =>
       setUploading((items) =>
-        items.map((item) => (item.name === file.name ? { ...item, percent } : item)),
+        items.map((item) => (item.uid === uid ? { ...item, percent } : item)),
       );
-    setUploading((items) => [...items, { name: file.name, percent: 0 }]);
+    setUploading((items) => [...items, { uid, name: file.name, percent: 0 }]);
     try {
       await uploadFile(file, progress);
       toast.success(t('uploaded', { name: file.name }));
@@ -42,7 +45,7 @@ const MyFiles = () => {
     } catch (error) {
       toast.error(`${file.name}: ${getErrorMessage(error)}`);
     } finally {
-      setUploading((items) => items.filter((item) => item.name !== file.name));
+      setUploading((items) => items.filter((item) => item.uid !== uid));
     }
   };
 
@@ -103,7 +106,7 @@ const MyFiles = () => {
       <Upload.Dragger
         multiple
         showUploadList={false}
-        customRequest={({ file }) => void upload(file as File)}
+        customRequest={({ file }) => void upload(file as File, (file as RcFile).uid)}
         className="my-files-upload"
       >
         <p className="ant-upload-drag-icon">
@@ -114,7 +117,7 @@ const MyFiles = () => {
       </Upload.Dragger>
 
       {uploading.map((item) => (
-        <div key={item.name} className="my-files-progress">
+        <div key={item.uid} className="my-files-progress">
           <Text ellipsis>{item.name}</Text>
           <Progress percent={item.percent} size="small" />
         </div>
