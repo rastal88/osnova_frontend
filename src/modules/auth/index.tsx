@@ -46,14 +46,6 @@ export const authPublicRoutes: RouteObject[] = [
 /** Client area: pages inside the main layout for any signed-in user. */
 export const authLayoutRoutes: RouteObject[] = [
   {
-    path: 'dashboard',
-    element: (
-      <ProtectedRoute area="client">
-        {lazyElement(() => import('./pages/Dashboard/Dashboard'))}
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: 'profile',
     element: <ProtectedRoute area="client">{profileElement}</ProtectedRoute>,
   },

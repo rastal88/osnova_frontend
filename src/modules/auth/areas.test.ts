@@ -5,7 +5,7 @@ import { areaOfPath, landingPath, otherArea } from './areas';
 describe('landingPath', () => {
   it('opens the first area of the user', () => {
     expect(landingPath({ areas: ['admin', 'client'] })).toBe('/admin');
-    expect(landingPath({ areas: ['client'] })).toBe('/dashboard');
+    expect(landingPath({ areas: ['client'] })).toBe('/');
   });
 
   it('falls back to home', () => {
@@ -25,11 +25,13 @@ describe('areaOfPath', () => {
 
 describe('otherArea', () => {
   it('switches between admin and client for admin roles', () => {
-    expect(otherArea('/dashboard', ['admin', 'client'])).toBe('admin');
+    expect(otherArea('/', ['admin', 'client'])).toBe('admin');
+    expect(otherArea('/files', ['admin', 'client'])).toBe('admin');
     expect(otherArea('/admin', ['admin', 'client'])).toBe('client');
   });
 
   it('offers nothing when the user has one area', () => {
-    expect(otherArea('/dashboard', ['client'])).toBeUndefined();
+    // An ordinary user never sees the switch to the admin area
+    expect(otherArea('/', ['client'])).toBeUndefined();
   });
 });

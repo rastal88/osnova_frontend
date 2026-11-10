@@ -2,7 +2,6 @@
   "pages": {
     "home": "Главная",
     "contact": "Контакты",
-    "dashboard": "Кабинет",
     "profile": "Профиль",
     "login": "Вход",
     "register": "Регистрация",
@@ -15,6 +14,7 @@
     "privacy": "Политика конфиденциальности",
     "terms": "Условия использования",
     "cookies": "Политика cookies",
+    "settingsGeneral": "Общие",
     "settings": "Настройки",
     "leads": "Заявки",
     "channels": "Каналы",
@@ -40,7 +40,7 @@
     "logout": "Выйти",
     "language": "Язык",
     "toAdmin": "Админка",
-    "toClient": "Личный кабинет"
+    "toClient": "Клиентская часть"
   },
   "state": {
     "empty": "Здесь пока пусто",

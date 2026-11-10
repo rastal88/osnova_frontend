@@ -25,9 +25,12 @@ export const adminRoute: RouteObject = {
   children: [
     { index: true, element: lazyElement(() => import('./pages/Dashboard/Dashboard')) },
     { path: 'leads', element: lazyElement(() => import('./pages/Leads/Leads')) },
-    { path: 'channels', element: lazyElement(() => import('./pages/Channels/Channels')) },
     { path: 'users', element: lazyElement(() => import('./pages/Users/Users')) },
     { path: 'settings', element: lazyElement(() => import('./pages/Settings/Settings')) },
+    {
+      path: 'settings/channels',
+      element: lazyElement(() => import('./pages/Channels/Channels')),
+    },
     { path: 'profile', element: profileElement },
     { path: '*', element: <NotFound /> },
   ],

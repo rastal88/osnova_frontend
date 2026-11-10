@@ -29,14 +29,15 @@ With `authentication` on, the app has three areas in the same shell:
 | Area | Pages | Who |
 |---|---|---|
 | public | home, examples, legal, sign-in | everyone |
-| client | `/dashboard`, `/profile`, the project's own pages | any signed-in user |
+| client | `/profile`, `/files`, the project's own pages (starts on home) | any signed-in user |
 | admin | `/admin/*` (`src/modules/admin`) | `root`, `moderator` (needs `admin`) |
 
 - The backend decides: `GET /auth/users/me` returns `areas`, e.g. `["admin", "client"]`.
   After sign-in the user lands on the first one (`landingPath`, `src/modules/auth/areas.ts`).
 - Guard a page with `<ProtectedRoute area="client">` or `area="admin"`: guests go to
   `/login`, users without the area go to their own start page.
-- The user menu has a switch to the other area when the user has two.
+- The user menu has a switch to the other area (**Admin area** / **Client area**) only when
+  the backend gives the user both: `root` and `moderator`, not ordinary users.
 - **Sign-in with Google** (and other providers): the sign-in and sign-up pages show a
   button for every provider in `/bootstrap` `auth_providers` (`OAuthButtons`). The provider
   returns to `/oauth/<provider>/callback` (no language prefix needed), which finishes the
@@ -45,7 +46,7 @@ With `authentication` on, the app has three areas in the same shell:
 - **Email links:** the backend sends links to `/verify-email?token=` (after sign-up) and
   `/reset-password?token=` (from **Forgot password?** on the sign-in page,
   `/forgot-password`); these standalone pages live in `src/modules/auth/pages`. Until the
-  email is confirmed, the dashboard and profile show a notice with **Send again**.
+  email is confirmed, the profile shows a notice with **Send again**.
 - **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
   form / status filters, a drawer with the answers under their translated labels
   (`GET /admin/leads/forms`), mark done / new, delete.
@@ -59,7 +60,7 @@ With `authentication` on, the app has three areas in the same shell:
   and admins); limits come from `FILES_MAX_SIZE_MB` / `FILES_ALLOWED_TYPES` and their errors
   are shown per file. Remove the module: delete the folder and `filesRoutes` in
   `src/routes/routes.tsx`.
-- **Admin → Channels** (`/admin/channels`): lead delivery channels — configurable entities of
+- **Admin → Settings → Channels** (`/admin/settings/channels`): lead delivery channels — configurable entities of
   the group `lead_channels` (`/admin/entities`). The add / edit form is generated from the
   type description (`SchemaFields` with `namePrefix="params"`); secrets come as `********`
   and are kept when sent back. Root adds, edits, turns on / off, tests and deletes; the lead
@@ -68,8 +69,9 @@ With `authentication` on, the app has three areas in the same shell:
   search, role / status filters, sorting; block / unblock and the role select are shown
   only where the backend allows them (`src/modules/admin/pages/Users/permissions.ts`).
 - The admin area passes its own menu to the shell: `adminNavItems` in
-  `src/modules/admin/navigation.ts`. Add an item there for a new admin section, and its
-  route to `adminRoute.children` in `src/modules/admin/index.tsx`.
+  `src/modules/admin/navigation.ts`. Add an item there for a new admin section (or to the
+  `children` of Settings for a settings page), and its route to `adminRoute.children` in
+  `src/modules/admin/index.tsx`.
 
 ### 1.2. Navigation
 
@@ -83,7 +85,7 @@ export const navigationConfig: NavigationConfig = {
   showBreadcrumbs: true,       // breadcrumbs (when there is more than one level)
   items: [
     { path: '/', label: 'pages.home', icon: HomeOutlined },
-    { path: '/dashboard', label: 'pages.dashboard', icon: DashboardOutlined, capability: 'authentication', requiresAuth: true, area: 'client' },
+    { path: '/files', label: 'pages.files', icon: FolderOutlined, capability: 'files', requiresAuth: true, area: 'client' },
   ],
 };
 
@@ -95,6 +97,8 @@ export const redirects = [
 - **Menu item**: `path`, `label` (a key in the `common` translations), optional `icon`
   (an Ant Design icon), `capability` (hidden when the capability is off), `requiresAuth`
   and `area` (shown only to signed-in users / users who have this area).
+- **Submenu**: `children: NavItem[]`; the group's own `path` is only a key (e.g.
+  `'settings'`). It opens on its current page and is hidden when no child is visible.
 - Pages are not tied to the menu: remove an item and the page is still reachable by URL.
 - **Redirects**: add `{ from, to }` pairs.
 - **Breadcrumb titles**: `routeTitles` in the same file (path → translation key).

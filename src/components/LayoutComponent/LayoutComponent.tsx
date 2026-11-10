@@ -17,6 +17,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   type NavItem,
   findActiveNavPath,
+  navGroupsOf,
   navigationConfig,
   visibleNavItems,
 } from '../../config/navigation';
@@ -88,18 +89,22 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
   const area = areaOfPath(location.pathname);
   const switchTo = user ? otherArea(location.pathname, user.areas) : undefined;
 
-  const menuItems: MenuProps['items'] = navItems.map((item) => {
+  const toMenuItem = (item: NavItem): NonNullable<MenuProps['items']>[number] => {
     const Icon = item.icon;
 
     return {
       key: item.path,
       icon: Icon ? <Icon /> : undefined,
       label: t(item.label),
+      children: item.children?.map(toMenuItem),
     };
-  });
+  };
+  const menuItems: MenuProps['items'] = navItems.map(toMenuItem);
 
   const activePath = findActiveNavPath(location.pathname, navItems);
   const selectedKeys = activePath ? [activePath] : [];
+  // The submenu of the current page starts open
+  const openKeys = navGroupsOf(activePath, navItems);
 
   const showMenu = navigationConfig.enabled && navItems.length > 0;
   const isMobile = screens.md === false;
@@ -142,6 +147,7 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
     <Menu
       mode={isTop && !isMobile ? 'horizontal' : 'inline'}
       selectedKeys={selectedKeys}
+      defaultOpenKeys={openKeys}
       items={menuItems}
       onClick={handleMenuClick}
       className={isTop && !isMobile ? 'app-nav-top' : 'app-nav-sider'}
@@ -280,6 +286,7 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
           <Menu
             mode="inline"
             selectedKeys={selectedKeys}
+            defaultOpenKeys={openKeys}
             items={menuItems}
             onClick={handleMenuClick}
             className="app-nav-sider"
