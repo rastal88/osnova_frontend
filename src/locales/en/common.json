@@ -2,7 +2,6 @@
   "pages": {
     "home": "Home",
     "contact": "Contact",
-    "dashboard": "Dashboard",
     "profile": "Profile",
     "login": "Sign in",
     "register": "Sign up",
@@ -15,6 +14,7 @@
     "privacy": "Privacy policy",
     "terms": "Terms of use",
     "cookies": "Cookie policy",
+    "settingsGeneral": "General",
     "settings": "Settings",
     "leads": "Leads",
     "channels": "Channels",
@@ -40,7 +40,7 @@
     "logout": "Log out",
     "language": "Language",
     "toAdmin": "Admin area",
-    "toClient": "My account"
+    "toClient": "Client area"
   },
   "state": {
     "empty": "Nothing here yet",

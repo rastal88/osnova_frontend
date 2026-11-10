@@ -5,6 +5,7 @@ import {
   type NavItem,
   findActiveNavPath,
   getBreadcrumbs,
+  navGroupsOf,
   navigationConfig,
   visibleNavItems,
 } from './navigation';
@@ -31,7 +32,7 @@ describe('findActiveNavPath', () => {
 describe('visibleNavItems', () => {
   const items: NavItem[] = [
     { path: '/', label: 'pages.home' },
-    { path: '/dashboard', label: 'pages.dashboard', requiresAuth: true, area: 'client' },
+    { path: '/files', label: 'pages.files', requiresAuth: true, area: 'client' },
     { path: '/admin/users', label: 'pages.users', capability: 'admin', area: 'admin' },
   ];
   const features = { authentication: true, admin: true } as BootstrapFeatures;
@@ -43,13 +44,45 @@ describe('visibleNavItems', () => {
   });
 
   it('shows items of the areas the user has', () => {
-    expect(paths({ areas: ['client'] })).toEqual(['/', '/dashboard']);
-    expect(paths({ areas: ['admin', 'client'] })).toEqual(['/', '/dashboard', '/admin/users']);
+    expect(paths({ areas: ['client'] })).toEqual(['/', '/files']);
+    expect(paths({ areas: ['admin', 'client'] })).toEqual(['/', '/files', '/admin/users']);
   });
 
   it('hides items of disabled capabilities', () => {
     const noAdmin = { ...features, admin: false };
-    expect(paths({ areas: ['admin', 'client'] }, noAdmin)).toEqual(['/', '/dashboard']);
+    expect(paths({ areas: ['admin', 'client'] }, noAdmin)).toEqual(['/', '/files']);
+  });
+});
+
+describe('submenus', () => {
+  const items: NavItem[] = [
+    { path: '/admin', label: 'pages.overview' },
+    {
+      path: 'settings',
+      label: 'pages.settings',
+      children: [
+        { path: '/admin/settings', label: 'pages.settingsGeneral' },
+        { path: '/admin/settings/channels', label: 'pages.channels', capability: 'admin' },
+      ],
+    },
+  ];
+
+  it('selects the page inside a group and opens the group', () => {
+    expect(findActiveNavPath('/admin/settings/channels', items)).toBe('/admin/settings/channels');
+    expect(findActiveNavPath('/admin/settings', items)).toBe('/admin/settings');
+    expect(navGroupsOf('/admin/settings/channels', items)).toEqual(['settings']);
+    expect(navGroupsOf('/admin', items)).toEqual([]);
+  });
+
+  it('hides children of disabled capabilities and empty groups', () => {
+    const features = { admin: false } as BootstrapFeatures;
+    const [, group] = visibleNavItems(items, features, null);
+    expect(group.children?.map((item) => item.path)).toEqual(['/admin/settings']);
+
+    const onlyHidden: NavItem[] = [
+      { path: 'g', label: 'pages.settings', children: [{ ...items[0], requiresAuth: true }] },
+    ];
+    expect(visibleNavItems(onlyHidden, features, null)).toEqual([]);
   });
 });
 
@@ -66,6 +99,11 @@ describe('getBreadcrumbs', () => {
     expect(getBreadcrumbs('/admin/users/42')).toEqual([
       { titleKey: 'pages.admin', path: '/admin' },
       { titleKey: 'pages.users', path: '/admin/users' },
+    ]);
+    expect(getBreadcrumbs('/admin/settings/channels').map((crumb) => crumb.titleKey)).toEqual([
+      'pages.admin',
+      'pages.settings',
+      'pages.channels',
     ]);
   });
 });

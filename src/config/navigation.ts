@@ -1,9 +1,4 @@
-import {
-  AppstoreOutlined,
-  DashboardOutlined,
-  FolderOutlined,
-  HomeOutlined,
-} from '@ant-design/icons';
+import { AppstoreOutlined, FolderOutlined, HomeOutlined } from '@ant-design/icons';
 import type { ParseKeys } from 'i18next';
 import type { ComponentType } from 'react';
 
@@ -17,6 +12,7 @@ export type MenuPosition = 'top' | 'left' | 'right';
 export type LabelKey = ParseKeys<'common'>;
 
 export interface NavItem {
+  /** Page of the item; for a group with `children`, only a key (the group opens no page) */
   path: string;
   label: LabelKey;
   icon?: ComponentType;
@@ -24,6 +20,8 @@ export interface NavItem {
   /** Shown only to signed-in users (and only to those who have this area, when set) */
   requiresAuth?: boolean;
   area?: Area;
+  /** A submenu, e.g. Settings → General / Channels */
+  children?: NavItem[];
 }
 
 export interface NavigationConfig {
@@ -61,14 +59,6 @@ export const navigationConfig: NavigationConfig = {
       icon: AppstoreOutlined,
     },
     {
-      path: '/dashboard',
-      label: 'pages.dashboard',
-      icon: DashboardOutlined,
-      capability: 'authentication',
-      requiresAuth: true,
-      area: 'client',
-    },
-    {
       path: '/files',
       label: 'pages.files',
       icon: FolderOutlined,
@@ -88,37 +78,56 @@ export const routeTitles: Record<string, LabelKey> = {
   '/privacy': 'pages.privacy',
   '/terms': 'pages.terms',
   '/cookies': 'pages.cookies',
-  '/dashboard': 'pages.dashboard',
   '/profile': 'pages.profile',
   '/files': 'pages.files',
   '/login': 'pages.login',
   '/register': 'pages.register',
   '/admin': 'pages.admin',
-  '/admin/channels': 'pages.channels',
   '/admin/leads': 'pages.leads',
   '/admin/profile': 'pages.profile',
   '/admin/settings': 'pages.settings',
+  '/admin/settings/channels': 'pages.channels',
   '/admin/users': 'pages.users',
 };
 
 export const redirects: { from: string; to: string }[] = [{ from: '/home', to: '/' }];
 
-/** Menu items for the current capabilities and user (guests see only public ones). */
+/**
+ * Menu items for the current capabilities and user (guests see only public ones).
+ * A group keeps only its visible children and is dropped when none is left.
+ */
 export function visibleNavItems(
   items: NavItem[],
   features: BootstrapFeatures | undefined,
   user: { areas: Area[] } | null,
 ): NavItem[] {
-  return items.filter(
-    (item) =>
-      (!item.capability || Boolean(features?.[item.capability])) &&
-      (!item.requiresAuth || user !== null) &&
-      (!item.area || Boolean(user?.areas.includes(item.area))),
-  );
+  return items
+    .filter(
+      (item) =>
+        (!item.capability || Boolean(features?.[item.capability])) &&
+        (!item.requiresAuth || user !== null) &&
+        (!item.area || Boolean(user?.areas.includes(item.area))),
+    )
+    .map((item) =>
+      item.children ? { ...item, children: visibleNavItems(item.children, features, user) } : item,
+    )
+    .filter((item) => !item.children || item.children.length > 0);
+}
+
+/** Items that open a page: groups are replaced by their children. */
+export function navPages(items: NavItem[]): NavItem[] {
+  return items.flatMap((item) => (item.children ? navPages(item.children) : [item]));
+}
+
+/** Keys of the groups that contain the page at `path` (to open them in the menu). */
+export function navGroupsOf(path: string | undefined, items: NavItem[]): string[] {
+  return items
+    .filter((item) => item.children && navPages(item.children).some((page) => page.path === path))
+    .map((item) => item.path);
 }
 
 export function findActiveNavPath(pathname: string, items: NavItem[]): string | undefined {
-  return items
+  return navPages(items)
     .filter((item) =>
       item.path === '/'
         ? pathname === '/'

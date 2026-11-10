@@ -1,6 +1,6 @@
 import qs from 'qs';
 import api from '../../api/axios';
-import type { ClientSummary, OAuth2AuthorizeResponse, UserRead } from '../../api/generated';
+import type { OAuth2AuthorizeResponse, UserRead } from '../../api/generated';
 
 export const getCurrentUser = async (): Promise<UserRead> => {
   const response = await api.get<UserRead>('/auth/users/me', { skipAuthRedirect: true });
@@ -34,11 +34,6 @@ export async function register(email: string, password: string) {
       },
     },
   );
-  return response.data;
-}
-
-export async function getClientSummary(): Promise<ClientSummary> {
-  const response = await api.get<ClientSummary>('/client/summary');
   return response.data;
 }
 

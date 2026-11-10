@@ -7,6 +7,8 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Menu items can have `children`: a submenu that opens on its current page; groups
+  with no visible children are hidden.
 - Sign-in with Google: a **Continue with Google** button on the sign-in and sign-up pages
   for every provider in `/bootstrap` `auth_providers`, and the page
   `/oauth/<provider>/callback` that finishes the sign-in (once, also in Strict Mode) and opens
@@ -56,6 +58,13 @@ All notable changes are documented here. The format follows
 - Role names translated.
 
 ### Changed
+- Admin menu: Overview, Users, Leads, then **Settings** with **General** and **Channels**;
+  channels moved to `/admin/settings/channels`.
+- The client area starts on the home page: **My account** is now **Client area** and opens
+  `/`, ordinary users land there after sign-in.
+- nginx (Docker): `X-Forwarded-For` is set to the client address instead of appended to, so a
+  client cannot bypass the backend rate limits with its own header; request bodies up to 1 MB,
+  uploads to `/api/v1/files` up to 11 MB (the default 1 MB broke files over 1 MB).
 - The signed-in user is fetched once on start, not on every bootstrap change.
 - The admin area uses the main shell with its own menu (`src/modules/admin/navigation.ts`);
   `AdminLayout` removed. The Admin item left the main menu (use the user menu switch).
@@ -64,6 +73,8 @@ All notable changes are documented here. The format follows
 - API types regenerated: `/client/*` and `/admin/*` paths, `UserRead.areas`.
 
 ### Removed
+- The client dashboard page `/dashboard` (an example without content); the backend example
+  endpoint `/client/summary` stays.
 - Unused `src/types/api.ts` and `getAdminUsers` (the users list returns in the admin users stage).
 
 ## [0.1.0] - 2026-11-07

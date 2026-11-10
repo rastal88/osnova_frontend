@@ -2,10 +2,13 @@ import type { Area } from '../../api/generated';
 
 export type { Area };
 
-/** Start page of each area. The backend lists a user's areas; the first is the landing one. */
+/**
+ * Start page of each area. The backend lists a user's areas; the first is the landing one.
+ * The client area starts on the site's home page: add client pages to the main menu.
+ */
 export const AREA_HOME: Record<Area, string> = {
   admin: '/admin',
-  client: '/dashboard',
+  client: '/',
 };
 
 /** Where to go after sign-in. */
