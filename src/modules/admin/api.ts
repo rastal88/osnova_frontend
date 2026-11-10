@@ -10,12 +10,18 @@ import type {
   FormDescription,
   LeadPage,
   LeadRead,
+  LeadStats,
   SettingsGroupDescription,
 } from '../../api/generated';
 import type { TableQuery } from '../../components/DataTable/DataTable';
 
 export async function getOverview(): Promise<AdminOverview> {
   const response = await api.get<AdminOverview>('/admin/overview');
+  return response.data;
+}
+
+export async function getLeadStats(days = 14): Promise<LeadStats> {
+  const response = await api.get<LeadStats>('/admin/leads/stats', { params: { days } });
   return response.data;
 }
 

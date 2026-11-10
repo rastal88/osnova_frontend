@@ -32,7 +32,7 @@ describe('findActiveNavPath', () => {
 describe('visibleNavItems', () => {
   const items: NavItem[] = [
     { path: '/', label: 'pages.home' },
-    { path: '/files', label: 'pages.files', requiresAuth: true, area: 'client' },
+    { path: '/files', label: 'pages.files', requiresAuth: true, area: 'user' },
     { path: '/admin/users', label: 'pages.users', capability: 'admin', area: 'admin' },
   ];
   const features = { authentication: true, admin: true } as BootstrapFeatures;
@@ -44,13 +44,13 @@ describe('visibleNavItems', () => {
   });
 
   it('shows items of the areas the user has', () => {
-    expect(paths({ areas: ['client'] })).toEqual(['/', '/files']);
-    expect(paths({ areas: ['admin', 'client'] })).toEqual(['/', '/files', '/admin/users']);
+    expect(paths({ areas: ['user'] })).toEqual(['/', '/files']);
+    expect(paths({ areas: ['admin', 'user'] })).toEqual(['/', '/files', '/admin/users']);
   });
 
   it('hides items of disabled capabilities', () => {
     const noAdmin = { ...features, admin: false };
-    expect(paths({ areas: ['admin', 'client'] }, noAdmin)).toEqual(['/', '/files']);
+    expect(paths({ areas: ['admin', 'user'] }, noAdmin)).toEqual(['/', '/files']);
   });
 });
 
@@ -89,6 +89,15 @@ describe('submenus', () => {
 describe('getBreadcrumbs', () => {
   it('is empty on home', () => {
     expect(getBreadcrumbs('/')).toEqual([]);
+  });
+
+  it('names the start page of a section', () => {
+    expect(getBreadcrumbs('/admin').map((crumb) => crumb.titleKey)).toEqual([
+      'pages.admin',
+      'pages.overview',
+    ]);
+    // The shared profile page has no admin parent
+    expect(getBreadcrumbs('/profile').map((crumb) => crumb.titleKey)).toEqual(['pages.profile']);
   });
 
   it('lists known parents and skips unknown segments', () => {
