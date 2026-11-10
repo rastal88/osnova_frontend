@@ -64,6 +64,7 @@
     "unknown": "Что-то пошло не так. Попробуйте ещё раз."
   },
   "table": {
+    "export": "Экспорт в CSV",
     "search": "Поиск",
     "total_one": "{{count}} запись",
     "total_few": "{{count}} записи",

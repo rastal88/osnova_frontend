@@ -10,7 +10,7 @@ import type { DataTableColumn } from '../../../../components/DataTable/DataTable
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
 import { useAuthStore } from '../../../auth';
-import { type UserChanges, getUsers, updateUser } from '../../api';
+import { type UserChanges, exportUsers, getUsers, updateUser } from '../../api';
 import { canChangeRole, canManage } from './permissions';
 
 const { Text } = Typography;
@@ -127,6 +127,7 @@ const Users = () => {
         columns={columns}
         rowKey="id"
         fetch={getUsers}
+        onExport={exportUsers}
         pageSize={20}
         refreshKey={version}
         searchPlaceholder={t('users.search')}

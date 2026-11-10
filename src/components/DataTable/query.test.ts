@@ -5,7 +5,9 @@ import {
   type TableQuery,
   applyQuery,
   compareValues,
+  exportParams,
   lastPage,
+  listParams,
   readQuery,
   writeQuery,
 } from './query';
@@ -120,5 +122,33 @@ describe('helpers', () => {
     expect(compareValues(2, 10)).toBeLessThan(0);
     expect(compareValues('item 2', 'item 10')).toBeLessThan(0);
     expect(compareValues(new Date(2026, 0, 2), new Date(2026, 0, 1))).toBeGreaterThan(0);
+  });
+});
+
+describe('listParams / exportParams', () => {
+  const asked = query({
+    page: 3,
+    pageSize: 20,
+    search: '  ann ',
+    sort: { field: 'created_at', order: 'desc' },
+    filters: { status: ['new', 'done'], form: [] },
+  });
+
+  it('sends a page in the backend list format', () => {
+    expect(listParams(asked)).toEqual({
+      page: 3,
+      size: 20,
+      q: 'ann',
+      sort: '-created_at',
+      status: 'new,done',
+    });
+    expect(listParams(query())).toEqual({ page: 1, size: 10 });
+  });
+
+  it('exports everything that matches: no page and size', () => {
+    expect(exportParams(asked)).toEqual({ q: 'ann', sort: '-created_at', status: 'new,done' });
+    expect(exportParams(query({ sort: { field: 'email', order: 'asc' } }))).toEqual({
+      sort: 'email',
+    });
   });
 });

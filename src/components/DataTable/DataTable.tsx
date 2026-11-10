@@ -1,4 +1,5 @@
-import { Alert, Button, Input, Space, Table } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Alert, Button, Input, Space, Table, message } from 'antd';
 import type { TableProps } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { SorterResult } from 'antd/es/table/interface';
@@ -45,6 +46,11 @@ export type DataTableProps<T> = Source<T> & {
   searchPlaceholder?: string;
   /** Extra controls next to the search box */
   toolbar?: ReactNode;
+  /**
+   * Shows an export button; called with the current search, sort and filters (e.g. to
+   * download everything that matches as a file from the server)
+   */
+  onExport?: (query: TableQuery) => Promise<void>;
   /** Remote data: a new value fetches the current page again (e.g. after a row changed) */
   refreshKey?: unknown;
 };
@@ -54,6 +60,7 @@ const SEARCH_DELAY_MS = 300;
 /**
  * Table with search, column filters, sorting and pagination, kept in the URL.
  * Pass `data` to work in the browser, or `fetch` to ask the server for each page.
+ * `onExport` adds an export button to the toolbar.
  */
 function DataTable<T extends object>(props: DataTableProps<T>) {
   const {
@@ -63,6 +70,7 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
     urlPrefix = '',
     searchPlaceholder,
     toolbar,
+    onExport,
     refreshKey,
   } = props;
   const { t, i18n } = useTranslation();
@@ -152,6 +160,20 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
     };
   }, [queryKey, attempt, refreshKey]);
 
+  const [toast, toastHolder] = message.useMessage();
+  const [exporting, setExporting] = useState(false);
+  const runExport = async () => {
+    if (!onExport) return;
+    setExporting(true);
+    try {
+      await onExport(query);
+    } catch (reason) {
+      toast.error(getErrorMessage(reason));
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const page = localPage ?? remotePage ?? { items: [], total: 0 };
   const current = Math.min(query.page, lastPage(page.total, query.pageSize));
   const showSearch = props.search ?? (isRemote || columns.some((column) => column.searchable));
@@ -199,7 +221,8 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
 
   return (
     <div className="data-table">
-      {(showSearch || toolbar) && (
+      {toastHolder}
+      {(showSearch || toolbar || onExport) && (
         <Space className="data-table-toolbar" wrap>
           {showSearch && (
             <Input.Search
@@ -212,6 +235,11 @@ function DataTable<T extends object>(props: DataTableProps<T>) {
             />
           )}
           {toolbar}
+          {onExport && (
+            <Button icon={<DownloadOutlined />} loading={exporting} onClick={runExport}>
+              {t('table.export')}
+            </Button>
+          )}
         </Space>
       )}
 

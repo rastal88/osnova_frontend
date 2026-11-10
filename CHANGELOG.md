@@ -12,9 +12,13 @@ All notable changes are documented here. The format follows
   confirmation (password, or the email for accounts that sign in only with Google; root cannot).
   Server errors appear under the right field. All in the lazy profile chunk.
 - `useAuthStore` `setUser` / `clear`; account calls in `src/modules/auth/api.ts`.
+- CSV export: `DataTable` `onExport` adds an **Export CSV** button that gets the current
+  search, sort and filters; Admin → Users and Leads download every matching row
+  (`/admin/users/export`, `/admin/leads/export`) in the interface language.
+  `downloadFile` (`src/api/download.ts`) saves a file from the API with ordinary error messages.
 
 ### Changed
-- API types regenerated (`/auth/me/*`, `name`).
+- API types regenerated (`/auth/me/*`, `name`, the export endpoints).
 
 ## [0.2.0] - 2026-11-10
 

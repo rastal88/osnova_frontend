@@ -89,6 +89,22 @@ export function writeQuery(
   return next;
 }
 
+/** What narrows and orders a server list: q, sort and filters, in the backend format. */
+export function exportParams(query: TableQuery): Record<string, string | number> {
+  const params: Record<string, string | number> = {};
+  if (query.search.trim()) params.q = query.search.trim();
+  if (query.sort) params.sort = `${query.sort.order === 'desc' ? '-' : ''}${query.sort.field}`;
+  for (const [key, values] of Object.entries(query.filters)) {
+    if (values.length) params[key] = values.join(',');
+  }
+  return params;
+}
+
+/** One page of a server list: the same plus page and size. */
+export function listParams(query: TableQuery): Record<string, string | number> {
+  return { page: query.page, size: query.pageSize, ...exportParams(query) };
+}
+
 export function lastPage(total: number, pageSize: number): number {
   return Math.max(1, Math.ceil(total / pageSize));
 }

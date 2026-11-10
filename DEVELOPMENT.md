@@ -280,6 +280,10 @@ the page opens in the default one.
   - `fetch={(query) => api...}`: the server gets `{ page, pageSize, search, sort, filters }`
     and returns `{ items, total }`; the table shows a loader and an error with retry.
     A new `refreshKey` value fetches the current page again (e.g. after a row was changed).
+  - `onExport={(query) => ...}`: an **Export CSV** button in the toolbar, called with the
+    current search, sort and filters. Admin → Users and Leads download every matching row
+    from the backend (`exportUsers` / `exportLeads`, `downloadFile` in `src/api/download.ts`);
+    `listParams` / `exportParams` (`query.ts`) turn the query into backend parameters.
     The backend lists use the same URL names (see `getUsers` in `src/modules/admin/api.ts`).
   - Column `key` is the field name and the URL parameter, so `q`, `page`, `size`, `sort` are reserved.
     Define columns with `useMemo`.

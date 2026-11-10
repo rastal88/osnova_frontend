@@ -9,7 +9,7 @@ import DataTable from '../../../../components/DataTable/DataTable';
 import type { DataTableColumn } from '../../../../components/DataTable/DataTable';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
-import { deleteLead, getLeadForms, getLeads, updateLead } from '../../api';
+import { deleteLead, exportLeads, getLeadForms, getLeads, updateLead } from '../../api';
 import { formatValue, leadSummary } from './leadText';
 import './Leads.css';
 
@@ -123,6 +123,7 @@ const Leads = () => {
         columns={columns}
         rowKey="id"
         fetch={getLeads}
+        onExport={exportLeads}
         pageSize={20}
         refreshKey={version}
         searchPlaceholder={t('leads.search')}
