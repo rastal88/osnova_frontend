@@ -687,6 +687,22 @@ export type OAuth2AuthorizeResponse = {
 };
 
 /**
+ * ReadyResponse
+ */
+export type ReadyResponse = {
+    /**
+     * Status
+     */
+    status: 'ok' | 'unavailable';
+    /**
+     * Checks
+     */
+    checks: {
+        [key: string]: boolean;
+    };
+};
+
+/**
  * Role
  */
 export type Role = 'root' | 'moderator' | 'user';
@@ -908,6 +924,31 @@ export type HealthApiV1HealthGetResponses = {
 };
 
 export type HealthApiV1HealthGetResponse = HealthApiV1HealthGetResponses[keyof HealthApiV1HealthGetResponses];
+
+export type ReadyApiV1ReadyGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/ready';
+};
+
+export type ReadyApiV1ReadyGetErrors = {
+    /**
+     * A dependency is down
+     */
+    503: ReadyResponse;
+};
+
+export type ReadyApiV1ReadyGetError = ReadyApiV1ReadyGetErrors[keyof ReadyApiV1ReadyGetErrors];
+
+export type ReadyApiV1ReadyGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: ReadyResponse;
+};
+
+export type ReadyApiV1ReadyGetResponse = ReadyApiV1ReadyGetResponses[keyof ReadyApiV1ReadyGetResponses];
 
 export type GetFormApiV1FormsNameGetData = {
     body?: never;
