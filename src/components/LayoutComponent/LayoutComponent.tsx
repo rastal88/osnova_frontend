@@ -120,7 +120,7 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
     navigate('/login');
   };
 
-  // User menu: profile of the current area, switch to the other area (admin roles), sign out
+  // User menu: profile, switch to the other area (admin roles), sign out
   const profileMenu: MenuProps = {
     items: [
       { key: 'profile', icon: <SettingOutlined />, label: t('header.profile') },
@@ -129,7 +129,7 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
             {
               key: 'switch',
               icon: <SwapOutlined />,
-              label: t(switchTo === 'admin' ? 'header.toAdmin' : 'header.toClient'),
+              label: t(switchTo === 'admin' ? 'header.toAdmin' : 'header.toUser'),
             },
           ]
         : []),
@@ -137,7 +137,8 @@ const LayoutComponent = ({ navItems: areaItems = navigationConfig.items }: Layou
       { key: 'logout', icon: <LogoutOutlined />, label: t('header.logout'), danger: true },
     ],
     onClick: ({ key }) => {
-      if (key === 'profile') navigate(area === 'admin' ? '/admin/profile' : '/profile');
+      // One profile page for every role, outside the admin area
+      if (key === 'profile') navigate('/profile');
       if (key === 'switch' && switchTo) navigate(AREA_HOME[switchTo]);
       if (key === 'logout') void handleLogout();
     },

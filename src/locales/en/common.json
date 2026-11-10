@@ -40,7 +40,7 @@
     "logout": "Log out",
     "language": "Language",
     "toAdmin": "Admin area",
-    "toClient": "Client area"
+    "toUser": "User area"
   },
   "state": {
     "empty": "Nothing here yet",

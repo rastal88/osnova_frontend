@@ -33,13 +33,13 @@ profiles and capabilities.
 - Landing blocks: hero, services, gallery, pricing, reviews, FAQ, call to action
 - Legal pages (privacy, terms, cookies) as placeholders; a cookie banner when analytics is on
 - With `authentication` on the backend: sign-in, sign-up (also with Google when the backend
-  has its keys), email confirmation and password reset by email, the client area (starts on home; profile); with `admin`: the admin area for `root` and `moderator` in the same shell,
+  has its keys), email confirmation and password reset by email, the user area (starts on home; one profile page for every role); with `admin`: the admin area for `root` and `moderator` in the same shell,
   landing by role after sign-in and a switch between the areas in the user menu;
   Admin → Settings generated from the backend (site name, contacts, languages);
   Admin → Users: search, filters, block / unblock, change role; Admin → Leads: form
   submissions with search, filters, details, status, delete and delivery results; Admin →
   Channels: email / Telegram / webhook delivery set up and tested in the admin; with `files`:
-  "My files" in the client area (drag-and-drop upload, search, download, delete); with
+  "My files" in the user area (drag-and-drop upload, search, download, delete); with
   `notifications`: the bell in the header (unread count, latest items, mark read)
 
 ## Layout

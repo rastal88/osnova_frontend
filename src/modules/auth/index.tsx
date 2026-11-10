@@ -14,7 +14,7 @@ export { default as ProtectedRoute } from './components/ProtectedRoute';
 export { useAuthStore } from './authStore';
 export { AREA_HOME, type Area, areaOfPath, landingPath, otherArea } from './areas';
 
-export const profileElement = lazyElement(() => import('./pages/Profile/Profile'));
+const profileElement = lazyElement(() => import('./pages/Profile/Profile'));
 
 /** Standalone pages outside the main layout. */
 export const authPublicRoutes: RouteObject[] = [
@@ -43,10 +43,11 @@ export const authPublicRoutes: RouteObject[] = [
   },
 ];
 
-/** Client area: pages inside the main layout for any signed-in user. */
+/** User area: pages inside the main layout for any signed-in user. */
 export const authLayoutRoutes: RouteObject[] = [
   {
     path: 'profile',
-    element: <ProtectedRoute area="client">{profileElement}</ProtectedRoute>,
+    // Shared by every role: admins open the same page from the admin area
+    element: <ProtectedRoute>{profileElement}</ProtectedRoute>,
   },
 ];

@@ -11,7 +11,7 @@ import LayoutComponent from '../../components/LayoutComponent/LayoutComponent';
 import NotFound from '../../pages/NotFound/NotFound';
 import RouteError from '../../routes/RouteError';
 import { lazyElement } from '../../routes/lazy';
-import { ProtectedRoute, profileElement } from '../auth';
+import { ProtectedRoute } from '../auth';
 import { adminNavItems } from './navigation';
 
 export const adminRoute: RouteObject = {
@@ -31,7 +31,6 @@ export const adminRoute: RouteObject = {
       path: 'settings/channels',
       element: lazyElement(() => import('./pages/Channels/Channels')),
     },
-    { path: 'profile', element: profileElement },
     { path: '*', element: <NotFound /> },
   ],
 };

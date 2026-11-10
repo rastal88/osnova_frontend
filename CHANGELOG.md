@@ -7,6 +7,11 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Admin overview: users (total, active, by role) in one card; leads (total, new, done) with a
+  bar chart of the last 14 days; delivery channels set up / enabled; the system — template
+  profile, version, languages, modules on and off. `BarChart`: a small chart in HTML and CSS,
+  no chart library.
+- Breadcrumbs on the overview: Admin / Overview (`indexTitles`).
 - Menu items can have `children`: a submenu that opens on its current page; groups
   with no visible children are hidden.
 - Sign-in with Google: a **Continue with Google** button on the sign-in and sign-up pages
@@ -17,7 +22,7 @@ All notable changes are documented here. The format follows
   the header with the unread count (refreshed every minute while the page is visible and when
   it becomes visible again), the latest notifications, open-and-mark-read, **Mark all read**;
   lazy-loaded, with an accessible label that includes the count.
-- Files module (`src/modules/files`, `files` capability): **My files** in the client area —
+- Files module (`src/modules/files`, `files` capability): **My files** in the user area —
   drag-and-drop upload of several files with progress, a server-side table with search,
   size and upload time, download links, delete with confirmation; a menu item for
   signed-in users. `formatSize` with unit tests.
@@ -58,10 +63,16 @@ All notable changes are documented here. The format follows
 - Role names translated.
 
 ### Changed
+- The client area is now the user area: `Area` `'user'`, `AREA_HOME.user`, `area="user"`,
+  **User area** in the user menu (backend `areas` and `/user/*`).
+- One profile page `/profile` for every role: `/admin/profile` removed, so the profile no longer
+  shows Admin in its breadcrumbs.
+- Side menu: items and submenu titles have the same inset, so icons line up.
+- API types regenerated (`/user/summary`, `/admin/leads/stats`).
 - Admin menu: Overview, Users, Leads, then **Settings** with **General** and **Channels**;
   channels moved to `/admin/settings/channels`.
-- The client area starts on the home page: **My account** is now **Client area** and opens
-  `/`, ordinary users land there after sign-in.
+- The user area starts on the home page: **My account** is now **User area** and opens `/`,
+  ordinary users land there after sign-in.
 - nginx (Docker): `X-Forwarded-For` is set to the client address instead of appended to, so a
   client cannot bypass the backend rate limits with its own header; request bodies up to 1 MB,
   uploads to `/api/v1/files` up to 11 MB (the default 1 MB broke files over 1 MB).

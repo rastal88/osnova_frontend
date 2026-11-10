@@ -1,0 +1,8 @@
+.overview-card {
+  height: 100%;
+}
+
+.overview-caption {
+  display: block;
+  margin: 16px 0 8px;
+}

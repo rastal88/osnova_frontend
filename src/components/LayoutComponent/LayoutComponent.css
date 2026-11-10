@@ -162,7 +162,10 @@
   border-inline-end: none !important;
 }
 
-.app-nav-sider .ant-menu-item {
+/* Items and submenu titles share one inset, so every icon sits on the same line */
+.app-nav-sider .ant-menu-item,
+.app-nav-sider .ant-menu-submenu-title {
+  width: calc(100% - 16px);
   margin-inline: 8px;
   border-radius: 8px;
 }

@@ -88,7 +88,7 @@ export type AdminUserUpdate = {
  *
  * Parts of the interface: the public area needs no sign-in and is not listed.
  */
-export type Area = 'admin' | 'client';
+export type Area = 'admin' | 'user';
 
 /**
  * Body_auth_cookie_login_api_v1_auth_login_post
@@ -279,17 +279,6 @@ export type ChannelTestResult = {
      * Error
      */
     error: string | null;
-};
-
-/**
- * ClientSummary
- */
-export type ClientSummary = {
-    /**
-     * Email
-     */
-    email: string;
-    role: Role;
 };
 
 /**
@@ -533,6 +522,20 @@ export type HealthResponse = {
 };
 
 /**
+ * LeadDay
+ */
+export type LeadDay = {
+    /**
+     * Date
+     */
+    date: string;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
  * LeadDelivery
  */
 export type LeadDelivery = {
@@ -612,6 +615,26 @@ export type LeadRead = {
     deliveries: {
         [key: string]: LeadDelivery;
     };
+};
+
+/**
+ * LeadStats
+ */
+export type LeadStats = {
+    /**
+     * Total
+     */
+    total: number;
+    /**
+     * By Status
+     */
+    by_status: {
+        [key: string]: number;
+    };
+    /**
+     * By Day
+     */
+    by_day: Array<LeadDay>;
 };
 
 /**
@@ -798,6 +821,17 @@ export type UserRead = {
      * Areas the user can open; the frontend lands on the first one after sign-in.
      */
     readonly areas: Array<Area>;
+};
+
+/**
+ * UserSummary
+ */
+export type UserSummary = {
+    /**
+     * Email
+     */
+    email: string;
+    role: Role;
 };
 
 /**
@@ -1466,21 +1500,21 @@ export type OauthGoogleCookieCallbackApiV1AuthGoogleCallbackGetResponses = {
     200: unknown;
 };
 
-export type ClientSummaryApiV1ClientSummaryGetData = {
+export type UserSummaryApiV1UserSummaryGetData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/v1/client/summary';
+    url: '/api/v1/user/summary';
 };
 
-export type ClientSummaryApiV1ClientSummaryGetResponses = {
+export type UserSummaryApiV1UserSummaryGetResponses = {
     /**
      * Successful Response
      */
-    200: ClientSummary;
+    200: UserSummary;
 };
 
-export type ClientSummaryApiV1ClientSummaryGetResponse = ClientSummaryApiV1ClientSummaryGetResponses[keyof ClientSummaryApiV1ClientSummaryGetResponses];
+export type UserSummaryApiV1UserSummaryGetResponse = UserSummaryApiV1UserSummaryGetResponses[keyof UserSummaryApiV1UserSummaryGetResponses];
 
 export type AdminOverviewApiV1AdminOverviewGetData = {
     body?: never;
@@ -1752,6 +1786,38 @@ export type LeadFormsApiV1AdminLeadsFormsGetResponses = {
 };
 
 export type LeadFormsApiV1AdminLeadsFormsGetResponse = LeadFormsApiV1AdminLeadsFormsGetResponses[keyof LeadFormsApiV1AdminLeadsFormsGetResponses];
+
+export type LeadStatsApiV1AdminLeadsStatsGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Days
+         *
+         * Length of the by_day period
+         */
+        days?: number;
+    };
+    url: '/api/v1/admin/leads/stats';
+};
+
+export type LeadStatsApiV1AdminLeadsStatsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type LeadStatsApiV1AdminLeadsStatsGetError = LeadStatsApiV1AdminLeadsStatsGetErrors[keyof LeadStatsApiV1AdminLeadsStatsGetErrors];
+
+export type LeadStatsApiV1AdminLeadsStatsGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: LeadStats;
+};
+
+export type LeadStatsApiV1AdminLeadsStatsGetResponse = LeadStatsApiV1AdminLeadsStatsGetResponses[keyof LeadStatsApiV1AdminLeadsStatsGetResponses];
 
 export type TestChannelApiV1AdminLeadsChannelsChannelIdTestPostData = {
     body?: never;

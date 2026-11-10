@@ -64,7 +64,7 @@ export const navigationConfig: NavigationConfig = {
       icon: FolderOutlined,
       capability: 'files',
       requiresAuth: true,
-      area: 'client',
+      area: 'user',
     },
   ],
 };
@@ -84,10 +84,14 @@ export const routeTitles: Record<string, LabelKey> = {
   '/register': 'pages.register',
   '/admin': 'pages.admin',
   '/admin/leads': 'pages.leads',
-  '/admin/profile': 'pages.profile',
   '/admin/settings': 'pages.settings',
   '/admin/settings/channels': 'pages.channels',
   '/admin/users': 'pages.users',
+};
+
+/** Start pages of a section that have their own title, e.g. Admin / Overview. */
+export const indexTitles: Record<string, LabelKey> = {
+  '/admin': 'pages.overview',
 };
 
 export const redirects: { from: string; to: string }[] = [{ from: '/home', to: '/' }];
@@ -151,6 +155,11 @@ export function getBreadcrumbs(pathname: string): RouteCrumb[] {
     if (titleKey) {
       crumbs.push({ titleKey, path: current });
     }
+  }
+
+  const indexTitle = indexTitles[pathname];
+  if (indexTitle) {
+    crumbs.push({ titleKey: indexTitle, path: pathname });
   }
 
   return crumbs;

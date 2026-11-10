@@ -1,5 +1,5 @@
 /**
- * Files module — "My files" in the client area: upload, list, download, delete.
+ * Files module — "My files" in the user area: upload, list, download, delete.
  * Enabled by the `files` capability from /bootstrap (backend: FILES_ENABLED).
  * The page is lazy-loaded, so it is not in the main bundle.
  */
@@ -12,7 +12,7 @@ export const filesRoutes: RouteObject[] = [
   {
     path: 'files',
     element: (
-      <ProtectedRoute area="client">
+      <ProtectedRoute area="user">
         {lazyElement(() => import('./pages/MyFiles/MyFiles'))}
       </ProtectedRoute>
     ),

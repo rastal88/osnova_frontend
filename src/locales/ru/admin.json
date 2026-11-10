@@ -3,7 +3,30 @@
     "title": "Обзор",
     "subtitle": "Админка",
     "users": "Пользователи",
-    "activeUsers": "Активные пользователи"
+    "activeUsers": "Активные",
+    "byRole": "По ролям",
+    "leads": "Заявки",
+    "leadsNew": "Новые",
+    "leadsDone": "Обработаны",
+    "leadsPerDay": "Заявки за {{days}} дней",
+    "openLeads": "Открыть заявки",
+    "channels": "Каналы доставки",
+    "channelsEnabled": "Включены",
+    "channelsTotal": "Настроены",
+    "noChannels": "Каналов пока нет: заявки хранятся только в админке.",
+    "openChannels": "Настроить каналы",
+    "system": "Система",
+    "profile": "Профиль шаблона",
+    "version": "Версия",
+    "languages": "Языки",
+    "modules": "Модули",
+    "features": {
+      "authentication": "Пользователи",
+      "admin": "Админка",
+      "files": "Файлы",
+      "notifications": "Уведомления",
+      "background_tasks": "Фоновые задачи"
+    }
   },
   "settings": {
     "title": "Настройки",

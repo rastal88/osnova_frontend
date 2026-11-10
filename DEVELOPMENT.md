@@ -29,14 +29,14 @@ With `authentication` on, the app has three areas in the same shell:
 | Area | Pages | Who |
 |---|---|---|
 | public | home, examples, legal, sign-in | everyone |
-| client | `/profile`, `/files`, the project's own pages (starts on home) | any signed-in user |
+| user | `/profile`, `/files`, the project's own pages (starts on home) | any signed-in user |
 | admin | `/admin/*` (`src/modules/admin`) | `root`, `moderator` (needs `admin`) |
 
-- The backend decides: `GET /auth/users/me` returns `areas`, e.g. `["admin", "client"]`.
+- The backend decides: `GET /auth/users/me` returns `areas`, e.g. `["admin", "user"]`.
   After sign-in the user lands on the first one (`landingPath`, `src/modules/auth/areas.ts`).
-- Guard a page with `<ProtectedRoute area="client">` or `area="admin"`: guests go to
+- Guard a page with `<ProtectedRoute area="user">` or `area="admin"`: guests go to
   `/login`, users without the area go to their own start page.
-- The user menu has a switch to the other area (**Admin area** / **Client area**) only when
+- The user menu has a switch to the other area (**Admin area** / **User area**) only when
   the backend gives the user both: `root` and `moderator`, not ordinary users.
 - **Sign-in with Google** (and other providers): the sign-in and sign-up pages show a
   button for every provider in `/bootstrap` `auth_providers` (`OAuthButtons`). The provider
@@ -85,7 +85,7 @@ export const navigationConfig: NavigationConfig = {
   showBreadcrumbs: true,       // breadcrumbs (when there is more than one level)
   items: [
     { path: '/', label: 'pages.home', icon: HomeOutlined },
-    { path: '/files', label: 'pages.files', icon: FolderOutlined, capability: 'files', requiresAuth: true, area: 'client' },
+    { path: '/files', label: 'pages.files', icon: FolderOutlined, capability: 'files', requiresAuth: true, area: 'user' },
   ],
 };
 
@@ -337,7 +337,7 @@ entries in `src/config/prerender.json`.
 
 1. Create `src/pages/MyPage/MyPage.tsx` and wrap the content in `PageContainer`.
 2. Add a route in `src/routes/routes.tsx` (inside the layout children for the shell);
-   for signed-in users wrap it in `<ProtectedRoute area="client">`, for the admin area
+   for signed-in users wrap it in `<ProtectedRoute area="user">`, for the admin area
    add it to `src/modules/admin` instead (see 1.1a).
 3. Add its title key to `routeTitles` and, for a menu link, an item to `navigationConfig.items`.
 4. For a public page with a link preview, add it to `src/config/prerender.json` (see 2.4).

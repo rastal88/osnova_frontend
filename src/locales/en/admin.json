@@ -3,7 +3,30 @@
     "title": "Overview",
     "subtitle": "Admin area",
     "users": "Users",
-    "activeUsers": "Active users"
+    "activeUsers": "Active",
+    "byRole": "By role",
+    "leads": "Leads",
+    "leadsNew": "New",
+    "leadsDone": "Done",
+    "leadsPerDay": "Leads in the last {{days}} days",
+    "openLeads": "Open leads",
+    "channels": "Delivery channels",
+    "channelsEnabled": "Enabled",
+    "channelsTotal": "Set up",
+    "noChannels": "No channels yet: leads are only kept in the admin.",
+    "openChannels": "Set up channels",
+    "system": "System",
+    "profile": "Template profile",
+    "version": "Version",
+    "languages": "Languages",
+    "modules": "Modules",
+    "features": {
+      "authentication": "Users",
+      "admin": "Admin",
+      "files": "Files",
+      "notifications": "Notifications",
+      "background_tasks": "Background tasks"
+    }
   },
   "settings": {
     "title": "Settings",

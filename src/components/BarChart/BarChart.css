@@ -1,0 +1,61 @@
+.bar-chart {
+  margin: 0;
+}
+
+.bar-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  margin: 0;
+  padding: 16px 0 24px;
+  list-style: none;
+  box-sizing: content-box;
+}
+
+.bar-chart-item {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 0;
+}
+
+.bar-chart-bar {
+  display: block;
+  min-height: 2px;
+  border-radius: 4px 4px 0 0;
+  background: var(--color-primary);
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.bar-chart-item:hover .bar-chart-bar {
+  opacity: 1;
+}
+
+.bar-chart-value {
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.bar-chart-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 4px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--color-text-tertiary);
+}
+
+/* Every other label, so dates do not overlap on narrow screens */
+@media (max-width: 575px) {
+  .bar-chart-item:nth-child(even) .bar-chart-label {
+    visibility: hidden;
+  }
+}
