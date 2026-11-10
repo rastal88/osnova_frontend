@@ -6,6 +6,11 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-10
+
+The `standard` profile: sign-in and areas, admin (overview, users, leads, settings,
+delivery channels), my files, notifications, sign-in with Google.
+
 ### Added
 - Admin overview: users (total, active, by role) in one card; leads (total, new, done) with a
   bar chart of the last 14 days; delivery channels set up / enabled; the system — template
@@ -195,5 +200,6 @@ First release: the `minimal` profile.
 - Dependencies with known vulnerabilities updated (`npm audit`: 23 before, none after);
   `js-yaml` inside the API type generator is overridden to a fixed release.
 
-[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/rastal88/osnova_frontend/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rastal88/osnova_frontend/releases/tag/v0.1.0
