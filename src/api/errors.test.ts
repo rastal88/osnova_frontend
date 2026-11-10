@@ -25,6 +25,14 @@ describe('API errors', () => {
     expect(getApiError(new Error('boom'))).toBeNull();
   });
 
+  it('explains a proxy refusing a large body', () => {
+    const tooLarge = getErrorMessage(responseError(413, '<html>413</html>'));
+    expect(tooLarge).not.toBe(getErrorMessage(new Error('boom')));
+    // The backend's own 413 keeps its message
+    const body = { code: 'file_too_large', message: 'Up to 10 MB' };
+    expect(getErrorMessage(responseError(413, body))).toBe('Up to 10 MB');
+  });
+
   it('falls back to a local message', () => {
     const network = new AxiosError('Network Error', 'ERR_NETWORK');
     expect(getErrorMessage(network)).not.toBe(getErrorMessage(new Error('boom')));

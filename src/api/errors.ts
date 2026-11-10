@@ -23,5 +23,9 @@ export function getErrorMessage(error: unknown): string {
   const apiError = getApiError(error);
   if (apiError) return apiError.message;
   if (axios.isAxiosError(error) && !error.response) return i18n.t('errors.network');
+  // Answered by the proxy (nginx) before the request reached the backend
+  if (axios.isAxiosError(error) && error.response?.status === 413) {
+    return i18n.t('errors.tooLarge');
+  }
   return i18n.t('errors.unknown');
 }

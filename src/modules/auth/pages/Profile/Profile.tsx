@@ -1,5 +1,5 @@
-import { EditOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Descriptions } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Card, Descriptions } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import PageContainer from '../../../../components/PageContainer/PageContainer';
@@ -11,11 +11,7 @@ const Profile = () => {
   const user = useAuthStore((state) => state.user);
 
   return (
-    <PageContainer
-      title={t('profile.title')}
-      noindex
-      actions={<Button icon={<EditOutlined />}>{t('profile.edit')}</Button>}
-    >
+    <PageContainer title={t('profile.title')} noindex>
       <VerifyEmailNotice />
       <Card>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>

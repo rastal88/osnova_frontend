@@ -63,6 +63,11 @@ All notable changes are documented here. The format follows
 - Role names translated.
 
 ### Changed
+- Home: the **API docs** button only when the backend serves them (`/bootstrap` `api_docs`);
+  the version tag only once it is known.
+- A request refused by the proxy for its size (413 without a JSON body) is explained instead of
+  "Something went wrong".
+- Profile: the **Edit** button that did nothing is removed.
 - The client area is now the user area: `Area` `'user'`, `AREA_HOME.user`, `area="user"`,
   **User area** in the user menu (backend `areas` and `/user/*`).
 - One profile page `/profile` for every role: `/admin/profile` removed, so the profile no longer
@@ -82,6 +87,10 @@ All notable changes are documented here. The format follows
 - Menu items take `area` instead of `roles`; `visibleNavItems` filters them.
 - User menu built from Ant Design menu items (keyboard accessible).
 - API types regenerated: `/client/*` and `/admin/*` paths, `UserRead.areas`.
+
+### Fixed
+- My files: two uploads of files with the same name no longer share one progress bar.
+- Prerender: a `$&` or `$'` in a title or description is kept as typed.
 
 ### Removed
 - The client dashboard page `/dashboard` (an example without content); the backend example

@@ -265,6 +265,10 @@ export type BootstrapResponse = {
      * Auth Providers
      */
     auth_providers: Array<string>;
+    /**
+     * Api Docs
+     */
+    api_docs: boolean;
 };
 
 /**
