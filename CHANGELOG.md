@@ -6,6 +6,11 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-11
+
+Account and everyday tools: profile self-service, CSV export from the admin tables,
+optional captcha on forms and sign-up.
+
 ### Added
 - Profile: the user manages the account — name; password (current one asked; other devices
   are signed out); email (confirmed again); **Sign out everywhere**; **Delete account** with a
@@ -218,6 +223,7 @@ First release: the `minimal` profile.
 - Dependencies with known vulnerabilities updated (`npm audit`: 23 before, none after);
   `js-yaml` inside the API type generator is overridden to a fixed release.
 
-[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/rastal88/osnova_frontend/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/rastal88/osnova_frontend/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rastal88/osnova_frontend/releases/tag/v0.1.0
