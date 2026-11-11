@@ -35,7 +35,9 @@ profiles and capabilities.
 - With `authentication` on the backend: sign-in, sign-up (also with Google when the backend
   has its keys), email confirmation and password reset by email, the user area (starts on home; one profile page for every role, with the account's language for emails and notifications); with `admin`: the admin area (the `admin.access` permission; sections and actions by permission) in the same shell,
   landing by role after sign-in and a switch between the areas in the user menu;
-  Admin → Settings generated from the backend (site name, contacts, languages);
+  Admin → Settings generated from the backend, a tab per group (site, languages, mail with a
+  test email, protection, data retention, files, notifications), each changed with its own
+  permission;
   Admin → Users: search, filters, block / unblock, role and groups; Admin → Access: roles
   (permissions by area), groups and the audit log; Admin → Leads: form
   submissions with search, filters, details, status, delete and delivery results; Admin →

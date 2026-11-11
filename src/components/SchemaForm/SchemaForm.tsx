@@ -1,5 +1,14 @@
-import { Alert, Button, Checkbox, Form, Input, Result, Select, Typography } from 'antd';
-import type { FormRule } from 'antd';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  InputNumber,
+  Result,
+  Select,
+  Typography,
+} from 'antd';
 import type { TFunction } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
@@ -13,70 +22,12 @@ import { PRIVACY_POLICY_PATH } from '../../utils/constants';
 import { setServerFieldErrors } from '../../utils/formErrors';
 import { useCaptcha } from '../Captcha/Captcha';
 import PageState from '../PageState/PageState';
+import { rulesFor } from './rules';
 import './SchemaForm.css';
 
 const { Title } = Typography;
 
 type Outcome = { kind: 'success'; message: string } | { kind: 'error'; message: string };
-
-const trim = (value: unknown) => (typeof value === 'string' ? value.trim() : value);
-
-const PATTERN_MESSAGES = {
-  email: 'validation.email',
-  tel: 'validation.phone',
-} as const;
-
-/** Client rules mirror the server ones, so most mistakes are caught before sending. */
-function rulesFor(field: FormFieldDescription, t: TFunction<'forms'>): FormRule[] {
-  if (field.type === 'multiselect') {
-    const min = Math.max(field.min_length ?? 0, field.required ? 1 : 0);
-    return min ? [{ type: 'array', min, message: t('validation.chooseAtLeast', { min }) }] : [];
-  }
-  if (field.type === 'checkbox' || field.type === 'consent') {
-    if (!field.required) return [];
-    return [
-      {
-        validator: (_, value) =>
-          value ? Promise.resolve() : Promise.reject(new Error(t('validation.mustBeChecked'))),
-      },
-    ];
-  }
-
-  const rules: FormRule[] = [];
-  if (field.required) {
-    rules.push({
-      required: true,
-      whitespace: true,
-      message: t('validation.required'),
-    });
-  }
-  if (field.min_length) {
-    rules.push({
-      min: field.min_length,
-      transform: trim,
-      message: t('validation.minLength', { min: field.min_length }),
-    });
-  }
-  if (field.max_length) {
-    rules.push({
-      max: field.max_length,
-      transform: trim,
-      message: t('validation.maxLength', { max: field.max_length }),
-    });
-  }
-  if (field.pattern) {
-    const key =
-      field.type === 'email' || field.type === 'tel'
-        ? PATTERN_MESSAGES[field.type]
-        : 'validation.pattern';
-    rules.push({
-      pattern: new RegExp(field.pattern),
-      transform: trim,
-      message: t(key),
-    });
-  }
-  return rules;
-}
 
 function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): ReactNode {
   const maxLength = field.max_length ?? undefined;
@@ -92,6 +43,15 @@ function renderControl(field: FormFieldDescription, t: TFunction<'forms'>): Reac
     case 'password':
       // A token or key, not the user's own password: keep the browser from filling it
       return <Input.Password autoComplete="off" maxLength={maxLength} />;
+    case 'number':
+      return (
+        <InputNumber
+          min={field.min_value ?? undefined}
+          max={field.max_value ?? undefined}
+          precision={0}
+          style={{ width: '100%', maxWidth: 200 }}
+        />
+      );
     case 'select':
       return <Select options={field.options} allowClear={!field.required} />;
     case 'multiselect':
@@ -117,13 +77,17 @@ interface SchemaFieldsProps {
   fields: FormFieldDescription[];
   /** Nest the values under this name, e.g. "params" → { params: { chat_id } } */
   namePrefix?: string;
+  /** Explain under secret fields that the saved value shows as a mask and is kept */
+  secretHint?: boolean;
 }
 
 /** The form items for a list of described fields: use inside an Ant Design `Form`. */
-export const SchemaFields = ({ fields, namePrefix }: SchemaFieldsProps) => {
+export const SchemaFields = ({ fields, namePrefix, secretHint = false }: SchemaFieldsProps) => {
   const { t } = useTranslation('forms');
   return fields.map((field) => {
     const isCheckbox = field.type === 'checkbox' || field.type === 'consent';
+    const hints = [field.help, secretHint && field.type === 'password' && t('secretKept')];
+    const extra = hints.filter(Boolean).join(' ');
     return (
       <Form.Item
         key={field.name}
@@ -132,6 +96,7 @@ export const SchemaFields = ({ fields, namePrefix }: SchemaFieldsProps) => {
         required={field.required}
         rules={rulesFor(field, t)}
         valuePropName={isCheckbox ? 'checked' : 'value'}
+        extra={extra || undefined}
       >
         {renderControl(field, t)}
       </Form.Item>

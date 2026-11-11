@@ -17,6 +17,7 @@ import type {
   LeadPage,
   LeadRead,
   LeadStats,
+  MailTestResult,
   PermissionRead,
   RoleCreate,
   RoleRead,
@@ -46,6 +47,12 @@ export async function saveSettings(
   values: FormValues,
 ): Promise<SettingsGroupDescription> {
   const response = await api.put<SettingsGroupDescription>(`/admin/settings/${group}`, values);
+  return response.data;
+}
+
+/** A test email to the signed-in user with the saved mail settings. */
+export async function testMail(): Promise<MailTestResult> {
+  const response = await api.post<MailTestResult>('/admin/settings/mail/test');
   return response.data;
 }
 

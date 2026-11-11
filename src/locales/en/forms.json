@@ -7,11 +7,14 @@
     "email": "Enter a valid email address.",
     "phone": "Enter a valid phone number.",
     "mustBeChecked": "Please check this box to continue.",
-    "chooseAtLeast": "Choose at least {{min}}."
+    "chooseAtLeast": "Choose at least {{min}}.",
+    "min": "Must be at least {{min}}.",
+    "max": "Must be at most {{max}}."
   },
   "privacyPolicy": "privacy policy",
   "sending": "Sending…",
   "sendAnother": "Send another",
   "retry": "Try again",
-  "loadFailed": "The form could not be loaded."
+  "loadFailed": "The form could not be loaded.",
+  "secretKept": "A saved value shows as ********: leave it to keep it, or type a new one."
 }
