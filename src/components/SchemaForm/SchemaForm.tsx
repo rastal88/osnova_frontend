@@ -11,6 +11,7 @@ import { getForm, submitForm } from '../../api/forms';
 import type { FormDescription, FormFieldDescription, FormValues } from '../../api/forms';
 import { PRIVACY_POLICY_PATH } from '../../utils/constants';
 import { setServerFieldErrors } from '../../utils/formErrors';
+import { useCaptcha } from '../Captcha/Captcha';
 import PageState from '../PageState/PageState';
 import './SchemaForm.css';
 
@@ -146,7 +147,8 @@ interface SchemaFormProps {
 
 /**
  * A form rendered from its backend description. Handles client validation,
- * per-field server errors and the submit states: sending, success, error with retry.
+ * per-field server errors, the captcha when the backend asks for one, and the submit
+ * states: sending, success, error with retry.
  */
 const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
   const { t, i18n } = useTranslation('forms');
@@ -157,6 +159,7 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
   const [sending, setSending] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const lastValues = useRef<FormValues | null>(null);
+  const captcha = useCaptcha();
   const language = i18n.language;
 
   // Labels come translated from the backend: reload them when the language changes.
@@ -178,7 +181,7 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
     setSending(true);
     setOutcome(null);
     try {
-      const response = await submitForm(name, values);
+      const response = await submitForm(name, values, captcha.token);
       form.resetFields();
       setOutcome({ kind: 'success', message: response.message });
     } catch (error) {
@@ -188,6 +191,8 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
       }
     } finally {
       setSending(false);
+      // A captcha token works once: the next attempt needs a new one
+      captcha.reset();
     }
   };
 
@@ -227,6 +232,7 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
             <Button
               size="small"
               loading={sending}
+              disabled={!captcha.ready}
               onClick={() => lastValues.current && void send(lastValues.current)}
             >
               {t('retry')}
@@ -252,8 +258,10 @@ const SchemaForm = ({ name, showTitle = true }: SchemaFormProps) => {
           </Form.Item>
         </div>
 
+        {captcha.widget}
+
         <Form.Item className="schema-form-actions">
-          <Button type="primary" htmlType="submit" loading={sending}>
+          <Button type="primary" htmlType="submit" loading={sending} disabled={!captcha.ready}>
             {sending ? t('sending') : description.submit}
           </Button>
         </Form.Item>
