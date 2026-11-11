@@ -7,6 +7,7 @@ import {
   canEditGroup,
   canEditRole,
   canGiveRole,
+  canGrant,
   covers,
   permissionsOf,
 } from './access';
@@ -92,5 +93,22 @@ describe('groups', () => {
     expect(canEditGroup(manager, group, roles)).toBe(true);
     expect(canEditGroup(manager, { ...group, roles: ['support'] }, roles)).toBe(false);
     expect(canEditGroup({ permissions: ['leads.read', 'leads.export'] }, group, roles)).toBe(false);
+  });
+});
+
+describe('canGrant', () => {
+  const staff = { name: 'leads.read', everyone: false };
+  const shared = { name: 'files.share', everyone: true };
+  const me = { permissions: ['roles.manage', 'leads.read', 'files.share'] };
+
+  it('gives the sign-up role only permissions meant for everyone', () => {
+    expect(canGrant(me, 'user', staff)).toBe(false);
+    expect(canGrant(me, 'user', shared)).toBe(true);
+  });
+
+  it('lets other roles get what the editor has', () => {
+    expect(canGrant(me, 'sales', staff)).toBe(true);
+    expect(canGrant(me, null, staff)).toBe(true);
+    expect(canGrant(me, 'sales', { name: 'users.read', everyone: false })).toBe(false);
   });
 });

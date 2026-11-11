@@ -78,6 +78,7 @@
     "permissions": "Permissions",
     "systemName": "A built-in role keeps its name.",
     "ownOnly": "You can give or take away only the permissions you have yourself.",
+    "signUpRoleHint": "Every new account gets this role, so it cannot have staff permissions: to make a person staff, give them another role or a group in Users.",
     "rootHint": "Root has every permission, including those of modules added later. It cannot be edited.",
     "system": "Built-in",
     "allPermissions": "All",

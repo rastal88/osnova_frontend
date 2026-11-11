@@ -23,7 +23,7 @@ import type { PermissionRead, RoleRead } from '../../../../api/generated';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { setServerFieldErrors } from '../../../../utils/formErrors';
 import { useAuthStore, useCan } from '../../../auth';
-import { canDeleteRole, canEditRole, covers, useRoles } from '../../access';
+import { SIGN_UP_ROLE, canDeleteRole, canEditRole, canGrant, useRoles } from '../../access';
 import { createRole, deleteRole, getPermissions, updateRole } from '../../api';
 import PermissionPicker from './PermissionPicker';
 
@@ -221,11 +221,14 @@ const Roles = () => {
             <Form.Item
               name="permissions"
               label={t('roles.permissions')}
-              extra={editable && t('roles.ownOnly')}
+              extra={
+                editable &&
+                t(role?.slug === SIGN_UP_ROLE ? 'roles.signUpRoleHint' : 'roles.ownOnly')
+              }
             >
               <PermissionPicker
                 permissions={permissions ?? []}
-                allowed={(permission) => covers(me, [permission])}
+                allowed={(permission) => canGrant(me, role?.slug ?? null, permission)}
                 disabled={!editable}
               />
             </Form.Item>
