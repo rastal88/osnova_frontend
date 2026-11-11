@@ -17,6 +17,11 @@ All notable changes are documented here. The format follows
   read-only, built-in roles keep their names, a role that users have is not deleted.
 - Admin → Access → **Groups**: roles for several people at once; create, edit and delete with
   `roles.manage`. The members count opens the users list filtered by the group.
+- Admin → Access → **Audit log** (`/admin/audit`, with `audit.read`): who changed what in the
+  admin and when, from which IP, and the changes as "before → after" (role names instead of
+  slugs, secrets stay masked). Search by email or target, filter by action (texts from
+  `GET /admin/audit/actions`), sort, and a period with native date inputs (no date library);
+  everything is kept in the URL.
 - Admin → Users: a **Groups** column (filter, and the groups of a user are changed in place with
   `users.roles`). `src/modules/admin/access.ts`: `useRoles` / `useGroups` and the backend rules
   mirrored (`canEditRole`, `canGiveRole`, ...).

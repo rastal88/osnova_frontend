@@ -5,6 +5,8 @@ import type {
   AdminOverview,
   AdminUser,
   AdminUserPage,
+  AuditAction,
+  AuditPage,
   ChannelTestResult,
   EntityRead,
   EntityTypeDescription,
@@ -118,6 +120,25 @@ export async function updateGroup(id: string, values: GroupUpdate): Promise<Grou
 
 export async function deleteGroup(id: string) {
   await api.delete(`/admin/groups/${id}`);
+}
+
+export interface AuditPeriod {
+  /** Days, YYYY-MM-DD (UTC); `until` is included */
+  since?: string;
+  until?: string;
+}
+
+/** One page of the audit log; the query is the DataTable one. */
+export async function getAudit(query: TableQuery, period: AuditPeriod = {}): Promise<AuditPage> {
+  const params = { ...listParams(query), ...period };
+  const response = await api.get<AuditPage>('/admin/audit', { params });
+  return response.data;
+}
+
+/** The actions of the audit log with texts in the request language. */
+export async function getAuditActions(): Promise<AuditAction[]> {
+  const response = await api.get<AuditAction[]>('/admin/audit/actions');
+  return response.data;
 }
 
 export async function getLeadForms(): Promise<FormDescription[]> {

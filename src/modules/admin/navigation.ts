@@ -1,6 +1,7 @@
 import {
   ControlOutlined,
   DashboardOutlined,
+  HistoryOutlined,
   InboxOutlined,
   SafetyOutlined,
   SendOutlined,
@@ -28,6 +29,12 @@ export const adminNavItems: NavItem[] = [
     children: [
       { path: '/admin/roles', label: 'pages.roles', icon: UserSwitchOutlined },
       { path: '/admin/groups', label: 'pages.groups', icon: UsergroupAddOutlined },
+      {
+        path: '/admin/audit',
+        label: 'pages.audit',
+        icon: HistoryOutlined,
+        permission: 'audit.read',
+      },
     ],
   },
   {
