@@ -7,7 +7,7 @@ interface Props {
   value?: string[];
   onChange?: (value: string[]) => void;
   /** Permissions that may be ticked or unticked (the editor's own) */
-  allowed: (permission: string) => boolean;
+  allowed: (permission: PermissionRead) => boolean;
   disabled?: boolean;
 }
 
@@ -32,7 +32,7 @@ const PermissionPicker = ({ permissions, value = [], onChange, allowed, disabled
               options={items.map((item) => ({
                 value: item.name,
                 label: item.title,
-                disabled: !allowed(item.name),
+                disabled: !allowed(item),
               }))}
               onChange={(checked) =>
                 onChange?.([...value.filter((name) => !names.has(name)), ...checked])

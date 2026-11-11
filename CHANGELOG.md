@@ -51,6 +51,11 @@ All notable changes are documented here. The format follows
   more than the admin (its role and groups).
 - Admin → Overview counts users for every role, with the names of the project's roles.
 
+### Fixed
+- Admin → Roles: the `user` role, given to every new account, shows its staff permissions
+  greyed out with a note (the backend refuses them): a person becomes staff with another role
+  or a group. `canGrant` in `src/modules/admin/access.ts`.
+
 ## [0.3.0] - 2026-11-11
 
 Account and everyday tools: profile self-service, CSV export from the admin tables,

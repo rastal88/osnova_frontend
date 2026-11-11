@@ -4,11 +4,12 @@
  *
  * Nobody hands out, changes or takes away more than they have themselves: a role or
  * a group is changed only by someone with `roles.manage` who has every permission in
- * it; root has every permission and is not edited.
+ * it; root has every permission and is not edited. The `user` role is given to every
+ * new account, so it holds only permissions meant for everyone (`everyone`).
  */
 import { useCallback, useEffect, useState } from 'react';
 
-import type { GroupRead, RoleRead } from '../../api/generated';
+import type { GroupRead, PermissionRead, RoleRead } from '../../api/generated';
 import { type Permission, can, isSystemRole, useRoleLabel } from '../auth';
 import { getGroups, getRoles } from './api';
 
@@ -37,6 +38,19 @@ export function accountPermissions(
   const mine = new Set(user.groups ?? []);
   const slugs = groups.filter((group) => mine.has(group.id)).flatMap((group) => group.roles);
   return permissionsOf([user.role, ...slugs], roles);
+}
+
+/** The role every new account gets. */
+export const SIGN_UP_ROLE = 'user';
+
+/** May `me` tick or untick this permission in this role? */
+export function canGrant(
+  me: Account | null | undefined,
+  roleSlug: string | null,
+  permission: Pick<PermissionRead, 'name' | 'everyone'>,
+): boolean {
+  if (roleSlug === SIGN_UP_ROLE && !permission.everyone) return false;
+  return covers(me, [permission.name]);
 }
 
 export function canEditRole(me: Account | null | undefined, role: RoleRead): boolean {

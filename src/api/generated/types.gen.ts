@@ -963,6 +963,10 @@ export type PermissionRead = {
      * Area Title
      */
     area_title: string;
+    /**
+     * Everyone
+     */
+    everyone: boolean;
 };
 
 /**
