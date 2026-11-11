@@ -11,15 +11,15 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import type { AdminOverview, EntityRead, LeadStats, Role } from '../../../../api/generated';
+import type { AdminOverview, EntityRead, LeadStats } from '../../../../api/generated';
 import BarChart from '../../../../components/BarChart/BarChart';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
 import { useBootstrapStore } from '../../../../store/bootstrapStore';
+import { SYSTEM_ROLES, useCan, useRoleLabel } from '../../../auth';
 import { getEntities, getLeadStats, getOverview } from '../../api';
 import './Dashboard.css';
 
-const ROLES: Role[] = ['root', 'moderator', 'user'];
 const DAYS = 14;
 const CHANNELS = 'lead_channels';
 const FEATURES = ['authentication', 'admin', 'files', 'notifications', 'background_tasks'] as const;
@@ -30,7 +30,9 @@ const FEATURES = ['authentication', 'admin', 'files', 'notifications', 'backgrou
  * card whose module is removed simply does not load.
  */
 const AdminDashboard = () => {
-  const { t } = useTranslation(['admin', 'auth']);
+  const { t } = useTranslation('admin');
+  const roleLabel = useRoleLabel();
+  const canReadLeads = useCan('leads.read');
   const format = useFormat();
   const config = useBootstrapStore((state) => state.config);
   const [overview, setOverview] = useState<AdminOverview | null>(null);
@@ -42,13 +44,16 @@ const AdminDashboard = () => {
     getOverview()
       .then(setOverview)
       .catch(() => setError(true));
-    getLeadStats(DAYS)
-      .then(setLeads)
-      .catch(() => setLeads(null));
+    // Asked only when it will be answered
+    if (canReadLeads) {
+      getLeadStats(DAYS)
+        .then(setLeads)
+        .catch(() => setLeads(null));
+    }
     getEntities(CHANNELS)
       .then(setChannels)
       .catch(() => setChannels(null));
-  }, []);
+  }, [canReadLeads]);
 
   const dayLabel = (date: string) =>
     format.date(date, { day: 'numeric', month: 'short', timeZone: 'UTC' });
@@ -77,9 +82,9 @@ const AdminDashboard = () => {
                 {t('overview.byRole')}
               </Typography.Text>
               <Space wrap>
-                {ROLES.map((role) => (
+                {SYSTEM_ROLES.map((role) => (
                   <Tag key={role}>
-                    {t(`auth:roles.${role}`)}: {overview.users_by_role[role] ?? 0}
+                    {roleLabel(role)}: {overview.users_by_role[role] ?? 0}
                   </Tag>
                 ))}
               </Space>

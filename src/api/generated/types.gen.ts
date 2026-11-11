@@ -56,7 +56,10 @@ export type AdminUser = {
      * Name
      */
     name?: string | null;
-    role: Role;
+    /**
+     * Role
+     */
+    role: string;
     /**
      * Is Active
      */
@@ -794,6 +797,10 @@ export type ReadyResponse = {
 
 /**
  * Role
+ *
+ * The roles every project starts with; more are rows of the "roles" table.
+ *
+ * root has every permission and is not edited, user is given at sign-up.
  */
 export type Role = 'root' | 'moderator' | 'user';
 
@@ -885,11 +892,18 @@ export type UserRead = {
      * Is Verified
      */
     is_verified?: boolean;
-    role: Role;
+    /**
+     * Role
+     */
+    role: string;
     /**
      * Name
      */
     name?: string | null;
+    /**
+     * Permissions
+     */
+    permissions?: Array<string>;
     /**
      * Areas
      *
@@ -986,11 +1000,18 @@ export type UserReadWritable = {
      * Is Verified
      */
     is_verified?: boolean;
-    role: Role;
+    /**
+     * Role
+     */
+    role: string;
     /**
      * Name
      */
     name?: string | null;
+    /**
+     * Permissions
+     */
+    permissions?: Array<string>;
 };
 
 export type BootstrapApiV1BootstrapGetData = {

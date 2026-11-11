@@ -48,6 +48,17 @@ describe('visibleNavItems', () => {
     expect(paths({ areas: ['admin', 'user'] })).toEqual(['/', '/files', '/admin/users']);
   });
 
+  it('shows an item with a permission only to those who have it', () => {
+    const leads: NavItem[] = [
+      { path: '/admin/leads', label: 'pages.leads', permission: 'leads.read' },
+    ];
+    const visible = (permissions?: string[]) =>
+      visibleNavItems(leads, features, { areas: ['admin', 'user'], permissions }).length;
+    expect(visible(['leads.read'])).toBe(1);
+    expect(visible(['users.read'])).toBe(0);
+    expect(visible()).toBe(0);
+  });
+
   it('hides items of disabled capabilities', () => {
     const noAdmin = { ...features, admin: false };
     expect(paths({ areas: ['admin', 'user'] }, noAdmin)).toEqual(['/', '/files']);

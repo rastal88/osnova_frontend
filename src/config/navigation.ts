@@ -20,6 +20,8 @@ export interface NavItem {
   /** Shown only to signed-in users (and only to those who have this area, when set) */
   requiresAuth?: boolean;
   area?: Area;
+  /** Shown only to users who have this permission, e.g. 'leads.read' */
+  permission?: string;
   /** A submenu, e.g. Settings → General / Channels */
   children?: NavItem[];
 }
@@ -103,14 +105,15 @@ export const redirects: { from: string; to: string }[] = [{ from: '/home', to: '
 export function visibleNavItems(
   items: NavItem[],
   features: BootstrapFeatures | undefined,
-  user: { areas: Area[] } | null,
+  user: { areas: Area[]; permissions?: string[] } | null,
 ): NavItem[] {
   return items
     .filter(
       (item) =>
         (!item.capability || Boolean(features?.[item.capability])) &&
         (!item.requiresAuth || user !== null) &&
-        (!item.area || Boolean(user?.areas.includes(item.area))),
+        (!item.area || Boolean(user?.areas.includes(item.area))) &&
+        (!item.permission || Boolean(user?.permissions?.includes(item.permission))),
     )
     .map((item) =>
       item.children ? { ...item, children: visibleNavItems(item.children, features, user) } : item,

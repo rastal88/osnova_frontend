@@ -4,24 +4,25 @@ import { useTranslation } from 'react-i18next';
 
 import { utc } from '../../../../api/dates';
 import { getErrorMessage } from '../../../../api/errors';
-import type { AdminUser, Role } from '../../../../api/generated';
+import type { AdminUser } from '../../../../api/generated';
 import DataTable from '../../../../components/DataTable/DataTable';
 import type { DataTableColumn } from '../../../../components/DataTable/DataTable';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
-import { useAuthStore } from '../../../auth';
+import { SYSTEM_ROLES, useAuthStore, useCan, useRoleLabel } from '../../../auth';
 import { type UserChanges, exportUsers, getUsers, updateUser } from '../../api';
 import { canChangeRole, canManage } from './permissions';
 
 const { Text } = Typography;
 
-const ROLES: Role[] = ['root', 'moderator', 'user'];
-const ROLE_COLORS: Record<Role, string> = { root: 'gold', moderator: 'blue', user: 'default' };
+const ROLE_COLORS: Record<string, string> = { root: 'gold', moderator: 'blue', user: 'default' };
 
 const Users = () => {
-  const { t } = useTranslation(['admin', 'auth']);
+  const { t } = useTranslation('admin');
+  const roleLabel = useRoleLabel();
   const format = useFormat();
   const me = useAuthStore((state) => state.user);
+  const canExport = useCan('users.export');
   const [toast, toastHolder] = message.useMessage();
   // Changing it makes the table fetch the current page again
   const [version, setVersion] = useState(0);
@@ -54,23 +55,23 @@ const Users = () => {
         key: 'role',
         title: t('users.columns.role'),
         sortable: true,
-        filters: ROLES.map((role) => ({ text: t(`auth:roles.${role}`), value: role })),
+        filters: SYSTEM_ROLES.map((role) => ({ text: roleLabel(role), value: role })),
         render: (_, user) =>
           canChangeRole(me, user) ? (
-            <Select<Role>
+            <Select
               size="small"
               value={user.role}
               disabled={busy === user.id}
               aria-label={t('users.columns.role')}
               options={(['user', 'moderator'] as const).map((role) => ({
                 value: role,
-                label: t(`auth:roles.${role}`),
+                label: roleLabel(role),
               }))}
               onChange={(role) => void change(user, { role: role as UserChanges['role'] })}
               style={{ minWidth: 140 }}
             />
           ) : (
-            <Tag color={ROLE_COLORS[user.role]}>{t(`auth:roles.${user.role}`)}</Tag>
+            <Tag color={ROLE_COLORS[user.role] ?? 'purple'}>{roleLabel(user.role)}</Tag>
           ),
       },
       {
@@ -118,7 +119,7 @@ const Users = () => {
           ),
       },
     ];
-  }, [t, format, me, busy, toast]);
+  }, [t, roleLabel, format, me, busy, toast]);
 
   return (
     <PageContainer title={t('users.title')} subtitle={t('users.subtitle')} noindex>
@@ -127,7 +128,7 @@ const Users = () => {
         columns={columns}
         rowKey="id"
         fetch={getUsers}
-        onExport={exportUsers}
+        onExport={canExport ? exportUsers : undefined}
         pageSize={20}
         refreshKey={version}
         searchPlaceholder={t('users.search')}

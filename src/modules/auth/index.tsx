@@ -13,6 +13,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 export { default as ProtectedRoute } from './components/ProtectedRoute';
 export { useAuthStore } from './authStore';
 export { AREA_HOME, type Area, areaOfPath, landingPath, otherArea } from './areas';
+export { type Permission, can, useCan } from './permissions';
+export { SYSTEM_ROLES, type SystemRole, isSystemRole, useRoleLabel } from './roles';
 
 const profileElement = lazyElement(() => import('./pages/Profile/Profile'));
 

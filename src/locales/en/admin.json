@@ -33,7 +33,7 @@
     "subtitle": "Changes apply to the whole site",
     "save": "Save",
     "saved": "Saved",
-    "readOnly": "Only root can change the settings."
+    "readOnly": "Your role does not allow changing the settings."
   },
   "users": {
     "title": "Users",
@@ -104,7 +104,7 @@
     "name": "Name",
     "nameRequired": "Enter a name",
     "empty": "No channels yet: leads are only kept in the admin.",
-    "readOnly": "Only root can change the channels.",
+    "readOnly": "Your role does not allow changing the channels.",
     "hint": "Every new lead is sent to each enabled channel. Use Test after setting one up.",
     "secretHint": "Leave ******** to keep the saved token or secret."
   }
