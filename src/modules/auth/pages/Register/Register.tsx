@@ -1,17 +1,17 @@
 import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { getErrorMessage } from '../../../../api/errors';
 import { useCaptcha } from '../../../../components/Captcha/Captcha';
 import { setServerFieldErrors } from '../../../../utils/formErrors';
 import { login, register } from '../../api';
-import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
 import OAuthButtons from '../../components/OAuthButtons';
 import PasswordFields from '../../components/PasswordFields';
+import { useEnterAccount } from '../../language';
 
 interface RegisterValues {
   email: string;
@@ -22,7 +22,7 @@ interface RegisterValues {
 const Register = () => {
   const { t } = useTranslation(['auth', 'forms']);
   const [form] = Form.useForm<RegisterValues>();
-  const navigate = useNavigate();
+  const enterAccount = useEnterAccount();
   const { fetchUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -35,7 +35,7 @@ const Register = () => {
       await register(email, password, captcha.token);
       await login(email, password);
       const user = await fetchUser();
-      navigate(landingPath(user));
+      await enterAccount(user);
     } catch (err: unknown) {
       if (!setServerFieldErrors(form, err, ['email', 'password'])) {
         setError(getErrorMessage(err));

@@ -17,6 +17,11 @@ All notable changes are documented here. The format follows
   read-only, built-in roles keep their names, a role that users have is not deleted.
 - Admin → Access → **Groups**: roles for several people at once; create, edit and delete with
   `roles.manage`. The members count opens the users list filtered by the group.
+- The account's language: a **Language** section in the profile (emails and notifications come
+  in it; hidden with one language), and the header switcher saves the choice of a signed-in
+  user too. Signing in (password, sign-up, Google) opens the site in the account's language;
+  an account without one gets the current language. `src/modules/auth/language.ts`;
+  `switchLanguage` can open another page (`path`) and replace the history entry.
 - Admin → Access → **Audit log** (`/admin/audit`, with `audit.read`): who changed what in the
   admin and when, from which IP, and the changes as "before → after" (role names instead of
   slugs, secrets stay masked). Search by email or target, filter by action (texts from

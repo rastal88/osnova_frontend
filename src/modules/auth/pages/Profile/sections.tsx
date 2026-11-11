@@ -1,4 +1,15 @@
-import { Alert, Button, Card, Form, Input, Modal, Popconfirm, Typography, message } from 'antd';
+import {
+  Alert,
+  Button,
+  Card,
+  Form,
+  Input,
+  Modal,
+  Popconfirm,
+  Select,
+  Typography,
+  message,
+} from 'antd';
 import type { FormInstance } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,12 +17,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getApiError, getErrorMessage } from '../../../../api/errors';
 import type { UserRead } from '../../../../api/generated';
-import { localizedPath } from '../../../../i18n/language';
+import { localizedPath, switchLanguage } from '../../../../i18n/language';
+import { useBootstrapStore } from '../../../../store/bootstrapStore';
 import {
   changeEmail,
   changePassword,
   deleteAccount,
   signOutEverywhere,
+  updateLanguage,
   updateName,
 } from '../../api';
 import { useAuthStore } from '../../authStore';
@@ -89,6 +102,51 @@ export const NameSection = ({ user }: { user: UserRead }) => {
           {t('profile.save')}
         </Button>
       </Form>
+    </Card>
+  );
+};
+
+/** Emails and notifications come in it; choosing one also switches the site. */
+export const LanguageSection = ({ user }: { user: UserRead }) => {
+  const { t, i18n } = useTranslation('auth');
+  const languages = useBootstrapStore((state) => state.config?.i18n.languages) ?? [];
+  const setUser = useAuthStore((state) => state.setUser);
+  const [toast, holder] = message.useMessage();
+  const [busy, setBusy] = useState(false);
+
+  // Nothing to choose from
+  if (languages.length < 2) return null;
+  const codes = languages.map((language) => language.code);
+  const current = user.language && codes.includes(user.language) ? user.language : i18n.language;
+
+  const choose = async (language: string) => {
+    setBusy(true);
+    try {
+      setUser(await updateLanguage(language));
+      await switchLanguage(language, codes);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Card title={t('profile.languageTitle')}>
+      {holder}
+      <Paragraph type="secondary">{t('profile.languageHint')}</Paragraph>
+      <Select
+        value={current}
+        loading={busy}
+        disabled={busy}
+        aria-label={t('profile.languageTitle')}
+        style={{ minWidth: 200 }}
+        options={languages.map((language) => ({
+          value: language.code,
+          label: <span lang={language.code}>{language.name}</span>,
+        }))}
+        onChange={(language) => void choose(language)}
+      />
     </Card>
   );
 };

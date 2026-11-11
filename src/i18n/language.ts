@@ -71,14 +71,28 @@ export async function setupLanguage(config: BootstrapI18n) {
   await i18n.changeLanguage(language);
 }
 
-/** Switches the language, keeping the current page, and remembers the choice. */
-export async function switchLanguage(language: string, codes: string[]) {
+interface SwitchOptions {
+  /** A page to open instead of the current one, without the prefix (e.g. after sign-in) */
+  path?: string;
+  /** Replace the history entry instead of adding one */
+  replace?: boolean;
+}
+
+/**
+ * Switches the language, keeping the current page (or opening `path`), and remembers
+ * the choice. The router is built again for the new prefix and opens the URL.
+ */
+export async function switchLanguage(
+  language: string,
+  codes: string[],
+  { path, replace = false }: SwitchOptions = {},
+) {
   const { pathname, search, hash } = window.location;
   save(language);
-  window.history.pushState(
-    null,
-    '',
-    `${localizedPath(stripLanguage(pathname, codes), language)}${search}${hash}`,
-  );
+  const url = path
+    ? localizedPath(path, language)
+    : `${localizedPath(stripLanguage(pathname, codes), language)}${search}${hash}`;
+  if (replace) window.history.replaceState(null, '', url);
+  else window.history.pushState(null, '', url);
   await i18n.changeLanguage(language);
 }

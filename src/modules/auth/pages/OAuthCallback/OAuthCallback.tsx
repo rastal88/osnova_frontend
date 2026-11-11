@@ -1,20 +1,20 @@
 import { Button, Spin } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { getErrorMessage } from '../../../../api/errors';
 import { finishOAuth } from '../../api';
-import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
+import { useEnterAccount } from '../../language';
 
 /** The provider sends the user here (FRONTEND_URL/oauth/<provider>/callback?code=&state=). */
 const OAuthCallback = () => {
   const { t } = useTranslation('auth');
   const { provider = '' } = useParams();
   const { search } = useLocation();
-  const navigate = useNavigate();
+  const enterAccount = useEnterAccount();
   const fetchUser = useAuthStore((state) => state.fetchUser);
   const [error, setError] = useState<string | null>(null);
   // The code works once: do not send it again when the effect re-runs (Strict Mode)
@@ -30,9 +30,9 @@ const OAuthCallback = () => {
     }
     finishOAuth(provider, search)
       .then(fetchUser)
-      .then((user) => navigate(landingPath(user), { replace: true }))
+      .then((user) => enterAccount(user, { replace: true }))
       .catch((err) => setError(getErrorMessage(err)));
-  }, [provider, search, fetchUser, navigate, t]);
+  }, [provider, search, fetchUser, enterAccount, t]);
 
   return (
     <AuthCard title={t('oauth.title')} error={error}>

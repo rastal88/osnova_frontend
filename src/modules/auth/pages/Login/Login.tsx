@@ -1,14 +1,14 @@
 import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { getErrorMessage } from '../../../../api/errors';
 import { login } from '../../api';
-import { landingPath } from '../../areas';
 import { useAuthStore } from '../../authStore';
 import AuthCard from '../../components/AuthCard/AuthCard';
 import OAuthButtons from '../../components/OAuthButtons';
+import { useEnterAccount } from '../../language';
 
 interface LoginValues {
   email: string;
@@ -17,7 +17,7 @@ interface LoginValues {
 
 const Login = () => {
   const { t } = useTranslation(['auth', 'forms']);
-  const navigate = useNavigate();
+  const enterAccount = useEnterAccount();
   const { fetchUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -28,7 +28,7 @@ const Login = () => {
     try {
       await login(email, password);
       const user = await fetchUser();
-      navigate(landingPath(user));
+      await enterAccount(user);
     } catch (err: unknown) {
       setError(getErrorMessage(err));
     } finally {

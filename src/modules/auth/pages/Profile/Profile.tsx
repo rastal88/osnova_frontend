@@ -9,6 +9,7 @@ import { useRoleLabel } from '../../roles';
 import {
   DeleteSection,
   EmailSection,
+  LanguageSection,
   NameSection,
   PasswordSection,
   SessionsSection,
@@ -45,6 +46,7 @@ const Profile = () => {
             </Descriptions>
           </Card>
           <NameSection key={`name-${user.name ?? ''}`} user={user} />
+          <LanguageSection user={user} />
           <PasswordSection />
           <EmailSection user={user} />
           <SessionsSection />
