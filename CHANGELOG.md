@@ -6,6 +6,11 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-11
+
+Permissions and control: actions by permission, Roles, Groups and Audit log pages, the
+account's language, settings in tabs with a permission per group.
+
 ### Added
 - Permissions: `can(user, 'leads.read')` and the `useCan(...)` hook (`src/modules/auth`) read the
   `permissions` the backend sends with the account. Menu items and `ProtectedRoute` take a
@@ -273,7 +278,8 @@ First release: the `minimal` profile.
 - Dependencies with known vulnerabilities updated (`npm audit`: 23 before, none after);
   `js-yaml` inside the API type generator is overridden to a fixed release.
 
-[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/rastal88/osnova_frontend/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/rastal88/osnova_frontend/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/rastal88/osnova_frontend/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rastal88/osnova_frontend/releases/tag/v0.1.0
