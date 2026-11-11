@@ -37,7 +37,7 @@
   },
   "users": {
     "title": "Users",
-    "subtitle": "Search, block and change roles",
+    "subtitle": "Search, block, roles and groups",
     "search": "Search by email",
     "columns": {
       "email": "Email",
@@ -45,7 +45,8 @@
       "status": "Status",
       "created": "Signed up",
       "lastLogin": "Last sign-in",
-      "actions": "Actions"
+      "actions": "Actions",
+      "groups": "Groups"
     },
     "status": {
       "active": "Active",
@@ -56,6 +57,58 @@
     "blockConfirm": "Block {{email}}? They will lose access at once.",
     "unblockConfirm": "Unblock {{email}}?",
     "saved": "Saved"
+  },
+  "roles": {
+    "title": "Roles",
+    "subtitle": "What each role may do",
+    "add": "New role",
+    "edit": "Edit",
+    "view": "View",
+    "delete": "Delete",
+    "deleteConfirm": "Delete the role {{name}}? Groups that have it lose it.",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "name": "Name",
+    "nameRequired": "Enter a name",
+    "permissions": "Permissions",
+    "systemName": "A built-in role keeps its name.",
+    "ownOnly": "You can give or take away only the permissions you have yourself.",
+    "rootHint": "Root has every permission, including those of modules added later. It cannot be edited.",
+    "system": "Built-in",
+    "allPermissions": "All",
+    "saved": "Saved",
+    "deleted": "Deleted",
+    "readOnly": "Roles can be changed by those with the permission to manage roles and groups.",
+    "columns": {
+      "name": "Role",
+      "permissions": "Permissions",
+      "users": "Users",
+      "actions": "Actions"
+    }
+  },
+  "groups": {
+    "title": "Groups",
+    "subtitle": "Roles for several people at once",
+    "add": "New group",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Delete the group {{name}}? Its members lose its roles.",
+    "save": "Save",
+    "name": "Name",
+    "nameRequired": "Enter a name",
+    "roles": "Roles",
+    "ownOnly": "You can give only the roles whose permissions you have yourself.",
+    "hint": "Everyone in a group gets its roles on top of their own role. People are added to groups in Users.",
+    "saved": "Saved",
+    "deleted": "Deleted",
+    "readOnly": "Groups can be changed by those with the permission to manage roles and groups.",
+    "columns": {
+      "name": "Group",
+      "roles": "Roles",
+      "users": "Members",
+      "actions": "Actions"
+    }
   },
   "leads": {
     "title": "Leads",

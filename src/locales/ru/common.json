@@ -18,7 +18,10 @@
     "settings": "Настройки",
     "leads": "Заявки",
     "channels": "Каналы",
-    "files": "Мои файлы"
+    "files": "Мои файлы",
+    "access": "Доступ",
+    "roles": "Роли",
+    "groups": "Группы"
   },
   "cookieBanner": {
     "label": "Согласие на cookies",

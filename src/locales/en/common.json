@@ -18,7 +18,10 @@
     "settings": "Settings",
     "leads": "Leads",
     "channels": "Channels",
-    "files": "My files"
+    "files": "My files",
+    "access": "Access",
+    "roles": "Roles",
+    "groups": "Groups"
   },
   "cookieBanner": {
     "label": "Cookie consent",
