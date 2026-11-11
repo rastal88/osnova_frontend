@@ -37,6 +37,18 @@ describe('canManage', () => {
     expect(canChangeRole(hr, user)).toBe(true);
   });
 
+  it('treats a user in a group like one with another role', () => {
+    const member = { ...user, id: 'g', groups: ['team'] };
+    expect(canManage(moderator, member)).toBe(false);
+    expect(canManage(root, member)).toBe(true);
+  });
+
+  it('leaves alone an account that may do more', () => {
+    const exporter = { id: 'e', role: 'user', permissions: ['leads.export'] };
+    expect(canManage(moderator, exporter)).toBe(false);
+    expect(canChangeRole(root, exporter)).toBe(false);
+  });
+
   it('gives nothing to a guest', () => {
     expect(canManage(null, user)).toBe(false);
   });

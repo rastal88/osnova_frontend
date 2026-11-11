@@ -11,12 +11,25 @@ All notable changes are documented here. The format follows
   `permissions` the backend sends with the account. Menu items and `ProtectedRoute` take a
   `permission`; the admin sections Users and Leads ask for `users.read` and `leads.read`.
 - `useRoleLabel()`: translated names of the built-in roles, other roles show as stored.
+- Admin → Access → **Roles**: the roles with their permissions and users; create, edit and
+  delete with `roles.manage`. Permissions are ticked in sections by area (texts from
+  `GET /admin/permissions`); only those the editor has can be given or taken away, root is
+  read-only, built-in roles keep their names, a role that users have is not deleted.
+- Admin → Access → **Groups**: roles for several people at once; create, edit and delete with
+  `roles.manage`. The members count opens the users list filtered by the group.
+- Admin → Users: a **Groups** column (filter, and the groups of a user are changed in place with
+  `users.roles`). `src/modules/admin/access.ts`: `useRoles` / `useGroups` and the backend rules
+  mirrored (`canEditRole`, `canGiveRole`, ...).
 
 ### Changed
 - Admin pages show actions by permission instead of the role: export (`users.export`,
   `leads.export`), block and role change (`users.block`, `users.roles`), lead status and delete
   (`leads.manage`), settings (`settings.manage`), channels (`entities.manage`).
 - `role` of a user is a string (the backend stores roles in the database).
+- Admin → Users: the role is chosen from every role of the project (not only user and
+  moderator), the role filter lists them all; actions are hidden for an account that may do
+  more than the admin (its role and groups).
+- Admin → Overview counts users for every role, with the names of the project's roles.
 
 ## [0.3.0] - 2026-11-11
 

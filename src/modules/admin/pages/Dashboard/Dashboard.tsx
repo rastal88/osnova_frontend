@@ -16,7 +16,8 @@ import BarChart from '../../../../components/BarChart/BarChart';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
 import { useBootstrapStore } from '../../../../store/bootstrapStore';
-import { SYSTEM_ROLES, useCan, useRoleLabel } from '../../../auth';
+import { useCan } from '../../../auth';
+import { useRoles } from '../../access';
 import { getEntities, getLeadStats, getOverview } from '../../api';
 import './Dashboard.css';
 
@@ -31,7 +32,7 @@ const FEATURES = ['authentication', 'admin', 'files', 'notifications', 'backgrou
  */
 const AdminDashboard = () => {
   const { t } = useTranslation('admin');
-  const roleLabel = useRoleLabel();
+  const { roleName } = useRoles();
   const canReadLeads = useCan('leads.read');
   const format = useFormat();
   const config = useBootstrapStore((state) => state.config);
@@ -82,9 +83,9 @@ const AdminDashboard = () => {
                 {t('overview.byRole')}
               </Typography.Text>
               <Space wrap>
-                {SYSTEM_ROLES.map((role) => (
+                {Object.entries(overview.users_by_role).map(([role, count]) => (
                   <Tag key={role}>
-                    {roleLabel(role)}: {overview.users_by_role[role] ?? 0}
+                    {roleName(role)}: {count}
                   </Tag>
                 ))}
               </Space>

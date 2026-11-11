@@ -36,7 +36,7 @@ export type AdminOverview = {
      * Users By Role
      */
     users_by_role: {
-        [key in Role]?: number;
+        [key: string]: number;
     };
 };
 
@@ -60,6 +60,10 @@ export type AdminUser = {
      * Role
      */
     role: string;
+    /**
+     * Groups
+     */
+    groups?: Array<string>;
     /**
      * Is Active
      */
@@ -103,7 +107,11 @@ export type AdminUserUpdate = {
     /**
      * Role
      */
-    role?: 'user' | 'moderator' | null;
+    role?: string | null;
+    /**
+     * Groups
+     */
+    groups?: Array<string> | null;
 };
 
 /**
@@ -568,6 +576,56 @@ export type FormSubmitResponse = {
 };
 
 /**
+ * GroupCreate
+ */
+export type GroupCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Roles
+     */
+    roles?: Array<string>;
+};
+
+/**
+ * GroupRead
+ */
+export type GroupRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Roles
+     */
+    roles: Array<string>;
+    /**
+     * Users
+     */
+    users: number;
+};
+
+/**
+ * GroupUpdate
+ */
+export type GroupUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Roles
+     */
+    roles?: Array<string> | null;
+};
+
+/**
  * HealthResponse
  */
 export type HealthResponse = {
@@ -780,6 +838,28 @@ export type PasswordChange = {
 };
 
 /**
+ * PermissionRead
+ */
+export type PermissionRead = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Area
+     */
+    area: string;
+    /**
+     * Area Title
+     */
+    area_title: string;
+};
+
+/**
  * ReadyResponse
  */
 export type ReadyResponse = {
@@ -803,6 +883,60 @@ export type ReadyResponse = {
  * root has every permission and is not edited, user is given at sign-up.
  */
 export type Role = 'root' | 'moderator' | 'user';
+
+/**
+ * RoleCreate
+ */
+export type RoleCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Permissions
+     */
+    permissions?: Array<string>;
+};
+
+/**
+ * RoleRead
+ */
+export type RoleRead = {
+    /**
+     * Slug
+     */
+    slug: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Permissions
+     */
+    permissions: Array<string>;
+    /**
+     * System
+     */
+    system: boolean;
+    /**
+     * Users
+     */
+    users: number;
+};
+
+/**
+ * RoleUpdate
+ */
+export type RoleUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Permissions
+     */
+    permissions?: Array<string> | null;
+};
 
 /**
  * SettingsGroupDescription
@@ -1744,6 +1878,12 @@ export type ListUsersApiV1AdminUsersGetData = {
          * Comma-separated: active, blocked
          */
         status?: string | null;
+        /**
+         * Group
+         *
+         * Comma-separated group ids
+         */
+        group?: string | null;
     };
     url: '/api/v1/admin/users';
 };
@@ -1792,6 +1932,12 @@ export type ExportUsersApiV1AdminUsersExportGetData = {
          * Comma-separated: active, blocked
          */
         status?: string | null;
+        /**
+         * Group
+         *
+         * Comma-separated group ids
+         */
+        group?: string | null;
         /**
          * Delimiter
          *
@@ -1847,6 +1993,230 @@ export type UpdateUserApiV1AdminUsersUserIdPatchResponses = {
 };
 
 export type UpdateUserApiV1AdminUsersUserIdPatchResponse = UpdateUserApiV1AdminUsersUserIdPatchResponses[keyof UpdateUserApiV1AdminUsersUserIdPatchResponses];
+
+export type ListPermissionsApiV1AdminPermissionsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/permissions';
+};
+
+export type ListPermissionsApiV1AdminPermissionsGetResponses = {
+    /**
+     * Response List Permissions Api V1 Admin Permissions Get
+     *
+     * Successful Response
+     */
+    200: Array<PermissionRead>;
+};
+
+export type ListPermissionsApiV1AdminPermissionsGetResponse = ListPermissionsApiV1AdminPermissionsGetResponses[keyof ListPermissionsApiV1AdminPermissionsGetResponses];
+
+export type ListRolesApiV1AdminRolesGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/roles';
+};
+
+export type ListRolesApiV1AdminRolesGetResponses = {
+    /**
+     * Response List Roles Api V1 Admin Roles Get
+     *
+     * Successful Response
+     */
+    200: Array<RoleRead>;
+};
+
+export type ListRolesApiV1AdminRolesGetResponse = ListRolesApiV1AdminRolesGetResponses[keyof ListRolesApiV1AdminRolesGetResponses];
+
+export type CreateRoleApiV1AdminRolesPostData = {
+    body: RoleCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/roles';
+};
+
+export type CreateRoleApiV1AdminRolesPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type CreateRoleApiV1AdminRolesPostError = CreateRoleApiV1AdminRolesPostErrors[keyof CreateRoleApiV1AdminRolesPostErrors];
+
+export type CreateRoleApiV1AdminRolesPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: RoleRead;
+};
+
+export type CreateRoleApiV1AdminRolesPostResponse = CreateRoleApiV1AdminRolesPostResponses[keyof CreateRoleApiV1AdminRolesPostResponses];
+
+export type DeleteRoleApiV1AdminRolesSlugDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Slug
+         */
+        slug: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/roles/{slug}';
+};
+
+export type DeleteRoleApiV1AdminRolesSlugDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteRoleApiV1AdminRolesSlugDeleteError = DeleteRoleApiV1AdminRolesSlugDeleteErrors[keyof DeleteRoleApiV1AdminRolesSlugDeleteErrors];
+
+export type DeleteRoleApiV1AdminRolesSlugDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteRoleApiV1AdminRolesSlugDeleteResponse = DeleteRoleApiV1AdminRolesSlugDeleteResponses[keyof DeleteRoleApiV1AdminRolesSlugDeleteResponses];
+
+export type UpdateRoleApiV1AdminRolesSlugPutData = {
+    body: RoleUpdate;
+    path: {
+        /**
+         * Slug
+         */
+        slug: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/roles/{slug}';
+};
+
+export type UpdateRoleApiV1AdminRolesSlugPutErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type UpdateRoleApiV1AdminRolesSlugPutError = UpdateRoleApiV1AdminRolesSlugPutErrors[keyof UpdateRoleApiV1AdminRolesSlugPutErrors];
+
+export type UpdateRoleApiV1AdminRolesSlugPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: RoleRead;
+};
+
+export type UpdateRoleApiV1AdminRolesSlugPutResponse = UpdateRoleApiV1AdminRolesSlugPutResponses[keyof UpdateRoleApiV1AdminRolesSlugPutResponses];
+
+export type ListGroupsApiV1AdminGroupsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/groups';
+};
+
+export type ListGroupsApiV1AdminGroupsGetResponses = {
+    /**
+     * Response List Groups Api V1 Admin Groups Get
+     *
+     * Successful Response
+     */
+    200: Array<GroupRead>;
+};
+
+export type ListGroupsApiV1AdminGroupsGetResponse = ListGroupsApiV1AdminGroupsGetResponses[keyof ListGroupsApiV1AdminGroupsGetResponses];
+
+export type CreateGroupApiV1AdminGroupsPostData = {
+    body: GroupCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/groups';
+};
+
+export type CreateGroupApiV1AdminGroupsPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type CreateGroupApiV1AdminGroupsPostError = CreateGroupApiV1AdminGroupsPostErrors[keyof CreateGroupApiV1AdminGroupsPostErrors];
+
+export type CreateGroupApiV1AdminGroupsPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: GroupRead;
+};
+
+export type CreateGroupApiV1AdminGroupsPostResponse = CreateGroupApiV1AdminGroupsPostResponses[keyof CreateGroupApiV1AdminGroupsPostResponses];
+
+export type DeleteGroupApiV1AdminGroupsGroupIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Group Id
+         */
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/groups/{group_id}';
+};
+
+export type DeleteGroupApiV1AdminGroupsGroupIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type DeleteGroupApiV1AdminGroupsGroupIdDeleteError = DeleteGroupApiV1AdminGroupsGroupIdDeleteErrors[keyof DeleteGroupApiV1AdminGroupsGroupIdDeleteErrors];
+
+export type DeleteGroupApiV1AdminGroupsGroupIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteGroupApiV1AdminGroupsGroupIdDeleteResponse = DeleteGroupApiV1AdminGroupsGroupIdDeleteResponses[keyof DeleteGroupApiV1AdminGroupsGroupIdDeleteResponses];
+
+export type UpdateGroupApiV1AdminGroupsGroupIdPutData = {
+    body: GroupUpdate;
+    path: {
+        /**
+         * Group Id
+         */
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/v1/admin/groups/{group_id}';
+};
+
+export type UpdateGroupApiV1AdminGroupsGroupIdPutErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type UpdateGroupApiV1AdminGroupsGroupIdPutError = UpdateGroupApiV1AdminGroupsGroupIdPutErrors[keyof UpdateGroupApiV1AdminGroupsGroupIdPutErrors];
+
+export type UpdateGroupApiV1AdminGroupsGroupIdPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: GroupRead;
+};
+
+export type UpdateGroupApiV1AdminGroupsGroupIdPutResponse = UpdateGroupApiV1AdminGroupsGroupIdPutResponses[keyof UpdateGroupApiV1AdminGroupsGroupIdPutResponses];
 
 export type ListTypesApiV1AdminEntitiesTypesGetData = {
     body?: never;

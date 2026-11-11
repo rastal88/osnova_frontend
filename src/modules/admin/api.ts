@@ -9,9 +9,16 @@ import type {
   EntityRead,
   EntityTypeDescription,
   FormDescription,
+  GroupCreate,
+  GroupRead,
+  GroupUpdate,
   LeadPage,
   LeadRead,
   LeadStats,
+  PermissionRead,
+  RoleCreate,
+  RoleRead,
+  RoleUpdate,
   SettingsGroupDescription,
 } from '../../api/generated';
 import type { TableQuery } from '../../components/DataTable/DataTable';
@@ -42,7 +49,10 @@ export async function saveSettings(
 
 export interface UserChanges {
   is_active?: boolean;
-  role?: 'user' | 'moderator';
+  /** The slug of a role (not root) */
+  role?: string;
+  /** Ids of the groups; replaces the user's groups */
+  groups?: string[];
 }
 
 /** "users-2026-01-31.csv", as the backend names the file. */
@@ -64,6 +74,50 @@ export function exportUsers(query: TableQuery): Promise<void> {
 export async function updateUser(id: string, changes: UserChanges): Promise<AdminUser> {
   const response = await api.patch<AdminUser>(`/admin/users/${id}`, changes);
   return response.data;
+}
+
+/** Every permission of the enabled modules, with texts in the request language. */
+export async function getPermissions(): Promise<PermissionRead[]> {
+  const response = await api.get<PermissionRead[]>('/admin/permissions');
+  return response.data;
+}
+
+export async function getRoles(): Promise<RoleRead[]> {
+  const response = await api.get<RoleRead[]>('/admin/roles');
+  return response.data;
+}
+
+export async function createRole(values: RoleCreate): Promise<RoleRead> {
+  const response = await api.post<RoleRead>('/admin/roles', values);
+  return response.data;
+}
+
+export async function updateRole(slug: string, values: RoleUpdate): Promise<RoleRead> {
+  const response = await api.put<RoleRead>(`/admin/roles/${slug}`, values);
+  return response.data;
+}
+
+export async function deleteRole(slug: string) {
+  await api.delete(`/admin/roles/${slug}`);
+}
+
+export async function getGroups(): Promise<GroupRead[]> {
+  const response = await api.get<GroupRead[]>('/admin/groups');
+  return response.data;
+}
+
+export async function createGroup(values: GroupCreate): Promise<GroupRead> {
+  const response = await api.post<GroupRead>('/admin/groups', values);
+  return response.data;
+}
+
+export async function updateGroup(id: string, values: GroupUpdate): Promise<GroupRead> {
+  const response = await api.put<GroupRead>(`/admin/groups/${id}`, values);
+  return response.data;
+}
+
+export async function deleteGroup(id: string) {
+  await api.delete(`/admin/groups/${id}`);
 }
 
 export async function getLeadForms(): Promise<FormDescription[]> {

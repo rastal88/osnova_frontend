@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Select, Tag, Typography, message } from 'antd';
+import { Button, Popconfirm, Select, Space, Tag, Typography, message } from 'antd';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,15 @@ import DataTable from '../../../../components/DataTable/DataTable';
 import type { DataTableColumn } from '../../../../components/DataTable/DataTable';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
-import { SYSTEM_ROLES, useAuthStore, useCan, useRoleLabel } from '../../../auth';
+import { useAuthStore, useCan } from '../../../auth';
+import {
+  accountPermissions,
+  canGiveRole,
+  covers,
+  permissionsOf,
+  useGroups,
+  useRoles,
+} from '../../access';
 import { type UserChanges, exportUsers, getUsers, updateUser } from '../../api';
 import { canChangeRole, canManage } from './permissions';
 
@@ -19,7 +27,8 @@ const ROLE_COLORS: Record<string, string> = { root: 'gold', moderator: 'blue', u
 
 const Users = () => {
   const { t } = useTranslation('admin');
-  const roleLabel = useRoleLabel();
+  const { roles, roleName } = useRoles();
+  const { groups } = useGroups();
   const format = useFormat();
   const me = useAuthStore((state) => state.user);
   const canExport = useCan('users.export');
@@ -49,31 +58,76 @@ const Users = () => {
         <Text type="secondary">—</Text>
       );
 
+    // With what the user may do, to know whether `me` may change them
+    const account = (user: AdminUser) => ({
+      ...user,
+      permissions: accountPermissions(user, roles ?? [], groups ?? []),
+    });
+    const groupName = (id: string) => groups?.find((group) => group.id === id)?.name ?? id;
+
     return [
       { key: 'email', title: t('users.columns.email'), sortable: true },
       {
         key: 'role',
         title: t('users.columns.role'),
         sortable: true,
-        filters: SYSTEM_ROLES.map((role) => ({ text: roleLabel(role), value: role })),
+        filters: roles?.map((role) => ({ text: roleName(role.slug), value: role.slug })),
         render: (_, user) =>
-          canChangeRole(me, user) ? (
+          canChangeRole(me, account(user)) ? (
             <Select
               size="small"
               value={user.role}
               disabled={busy === user.id}
               aria-label={t('users.columns.role')}
-              options={(['user', 'moderator'] as const).map((role) => ({
-                value: role,
-                label: roleLabel(role),
-              }))}
-              onChange={(role) => void change(user, { role: role as UserChanges['role'] })}
+              options={(roles ?? [])
+                .filter((role) => role.slug !== 'root')
+                .map((role) => ({
+                  value: role.slug,
+                  label: roleName(role.slug),
+                  disabled: !canGiveRole(me, role),
+                }))}
+              onChange={(role) => void change(user, { role })}
               style={{ minWidth: 140 }}
             />
           ) : (
-            <Tag color={ROLE_COLORS[user.role] ?? 'purple'}>{roleLabel(user.role)}</Tag>
+            <Tag color={ROLE_COLORS[user.role] ?? 'purple'}>{roleName(user.role)}</Tag>
           ),
       },
+      // Shown when the project has groups; the key is the backend filter
+      ...(groups?.length
+        ? [
+            {
+              key: 'group',
+              title: t('users.columns.groups'),
+              filters: groups.map((group) => ({ text: group.name, value: group.id })),
+              render: (_: unknown, user: AdminUser) =>
+                canChangeRole(me, account(user)) ? (
+                  <Select
+                    size="small"
+                    mode="multiple"
+                    value={user.groups ?? []}
+                    disabled={busy === user.id}
+                    aria-label={t('users.columns.groups')}
+                    placeholder="—"
+                    optionFilterProp="label"
+                    options={groups.map((group) => ({
+                      value: group.id,
+                      label: group.name,
+                      disabled: !covers(me, permissionsOf(group.roles, roles ?? [])),
+                    }))}
+                    onChange={(ids) => void change(user, { groups: ids })}
+                    style={{ minWidth: 160 }}
+                  />
+                ) : (
+                  <Space wrap size={[0, 4]}>
+                    {(user.groups ?? []).map((id) => (
+                      <Tag key={id}>{groupName(id)}</Tag>
+                    ))}
+                  </Space>
+                ),
+            },
+          ]
+        : []),
       {
         key: 'status',
         title: t('users.columns.status'),
@@ -103,7 +157,7 @@ const Users = () => {
         key: 'actions',
         title: t('users.columns.actions'),
         render: (_, user) =>
-          canManage(me, user) && (
+          canManage(me, account(user)) && (
             <Popconfirm
               title={t(user.is_active ? 'users.blockConfirm' : 'users.unblockConfirm', {
                 email: user.email,
@@ -119,7 +173,7 @@ const Users = () => {
           ),
       },
     ];
-  }, [t, roleLabel, format, me, busy, toast]);
+  }, [t, roles, groups, roleName, format, me, busy, toast]);
 
   return (
     <PageContainer title={t('users.title')} subtitle={t('users.subtitle')} noindex>
