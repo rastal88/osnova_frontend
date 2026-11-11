@@ -33,7 +33,11 @@
     "subtitle": "Changes apply to the whole site",
     "save": "Save",
     "saved": "Saved",
-    "readOnly": "Your role does not allow changing the settings."
+    "readOnly": "Your role does not allow changing these settings.",
+    "sendTest": "Send a test email",
+    "testHint": "To your email, with the saved settings: save first.",
+    "testSent": "Test email sent: check your inbox (with sending to the log, the backend log).",
+    "testFailed": "The test email was not sent"
   },
   "users": {
     "title": "Users",

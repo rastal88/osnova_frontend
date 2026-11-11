@@ -17,6 +17,14 @@ All notable changes are documented here. The format follows
   read-only, built-in roles keep their names, a role that users have is not deleted.
 - Admin → Access → **Groups**: roles for several people at once; create, edit and delete with
   `roles.manage`. The members count opens the users list filtered by the group.
+- Admin → Settings: a **tab per group** (left on wide screens, the open one kept in the URL as
+  `?group=`), each group editable by its own permission (`editable` from the backend) — the
+  read-only note shows per group. The **Mail** tab has a **Send a test email** button (to
+  yourself with the saved settings; the mail server's error in a dialog).
+- SchemaForm: `number` fields (`InputNumber` with the range from the backend and "at least /
+  at most" messages), hints under fields (`help`), and with `secretHint` a note that a saved
+  secret shows as `********` and is kept. Client rules moved to
+  `src/components/SchemaForm/rules.ts` (with tests).
 - The account's language: a **Language** section in the profile (emails and notifications come
   in it; hidden with one language), and the header switcher saves the choice of a signed-in
   user too. Signing in (password, sign-up, Google) opens the site in the account's language;
@@ -32,6 +40,8 @@ All notable changes are documented here. The format follows
   mirrored (`canEditRole`, `canGiveRole`, ...).
 
 ### Changed
+- The settings page no longer asks for `settings.manage` (removed on the backend): every
+  group says whether the user may change it.
 - Admin pages show actions by permission instead of the role: export (`users.export`,
   `leads.export`), block and role change (`users.block`, `users.roles`), lead status and delete
   (`leads.manage`), settings (`settings.manage`), channels (`entities.manage`).

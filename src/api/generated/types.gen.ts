@@ -604,7 +604,7 @@ export type FormFieldDescription = {
     /**
      * Type
      */
-    type: 'text' | 'textarea' | 'email' | 'tel' | 'password' | 'select' | 'multiselect' | 'checkbox' | 'consent';
+    type: 'text' | 'textarea' | 'email' | 'tel' | 'password' | 'number' | 'select' | 'multiselect' | 'checkbox' | 'consent';
     /**
      * Label
      */
@@ -629,6 +629,18 @@ export type FormFieldDescription = {
      * Options
      */
     options: Array<FormFieldOption>;
+    /**
+     * Min Value
+     */
+    min_value?: number | null;
+    /**
+     * Max Value
+     */
+    max_value?: number | null;
+    /**
+     * Help
+     */
+    help?: string | null;
 };
 
 /**
@@ -842,6 +854,20 @@ export type LeadUpdate = {
 };
 
 /**
+ * MailTestResult
+ */
+export type MailTestResult = {
+    /**
+     * Ok
+     */
+    ok: boolean;
+    /**
+     * Error
+     */
+    error: string | null;
+};
+
+/**
  * NotificationPage
  */
 export type NotificationPage = {
@@ -1040,6 +1066,10 @@ export type SettingsGroupDescription = {
     values: {
         [key: string]: unknown;
     };
+    /**
+     * Editable
+     */
+    editable?: boolean;
 };
 
 /**
@@ -2812,6 +2842,22 @@ export type ListSettingsApiV1AdminSettingsGetResponses = {
 };
 
 export type ListSettingsApiV1AdminSettingsGetResponse = ListSettingsApiV1AdminSettingsGetResponses[keyof ListSettingsApiV1AdminSettingsGetResponses];
+
+export type TestMailApiV1AdminSettingsMailTestPostData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/settings/mail/test';
+};
+
+export type TestMailApiV1AdminSettingsMailTestPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: MailTestResult;
+};
+
+export type TestMailApiV1AdminSettingsMailTestPostResponse = TestMailApiV1AdminSettingsMailTestPostResponses[keyof TestMailApiV1AdminSettingsMailTestPostResponses];
 
 export type UpdateSettingsApiV1AdminSettingsNamePutData = {
     /**
