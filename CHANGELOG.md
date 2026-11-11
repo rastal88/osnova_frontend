@@ -6,6 +6,18 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Permissions: `can(user, 'leads.read')` and the `useCan(...)` hook (`src/modules/auth`) read the
+  `permissions` the backend sends with the account. Menu items and `ProtectedRoute` take a
+  `permission`; the admin sections Users and Leads ask for `users.read` and `leads.read`.
+- `useRoleLabel()`: translated names of the built-in roles, other roles show as stored.
+
+### Changed
+- Admin pages show actions by permission instead of the role: export (`users.export`,
+  `leads.export`), block and role change (`users.block`, `users.roles`), lead status and delete
+  (`leads.manage`), settings (`settings.manage`), channels (`entities.manage`).
+- `role` of a user is a string (the backend stores roles in the database).
+
 ## [0.3.0] - 2026-11-11
 
 Account and everyday tools: profile self-service, CSV export from the admin tables,

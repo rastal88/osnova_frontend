@@ -25,7 +25,7 @@ import type { EntityRead, EntityTypeDescription } from '../../../../api/generate
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { SchemaFields } from '../../../../components/SchemaForm/SchemaForm';
 import { setServerFieldErrors } from '../../../../utils/formErrors';
-import { useAuthStore } from '../../../auth';
+import { useCan } from '../../../auth';
 import {
   createEntity,
   deleteEntity,
@@ -53,7 +53,7 @@ interface ChannelValues {
 
 const Channels = () => {
   const { t, i18n } = useTranslation('admin');
-  const isRoot = useAuthStore((state) => state.user?.role === 'root');
+  const editable = useCan('entities.manage');
   const [types, setTypes] = useState<EntityTypeDescription[]>([]);
   const [channels, setChannels] = useState<EntityRead[] | null>(null);
   const [error, setError] = useState(false);
@@ -151,7 +151,7 @@ const Channels = () => {
       error={error}
       maxWidth={860}
       actions={
-        isRoot &&
+        editable &&
         types.length > 0 && (
           <Dropdown
             trigger={['click']}
@@ -170,7 +170,7 @@ const Channels = () => {
       {toastHolder}
       {modalHolder}
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        {!isRoot && <Alert type="info" showIcon message={t('channels.readOnly')} />}
+        {!editable && <Alert type="info" showIcon message={t('channels.readOnly')} />}
         <Alert type="info" showIcon message={t('channels.hint')} />
         <Card>
           {channels?.length === 0 ? (
@@ -181,7 +181,7 @@ const Channels = () => {
               renderItem={(channel) => (
                 <List.Item
                   actions={
-                    isRoot
+                    editable
                       ? [
                           <Button
                             key="test"
@@ -222,7 +222,7 @@ const Channels = () => {
                     avatar={
                       <Switch
                         checked={channel.enabled}
-                        disabled={!isRoot}
+                        disabled={!editable}
                         loading={busy === channel.id}
                         aria-label={t('channels.enabled')}
                         onChange={(enabled) =>

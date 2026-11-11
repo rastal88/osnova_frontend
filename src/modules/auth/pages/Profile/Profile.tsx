@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useAuthStore } from '../../authStore';
 import VerifyEmailNotice from '../../components/VerifyEmailNotice';
+import { useRoleLabel } from '../../roles';
 import {
   DeleteSection,
   EmailSection,
@@ -17,6 +18,7 @@ import './Profile.css';
 /** The same page for every role: the account and its settings. */
 const Profile = () => {
   const { t } = useTranslation('auth');
+  const roleLabel = useRoleLabel();
   const user = useAuthStore((state) => state.user);
 
   return (
@@ -35,7 +37,7 @@ const Profile = () => {
             <Descriptions bordered column={1} size="small">
               <Descriptions.Item label={t('email')}>{user.email}</Descriptions.Item>
               <Descriptions.Item label={t('profile.role')}>
-                {t(`roles.${user.role}`)}
+                {roleLabel(user.role)}
               </Descriptions.Item>
               <Descriptions.Item label={t('profile.emailStatus')}>
                 {t(user.is_verified ? 'profile.verified' : 'profile.notVerified')}

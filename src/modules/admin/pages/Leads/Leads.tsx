@@ -9,6 +9,7 @@ import DataTable from '../../../../components/DataTable/DataTable';
 import type { DataTableColumn } from '../../../../components/DataTable/DataTable';
 import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { useFormat } from '../../../../i18n/format';
+import { useCan } from '../../../auth';
 import { deleteLead, exportLeads, getLeadForms, getLeads, updateLead } from '../../api';
 import { formatValue, leadSummary } from './leadText';
 import './Leads.css';
@@ -24,6 +25,8 @@ const Leads = () => {
   const [forms, setForms] = useState<Record<string, FormDescription>>({});
   const [open, setOpen] = useState<LeadRead | null>(null);
   const [busy, setBusy] = useState(false);
+  const canManage = useCan('leads.manage');
+  const canExport = useCan('leads.export');
   // Changing it makes the table fetch the current page again
   const [version, setVersion] = useState(0);
   const language = i18n.language;
@@ -123,7 +126,7 @@ const Leads = () => {
         columns={columns}
         rowKey="id"
         fetch={getLeads}
-        onExport={exportLeads}
+        onExport={canExport ? exportLeads : undefined}
         pageSize={20}
         refreshKey={version}
         searchPlaceholder={t('leads.search')}
@@ -135,7 +138,8 @@ const Leads = () => {
         title={open && (form?.title ?? open.form)}
         width={520}
         extra={
-          open && (
+          open &&
+          canManage && (
             <Space>
               <Button
                 loading={busy}

@@ -9,7 +9,7 @@ import PageContainer from '../../../../components/PageContainer/PageContainer';
 import { SchemaFields } from '../../../../components/SchemaForm/SchemaForm';
 import { useBootstrapStore } from '../../../../store/bootstrapStore';
 import { setServerFieldErrors } from '../../../../utils/formErrors';
-import { useAuthStore } from '../../../auth';
+import { useCan } from '../../../auth';
 import { getSettings, saveSettings } from '../../api';
 
 interface GroupFormProps {
@@ -64,7 +64,7 @@ const GroupForm = ({ group, editable }: GroupFormProps) => {
 
 const Settings = () => {
   const { t, i18n } = useTranslation('admin');
-  const isRoot = useAuthStore((state) => state.user?.role === 'root');
+  const editable = useCan('settings.manage');
   const [groups, setGroups] = useState<SettingsGroupDescription[] | null>(null);
   const [error, setError] = useState(false);
   const language = i18n.language;
@@ -92,9 +92,9 @@ const Settings = () => {
       maxWidth={720}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        {!isRoot && <Alert type="info" showIcon message={t('settings.readOnly')} />}
+        {!editable && <Alert type="info" showIcon message={t('settings.readOnly')} />}
         {groups?.map((group) => (
-          <GroupForm key={`${group.name}-${language}`} group={group} editable={isRoot} />
+          <GroupForm key={`${group.name}-${language}`} group={group} editable={editable} />
         ))}
       </Space>
     </PageContainer>

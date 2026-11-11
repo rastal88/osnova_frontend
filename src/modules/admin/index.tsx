@@ -1,9 +1,10 @@
 /**
- * Admin module — the /admin area for the ROOT and MODERATOR roles.
+ * Admin module — the /admin area for users with the `admin.access` permission.
  * Enabled by the `admin` capability from /bootstrap. Requires the auth module.
  *
  * The admin area uses the same shell as the rest of the app with its own menu
- * (./navigation.ts); access comes from the user's `areas`.
+ * (./navigation.ts); access comes from the user's `areas`, sections ask for
+ * their own permissions.
  */
 import type { RouteObject } from 'react-router-dom';
 
@@ -24,8 +25,22 @@ export const adminRoute: RouteObject = {
   errorElement: <RouteError />,
   children: [
     { index: true, element: lazyElement(() => import('./pages/Dashboard/Dashboard')) },
-    { path: 'leads', element: lazyElement(() => import('./pages/Leads/Leads')) },
-    { path: 'users', element: lazyElement(() => import('./pages/Users/Users')) },
+    {
+      path: 'leads',
+      element: (
+        <ProtectedRoute permission="leads.read">
+          {lazyElement(() => import('./pages/Leads/Leads'))}
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: 'users',
+      element: (
+        <ProtectedRoute permission="users.read">
+          {lazyElement(() => import('./pages/Users/Users'))}
+        </ProtectedRoute>
+      ),
+    },
     { path: 'settings', element: lazyElement(() => import('./pages/Settings/Settings')) },
     {
       path: 'settings/channels',
