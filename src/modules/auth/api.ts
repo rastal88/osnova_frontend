@@ -1,5 +1,6 @@
 import qs from 'qs';
 import api from '../../api/axios';
+import { captchaHeaders } from '../../api/captcha';
 import type {
   AccountDelete,
   EmailChange,
@@ -27,7 +28,7 @@ export async function logout() {
   return response.data;
 }
 
-export async function register(email: string, password: string) {
+export async function register(email: string, password: string, captchaToken?: string | null) {
   const response = await api.post(
     '/auth/register',
     {
@@ -37,6 +38,7 @@ export async function register(email: string, password: string) {
     {
       headers: {
         'Content-Type': 'application/json',
+        ...captchaHeaders(captchaToken),
       },
     },
   );

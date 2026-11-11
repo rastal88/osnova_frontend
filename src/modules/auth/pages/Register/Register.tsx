@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { getErrorMessage } from '../../../../api/errors';
+import { useCaptcha } from '../../../../components/Captcha/Captcha';
 import { setServerFieldErrors } from '../../../../utils/formErrors';
 import { login, register } from '../../api';
 import { landingPath } from '../../areas';
@@ -25,12 +26,13 @@ const Register = () => {
   const { fetchUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
+  const captcha = useCaptcha();
 
   const handleRegister = async ({ email, password }: RegisterValues) => {
     setError(null);
     setSending(true);
     try {
-      await register(email, password);
+      await register(email, password, captcha.token);
       await login(email, password);
       const user = await fetchUser();
       navigate(landingPath(user));
@@ -38,6 +40,8 @@ const Register = () => {
       if (!setServerFieldErrors(form, err, ['email', 'password'])) {
         setError(getErrorMessage(err));
       }
+      // A captcha token works once: the next attempt needs a new one
+      captcha.reset();
     } finally {
       setSending(false);
     }
@@ -71,7 +75,8 @@ const Register = () => {
           <Input inputMode="email" autoComplete="email" />
         </Form.Item>
         <PasswordFields />
-        <Button type="primary" htmlType="submit" block loading={sending}>
+        {captcha.widget}
+        <Button type="primary" htmlType="submit" block loading={sending} disabled={!captcha.ready}>
           {t('register.submit')}
         </Button>
       </Form>

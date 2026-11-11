@@ -16,9 +16,13 @@ All notable changes are documented here. The format follows
   search, sort and filters; Admin → Users and Leads download every matching row
   (`/admin/users/export`, `/admin/leads/export`) in the interface language.
   `downloadFile` (`src/api/download.ts`) saves a file from the API with ordinary error messages.
+- Optional captcha: when the backend turns it on (`/bootstrap` `captcha`), forms from
+  `SchemaForm` and the sign-up page show the Cloudflare Turnstile widget and send its token in
+  `X-Captcha-Token`. `useCaptcha` (`src/components/Captcha`) for other forms; the Cloudflare
+  script is loaded only when the captcha is on. No new dependencies.
 
 ### Changed
-- API types regenerated (`/auth/me/*`, `name`, the export endpoints).
+- API types regenerated (`/auth/me/*`, `name`, the export endpoints, `captcha` in `/bootstrap`).
 
 ## [0.2.0] - 2026-11-10
 

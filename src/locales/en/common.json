@@ -63,6 +63,9 @@
     "network": "Unable to reach the server. Check your connection and try again.",
     "unknown": "Something went wrong. Please try again."
   },
+  "captcha": {
+    "failed": "The check that you are not a robot did not load. Turn off content blockers for this site or try again later."
+  },
   "table": {
     "export": "Export CSV",
     "search": "Search",

@@ -217,6 +217,20 @@ export type BootstrapApplication = {
 };
 
 /**
+ * BootstrapCaptcha
+ */
+export type BootstrapCaptcha = {
+    /**
+     * Provider
+     */
+    provider: 'turnstile';
+    /**
+     * Site Key
+     */
+    site_key: string;
+};
+
+/**
  * BootstrapFeatures
  */
 export type BootstrapFeatures = {
@@ -289,6 +303,7 @@ export type BootstrapResponse = {
      * Api Docs
      */
     api_docs: boolean;
+    captcha?: BootstrapCaptcha | null;
 };
 
 /**

@@ -235,6 +235,14 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
   failure shows an alert with **Try again**, which resends the same values. Success
   replaces the form with the server message and **Send another**.
 - `consent` links to `PRIVACY_POLICY_PATH` (`src/utils/constants.ts`, `/privacy`).
+- **Captcha** (optional, set on the backend: `CAPTCHA_PROVIDER=turnstile` and its keys): when
+  `/bootstrap` has `captcha`, `SchemaForm` and the sign-up page show the Cloudflare Turnstile
+  widget, keep the submit button off until there is a token and send it in `X-Captcha-Token`.
+  The Cloudflare script is added to the page only then (`src/components/Captcha`), nothing
+  is loaded with the captcha off. In another form: `const captcha = useCaptcha()` — render
+  `captcha.widget`, send `captcha.token`, call `captcha.reset()` after every attempt (a token
+  works once). With a Content-Security-Policy allow `https://challenges.cloudflare.com` in
+  `script-src` and `frame-src`, and mention Cloudflare in the privacy policy.
 - Generic texts (validation, retry, sending): `src/locales/<language>/forms.json`.
 - Example page: `src/examples/contact` (`/examples/contact`, lazy-loaded — Ant Design form controls
   are in its own chunk, not in the main bundle).
