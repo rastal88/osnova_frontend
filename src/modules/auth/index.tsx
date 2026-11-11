@@ -9,6 +9,7 @@ import type { RouteObject } from 'react-router-dom';
 
 import { lazyElement } from '../../routes/lazy';
 import ProtectedRoute from './components/ProtectedRoute';
+import { saveLanguageChoices } from './language';
 
 export { default as ProtectedRoute } from './components/ProtectedRoute';
 export { useAuthStore } from './authStore';
@@ -19,6 +20,9 @@ export { SYSTEM_ROLES, type SystemRole, isSystemRole, useRoleLabel } from './rol
 const profileElement = lazyElement(() => import('./pages/Profile/Profile'));
 
 /** Standalone pages outside the main layout. */
+// A language chosen while signed in becomes the account's one (emails, notifications)
+saveLanguageChoices();
+
 export const authPublicRoutes: RouteObject[] = [
   { path: '/login', element: lazyElement(() => import('./pages/Login/Login')) },
   {

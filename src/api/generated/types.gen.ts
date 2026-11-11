@@ -57,6 +57,10 @@ export type AdminUser = {
      */
     name?: string | null;
     /**
+     * Language
+     */
+    language?: string | null;
+    /**
      * Role
      */
     role: string;
@@ -1111,6 +1115,10 @@ export type UserRead = {
      */
     name?: string | null;
     /**
+     * Language
+     */
+    language?: string | null;
+    /**
      * Permissions
      */
     permissions?: Array<string>;
@@ -1136,14 +1144,18 @@ export type UserSummary = {
 /**
  * UserUpdate
  *
- * PATCH /auth/users/me: only the name. Password and email change through
- * /auth/me*, which ask for the current password.
+ * PATCH /auth/users/me: the name and the language. Password and email change
+ * through /auth/me*, which ask for the current password.
  */
 export type UserUpdate = {
     /**
      * Name
      */
     name?: string | null;
+    /**
+     * Language
+     */
+    language?: string | null;
 };
 
 /**
@@ -1218,6 +1230,10 @@ export type UserReadWritable = {
      * Name
      */
     name?: string | null;
+    /**
+     * Language
+     */
+    language?: string | null;
     /**
      * Permissions
      */

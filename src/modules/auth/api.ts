@@ -84,6 +84,12 @@ export async function updateName(name: string): Promise<UserRead> {
   return response.data;
 }
 
+/** Emails and notifications go in this language (one of the enabled ones). */
+export async function updateLanguage(language: string): Promise<UserRead> {
+  const response = await api.patch<UserRead>('/auth/users/me', { language });
+  return response.data;
+}
+
 /** Other sessions end; this browser gets a new cookie. */
 export async function changePassword(data: PasswordChange) {
   await api.post('/auth/me/password', data, { skipAuthRedirect: true });
