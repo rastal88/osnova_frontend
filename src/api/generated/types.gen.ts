@@ -122,6 +122,82 @@ export type AdminUserUpdate = {
 export type Area = 'admin' | 'user';
 
 /**
+ * AuditAction
+ */
+export type AuditAction = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Title
+     */
+    title: string;
+};
+
+/**
+ * AuditPage
+ */
+export type AuditPage = {
+    /**
+     * Items
+     */
+    items: Array<AuditRead>;
+    /**
+     * Total
+     */
+    total: number;
+};
+
+/**
+ * AuditRead
+ */
+export type AuditRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Actor Id
+     */
+    actor_id: string | null;
+    /**
+     * Actor Email
+     */
+    actor_email: string;
+    /**
+     * Ip
+     */
+    ip: string | null;
+    /**
+     * Action
+     */
+    action: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Target Id
+     */
+    target_id: string | null;
+    /**
+     * Target
+     */
+    target: string | null;
+    /**
+     * Changes
+     */
+    changes: {
+        [key: string]: unknown;
+    } | null;
+};
+
+/**
  * Body_auth_cookie_login_api_v1_auth_login_post
  */
 export type BodyAuthCookieLoginApiV1AuthLoginPost = {
@@ -2217,6 +2293,92 @@ export type UpdateGroupApiV1AdminGroupsGroupIdPutResponses = {
 };
 
 export type UpdateGroupApiV1AdminGroupsGroupIdPutResponse = UpdateGroupApiV1AdminGroupsGroupIdPutResponses[keyof UpdateGroupApiV1AdminGroupsGroupIdPutResponses];
+
+export type ListActionsApiV1AdminAuditActionsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/admin/audit/actions';
+};
+
+export type ListActionsApiV1AdminAuditActionsGetResponses = {
+    /**
+     * Response List Actions Api V1 Admin Audit Actions Get
+     *
+     * Successful Response
+     */
+    200: Array<AuditAction>;
+};
+
+export type ListActionsApiV1AdminAuditActionsGetResponse = ListActionsApiV1AdminAuditActionsGetResponses[keyof ListActionsApiV1AdminAuditActionsGetResponses];
+
+export type ListAuditApiV1AdminAuditGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Q
+         *
+         * Part of the actor email or the target
+         */
+        q?: string;
+        /**
+         * Page
+         */
+        page?: number;
+        /**
+         * Size
+         */
+        size?: number;
+        /**
+         * Sort
+         */
+        sort?: 'created_at' | '-created_at' | 'action' | '-action' | 'actor_email' | '-actor_email';
+        /**
+         * Action
+         *
+         * Comma-separated actions
+         */
+        action?: string | null;
+        /**
+         * Actor
+         *
+         * The id of who acted
+         */
+        actor?: string | null;
+        /**
+         * Since
+         *
+         * From this day (UTC)
+         */
+        since?: string | null;
+        /**
+         * Until
+         *
+         * Up to and including this day (UTC)
+         */
+        until?: string | null;
+    };
+    url: '/api/v1/admin/audit';
+};
+
+export type ListAuditApiV1AdminAuditGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: ErrorResponse;
+};
+
+export type ListAuditApiV1AdminAuditGetError = ListAuditApiV1AdminAuditGetErrors[keyof ListAuditApiV1AdminAuditGetErrors];
+
+export type ListAuditApiV1AdminAuditGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: AuditPage;
+};
+
+export type ListAuditApiV1AdminAuditGetResponse = ListAuditApiV1AdminAuditGetResponses[keyof ListAuditApiV1AdminAuditGetResponses];
 
 export type ListTypesApiV1AdminEntitiesTypesGetData = {
     body?: never;

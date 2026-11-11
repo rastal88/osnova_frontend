@@ -41,6 +41,14 @@ export const adminRoute: RouteObject = {
         </ProtectedRoute>
       ),
     },
+    {
+      path: 'audit',
+      element: (
+        <ProtectedRoute permission="audit.read">
+          {lazyElement(() => import('./pages/Audit/Audit'))}
+        </ProtectedRoute>
+      ),
+    },
     { path: 'roles', element: lazyElement(() => import('./pages/Roles/Roles')) },
     { path: 'groups', element: lazyElement(() => import('./pages/Groups/Groups')) },
     { path: 'settings', element: lazyElement(() => import('./pages/Settings/Settings')) },

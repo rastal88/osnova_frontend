@@ -21,7 +21,8 @@
     "files": "Мои файлы",
     "access": "Доступ",
     "roles": "Роли",
-    "groups": "Группы"
+    "groups": "Группы",
+    "audit": "Журнал действий"
   },
   "cookieBanner": {
     "label": "Согласие на cookies",

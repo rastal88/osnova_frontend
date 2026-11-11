@@ -21,7 +21,8 @@
     "files": "My files",
     "access": "Access",
     "roles": "Roles",
-    "groups": "Groups"
+    "groups": "Groups",
+    "audit": "Audit log"
   },
   "cookieBanner": {
     "label": "Cookie consent",

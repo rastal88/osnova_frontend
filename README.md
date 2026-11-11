@@ -37,7 +37,7 @@ profiles and capabilities.
   landing by role after sign-in and a switch between the areas in the user menu;
   Admin → Settings generated from the backend (site name, contacts, languages);
   Admin → Users: search, filters, block / unblock, role and groups; Admin → Access: roles
-  (permissions by area) and groups; Admin → Leads: form
+  (permissions by area), groups and the audit log; Admin → Leads: form
   submissions with search, filters, details, status, delete and delivery results; Admin →
   Channels: email / Telegram / webhook delivery set up and tested in the admin; with `files`:
   "My files" in the user area (drag-and-drop upload, search, download, delete); with

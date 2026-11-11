@@ -110,6 +110,22 @@
       "actions": "Actions"
     }
   },
+  "audit": {
+    "title": "Audit log",
+    "subtitle": "Who changed what in the admin and when",
+    "search": "Search by email or target",
+    "since": "From",
+    "until": "To",
+    "yes": "yes",
+    "no": "no",
+    "columns": {
+      "time": "Time",
+      "actor": "Who",
+      "action": "Action",
+      "target": "Target",
+      "changes": "Changes"
+    }
+  },
   "leads": {
     "title": "Leads",
     "subtitle": "Form submissions from the site",
