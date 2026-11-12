@@ -6,6 +6,15 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Security headers from nginx: Content Security Policy (the site, Cloudflare Turnstile and
+  the analytics origin; no inline scripts; `frame-ancestors 'none'`), `X-Frame-Options`,
+  `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
+  `Cross-Origin-Opener-Policy`, and `Strict-Transport-Security` only when the proxy in front
+  reports HTTPS. Written at build time by `scripts/security-headers.mjs` (with tests); more
+  origins with the build argument `CSP_EXTRA_ORIGINS`. `server_tokens off`. Swagger UI and
+  ReDoc (`DEBUG`) keep working without the policy.
+
 ## [0.4.0] - 2026-11-11
 
 Permissions and control: actions by permission, Roles, Groups and Audit log pages, the

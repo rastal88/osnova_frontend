@@ -321,7 +321,12 @@ the page opens in the default one.
 - **Analytics and cookie banner**: off by default. Set `VITE_ANALYTICS_SCRIPT` (script URL
   of your provider; in Docker the build argument of the same name) and a banner asks for consent; the script loads only after **Accept**
   (`src/config/analytics.ts`, `src/consent`). The choice is kept in `app_consent` and can be
-  changed on the cookie policy page. Without analytics there is no banner.
+  changed on the cookie policy page. Without analytics there is no banner. The Content
+  Security Policy of the Docker image allows the script's origin; if the provider also
+  sends data to another host, add it to `CSP_EXTRA_ORIGINS` (README → Docker).
+- **Security headers** are sent only by nginx (the Docker image), not by `npm run dev`:
+  check a change that loads something from another host in the image, the browser console
+  reports what the policy blocks.
 
 ---
 
