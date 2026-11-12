@@ -19,6 +19,9 @@ ARG PRERENDER_API_URL=
 ARG VITE_ANALYTICS_SCRIPT=
 # More origins the Content Security Policy allows, space-separated (scripts/security-headers.mjs)
 ARG CSP_EXTRA_ORIGINS=
+# Error tracking in Sentry / GlitchTip; empty = off, no Sentry code in the build (src/errorTracking)
+ARG VITE_SENTRY_DSN=
+ARG VITE_SENTRY_ENVIRONMENT=
 ENV VITE_BASE_URL=$VITE_BASE_URL \
     VITE_SITE_URL=$VITE_SITE_URL \
     VITE_OG_IMAGE=$VITE_OG_IMAGE \
@@ -27,7 +30,9 @@ ENV VITE_BASE_URL=$VITE_BASE_URL \
     VITE_APP_NAME=$VITE_APP_NAME \
     PRERENDER_API_URL=$PRERENDER_API_URL \
     VITE_ANALYTICS_SCRIPT=$VITE_ANALYTICS_SCRIPT \
-    CSP_EXTRA_ORIGINS=$CSP_EXTRA_ORIGINS
+    CSP_EXTRA_ORIGINS=$CSP_EXTRA_ORIGINS \
+    VITE_SENTRY_DSN=$VITE_SENTRY_DSN \
+    VITE_SENTRY_ENVIRONMENT=$VITE_SENTRY_ENVIRONMENT
 RUN npm run build && node scripts/security-headers.mjs > security-headers.conf
 
 FROM nginx:1.27-alpine

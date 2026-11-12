@@ -5,8 +5,9 @@
 // Usage: node scripts/security-headers.mjs > security-headers.conf
 //
 // Allowed besides the site itself: Cloudflare Turnstile (the captcha), the origin of
-// the analytics script, and CSP_EXTRA_ORIGINS (space-separated, e.g. the collector of
-// an analytics service that sends data to another host, like Google Analytics).
+// the analytics script, the host of VITE_SENTRY_DSN (errors are sent there), and
+// CSP_EXTRA_ORIGINS (space-separated, e.g. the collector of an analytics service that
+// sends data to another host, like Google Analytics).
 
 const TURNSTILE = 'https://challenges.cloudflare.com';
 
@@ -21,7 +22,11 @@ export function originOf(url) {
 }
 
 /** The Content-Security-Policy value. */
-export function contentSecurityPolicy({ analyticsScript = '', extraOrigins = '' } = {}) {
+export function contentSecurityPolicy({
+  analyticsScript = '',
+  sentryDsn = '',
+  extraOrigins = '',
+} = {}) {
   const extra = [originOf(analyticsScript), ...extraOrigins.split(/\s+/).map(originOf)].filter(
     Boolean,
   );
@@ -33,7 +38,7 @@ export function contentSecurityPolicy({ analyticsScript = '', extraOrigins = '' 
     'style-src': "'self' 'unsafe-inline'",
     'img-src': unique(["'self'", 'data:', 'blob:', ...extra]),
     'font-src': "'self' data:",
-    'connect-src': unique(["'self'", ...extra]),
+    'connect-src': unique(["'self'", originOf(sentryDsn), ...extra].filter(Boolean)),
     'frame-src': TURNSTILE,
     // Nobody shows the site in a frame (clickjacking)
     'frame-ancestors': "'none'",
@@ -67,6 +72,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   process.stdout.write(
     securityHeaders({
       analyticsScript: process.env.VITE_ANALYTICS_SCRIPT ?? '',
+      sentryDsn: process.env.VITE_SENTRY_DSN ?? '',
       extraOrigins: process.env.CSP_EXTRA_ORIGINS ?? '',
     }),
   );

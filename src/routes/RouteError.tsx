@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
 import PageState from '../components/PageState/PageState';
+import { reportError } from '../errorTracking';
 import { languageFromPath } from '../i18n/language';
 import ErrorPage from '../pages/Error/Error';
 import NotFound from '../pages/NotFound/NotFound';
@@ -28,6 +29,7 @@ const RouteError = () => {
   }
 
   console.error('Route error', error);
+  reportError(error);
   return <ErrorPage />;
 };
 

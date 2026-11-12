@@ -7,7 +7,10 @@ import './index.css';
 import './i18n';
 import AppComponent from './components/AppComponent/AppComponent';
 import { applyConsent } from './consent';
+import { initErrorTracking } from './errorTracking';
 
+// Sentry when VITE_SENTRY_DSN is set (its own chunk, loaded after start)
+initErrorTracking();
 // Analytics of a returning visitor who has already agreed
 applyConsent();
 

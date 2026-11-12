@@ -42,6 +42,16 @@ describe('contentSecurityPolicy', () => {
   });
 });
 
+describe('contentSecurityPolicy with Sentry', () => {
+  it('lets the browser send errors to the host of the DSN, without its key', () => {
+    const csp = contentSecurityPolicy({ sentryDsn: 'https://public@o1.ingest.sentry.io/42' });
+    expect(directive(csp, 'connect-src')).toBe("'self' https://o1.ingest.sentry.io");
+    // The SDK comes from the site itself
+    expect(directive(csp, 'script-src')).toBe("'self' https://challenges.cloudflare.com");
+    expect(csp).not.toContain('public');
+  });
+});
+
 describe('securityHeaders', () => {
   it('writes nginx add_header lines sent with every answer', () => {
     const snippet = securityHeaders();
