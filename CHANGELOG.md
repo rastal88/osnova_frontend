@@ -7,6 +7,14 @@ All notable changes are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Optional error tracking: with `VITE_SENTRY_DSN` (Sentry or GlitchTip) unhandled errors,
+  promise rejections and what the error boundary and the router error page catch are sent,
+  with the release `osnova-frontend@<version>` and `VITE_SENTRY_ENVIRONMENT`. Without the
+  DSN the build has no Sentry code; with it `@sentry/browser` is its own chunk (~32 KB
+  gzipped) loaded after start, errors before it are kept. No personal data: no user,
+  cookies, headers or bodies, addresses without query and hash, no console lines. The
+  Content Security Policy allows the DSN host; the Docker image takes `VITE_SENTRY_DSN` and
+  `VITE_SENTRY_ENVIRONMENT` as build arguments. `reportError` for your own `catch` blocks.
 - Security headers from nginx: Content Security Policy (the site, Cloudflare Turnstile and
   the analytics origin; no inline scripts; `frame-ancestors 'none'`), `X-Frame-Options`,
   `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,

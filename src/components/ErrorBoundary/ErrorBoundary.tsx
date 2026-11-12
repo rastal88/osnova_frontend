@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 
+import { reportError } from '../../errorTracking';
 import ErrorPage from '../../pages/Error/Error';
 
 interface ErrorBoundaryProps {
@@ -20,6 +21,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error('Unhandled UI error', error, info);
+    reportError(error);
   }
 
   private handleRetry = () => {

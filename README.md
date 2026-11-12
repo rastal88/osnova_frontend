@@ -54,6 +54,7 @@ src/
 │                 # SchemaForm, DataTable, Image, landing blocks, CookieBanner...
 ├── config/       # navigation, brand, format, legal, analytics, prerender pages
 ├── consent/      # cookie consent state
+├── errorTracking/ # optional Sentry (VITE_SENTRY_DSN), its own chunk
 ├── examples/     # example pages, safe to delete
 ├── i18n/         # i18next setup, language in the URL, formatting
 ├── locales/      # translations: <language>/<namespace>.json
@@ -129,13 +130,15 @@ docker build --build-arg VITE_BASE_URL=/api/v1 --build-arg VITE_SITE_URL=https:/
 Usually it runs as part of the whole system from `osnova_backend` (`make up-minimal`,
 `make up-standard`), which passes the site URL, languages and app name from the backend
 `.env`. Build variables: [DEVELOPMENT.md](DEVELOPMENT.md#24-seo-and-link-previews);
-analytics: `--build-arg VITE_ANALYTICS_SCRIPT=<script URL>`.
+analytics: `--build-arg VITE_ANALYTICS_SCRIPT=<script URL>`; error tracking:
+`--build-arg VITE_SENTRY_DSN=<DSN>` (DEVELOPMENT.md → Error tracking).
 
 nginx sends security headers with every answer: a Content Security Policy (the site, the
 Turnstile captcha and the analytics origin; no inline scripts), `X-Frame-Options`,
 `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
 `Cross-Origin-Opener-Policy`, and HSTS when the proxy in front reports HTTPS
-(`X-Forwarded-Proto: https`). The policy is written at build time by
+(`X-Forwarded-Proto: https`). The host of `VITE_SENTRY_DSN` is allowed to receive data.
+The policy is written at build time by
 `scripts/security-headers.mjs`; a service that loads or sends data from another host (e.g.
 Google Analytics) needs `--build-arg CSP_EXTRA_ORIGINS="https://www.google-analytics.com"`.
 

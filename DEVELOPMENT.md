@@ -324,6 +324,18 @@ the page opens in the default one.
   changed on the cookie policy page. Without analytics there is no banner. The Content
   Security Policy of the Docker image allows the script's origin; if the provider also
   sends data to another host, add it to `CSP_EXTRA_ORIGINS` (README → Docker).
+- **Error tracking (optional)**: set `VITE_SENTRY_DSN` (a Sentry or GlitchTip project;
+  in Docker the build argument of the same name) and `VITE_SENTRY_ENVIRONMENT` (default
+  `production`). Without the DSN the build has no Sentry code at all. With it,
+  `@sentry/browser` comes in its own chunk (~32 KB gzipped) loaded after start; errors that
+  happen before it arrives are kept and sent then. Sent: unhandled errors and promise
+  rejections, and what the error boundary and the router error page show
+  (`reportError` in `src/errorTracking`, for your own `catch` blocks too), with the release
+  `osnova-frontend@<version>`. Nothing about the visitor: no user, cookies, headers or
+  bodies, addresses without query and hash (reset tokens, searches), no console lines
+  (`src/errorTracking/scrub.ts`). It needs no consent banner: no cookies are set. The
+  Content Security Policy allows the DSN host. Ad blockers may block the Sentry host; the
+  site works the same.
 - **Security headers** are sent only by nginx (the Docker image), not by `npm run dev`:
   check a change that loads something from another host in the image, the browser console
   reports what the policy blocks.
