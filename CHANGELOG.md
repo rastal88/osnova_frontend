@@ -6,6 +6,11 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-13
+
+Production: security headers with a Content Security Policy from nginx, and optional error
+tracking in its own chunk.
+
 ### Added
 - Optional error tracking: with `VITE_SENTRY_DSN` (Sentry or GlitchTip) unhandled errors,
   promise rejections and what the error boundary and the router error page catch are sent,
@@ -295,7 +300,8 @@ First release: the `minimal` profile.
 - Dependencies with known vulnerabilities updated (`npm audit`: 23 before, none after);
   `js-yaml` inside the API type generator is overridden to a fixed release.
 
-[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/rastal88/osnova_frontend/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/rastal88/osnova_frontend/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/rastal88/osnova_frontend/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/rastal88/osnova_frontend/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/rastal88/osnova_frontend/compare/v0.1.0...v0.2.0
