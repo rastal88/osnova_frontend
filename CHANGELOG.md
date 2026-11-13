@@ -6,6 +6,23 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Admin → Overview → System also shows where the installation keeps things (backend
+  `/admin/overview` → `system`): the mail backend (a warning when emails only go to the
+  log), where the rate limits count (a warning for counters in each process with the
+  scalable profile), the file storage, the sessions, error tracking and the log format.
+- `npm run strip` (`scripts/strip.mjs`, Node only) removes the modules a project does not
+  use, by the flags of `../osnova_backend/.env` or by name, with the modules that need them
+  (`auth` takes admin, files and notifications). It lists what goes; with `-- --apply`
+  (asks first, only on a clean git working tree) it deletes `src/modules/<name>`, points
+  the core's imports of it at `src/modules/off.ts` (the same names with the values of a
+  module that is off, so the core and the header do not change) and removes the CI blocks
+  between `strip:begin` and `strip:end`.
+- Checks that keep it working: `src/modules/off.test.ts` (the core imports only values
+  from a module's index that `off.ts` also has), an `off.check.ts` in each module (type
+  check that its values fit their stand-ins), a CI job that strips each module and runs
+  the lint, type check, tests and build.
+
 ### Changed
 - Admin: Roles, Groups and Settings use the full width like the other admin pages, and the
   tables of Roles and Groups sit on the page like every other table (no card around them)
@@ -22,21 +39,6 @@ All notable changes are documented here. The format follows
   instead of tabs; `/admin/settings` and old `?group=` links open the right group.
 - Bar chart: the day labels thin out by the width of the chart, so they do not overlap in a
   narrow card.
-
-### Added
-- `npm run strip` (`scripts/strip.mjs`, Node only) removes the modules a project does not
-  use, by the flags of `../osnova_backend/.env` or by name, with the modules that need them
-  (`auth` takes admin, files and notifications). It lists what goes; with `-- --apply`
-  (asks first, only on a clean git working tree) it deletes `src/modules/<name>`, points
-  the core's imports of it at `src/modules/off.ts` (the same names with the values of a
-  module that is off, so the core and the header do not change) and removes the CI blocks
-  between `strip:begin` and `strip:end`.
-- Checks that keep it working: `src/modules/off.test.ts` (the core imports only values
-  from a module's index that `off.ts` also has), an `off.check.ts` in each module (type
-  check that its values fit their stand-ins), a CI job that strips each module and runs
-  the lint, type check, tests and build.
-
-### Changed
 - The navigation's `Area` type is the core's own (`src/config/navigation.ts`), not the one
   generated from the auth API, which a stripped backend no longer has.
 

@@ -38,6 +38,39 @@ export type AdminOverview = {
     users_by_role: {
         [key: string]: number;
     };
+    system: AdminSystem;
+};
+
+/**
+ * AdminSystem
+ *
+ * How this installation is set up, for the dashboard; no secrets.
+ */
+export type AdminSystem = {
+    /**
+     * Rate Limit Storage
+     */
+    rate_limit_storage: 'memory' | 'redis';
+    /**
+     * Files Storage
+     */
+    files_storage: 'local' | 's3' | null;
+    /**
+     * Mail Backend
+     */
+    mail_backend: 'console' | 'smtp';
+    /**
+     * Auth Strategy
+     */
+    auth_strategy: 'jwt' | 'redis';
+    /**
+     * Error Tracking
+     */
+    error_tracking: boolean;
+    /**
+     * Log Format
+     */
+    log_format: 'text' | 'json';
 };
 
 /**

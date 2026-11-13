@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 
 import type {
   AdminOverview,
+  AdminSystem,
   BootstrapResponse,
   EntityRead,
   LeadStats,
@@ -41,14 +42,17 @@ const PROVIDERS: Record<string, string> = { google: 'Google' };
 const CAPTCHAS: Record<string, string> = { turnstile: 'Cloudflare Turnstile' };
 
 /**
- * The setup of this site: profile, versions, sign-in, protection, the modules and the
- * live checks of /ready (database, task queue, sessions).
+ * The setup of this site: profile, versions, sign-in, protection, where the data and
+ * the counters live (from /admin/overview), the modules and the live checks of /ready
+ * (database, task queue, sessions).
  */
 const SystemCard = ({
   config,
+  system,
   readiness,
 }: {
   config: BootstrapResponse;
+  system: AdminSystem;
   readiness: ReadyResponse | 'failed' | null;
 }) => {
   const { t } = useTranslation('admin');
@@ -57,6 +61,8 @@ const SystemCard = ({
     ? ['Email', ...config.auth_providers.map((name) => PROVIDERS[name] ?? name)].join(', ')
     : '—';
   const captcha = config.captcha?.provider;
+  // With replicas each one would count the rate limits on its own
+  const limitsPerProcess = system.rate_limit_storage === 'memory';
 
   return (
     <Card title={t('overview.system')} className="overview-card">
@@ -89,6 +95,35 @@ const SystemCard = ({
           ) : (
             t('overview.apiDocsClosed')
           )}
+        </Descriptions.Item>
+        <Descriptions.Item label={t('overview.mail')}>
+          {/* Saved in Admin → Settings → Mail: in the log nobody gets the emails */}
+          {system.mail_backend === 'console' ? (
+            <Tag color="warning">{t('overview.mailConsole')}</Tag>
+          ) : (
+            'SMTP'
+          )}
+        </Descriptions.Item>
+        <Descriptions.Item label={t('overview.rateLimits')}>
+          {limitsPerProcess && config.profile === 'scalable' ? (
+            <Tag color="warning">{t('overview.rateLimitsMemory')}</Tag>
+          ) : (
+            t(limitsPerProcess ? 'overview.rateLimitsMemory' : 'overview.rateLimitsRedis')
+          )}
+        </Descriptions.Item>
+        {system.files_storage && (
+          <Descriptions.Item label={t('overview.fileStorage')}>
+            {system.files_storage === 's3' ? 'S3' : t('overview.fileStorageLocal')}
+          </Descriptions.Item>
+        )}
+        <Descriptions.Item label={t('overview.sessions')}>
+          {t(system.auth_strategy === 'redis' ? 'overview.sessionsRedis' : 'overview.sessionsJwt')}
+        </Descriptions.Item>
+        <Descriptions.Item label={t('overview.errorTracking')}>
+          {system.error_tracking ? 'Sentry' : t('overview.errorTrackingOff')}
+        </Descriptions.Item>
+        <Descriptions.Item label={t('overview.logs')}>
+          {system.log_format === 'json' ? 'JSON' : t('overview.logsText')}
         </Descriptions.Item>
       </Descriptions>
 
@@ -206,7 +241,7 @@ const AdminDashboard = () => {
     >
       {overview && (
         <Space direction="vertical" size={16} style={{ width: '100%' }}>
-          {config && <SystemCard config={config} readiness={readiness} />}
+          {config && <SystemCard config={config} system={overview.system} readiness={readiness} />}
 
           {/* The cards share the row equally, however many of them there are */}
           <Row gutter={[16, 16]}>
