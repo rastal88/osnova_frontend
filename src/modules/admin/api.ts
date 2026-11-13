@@ -19,6 +19,7 @@ import type {
   LeadStats,
   MailTestResult,
   PermissionRead,
+  ReadyResponse,
   RoleCreate,
   RoleRead,
   RoleUpdate,
@@ -29,6 +30,14 @@ import { exportParams, listParams } from '../../components/DataTable/query';
 
 export async function getOverview(): Promise<AdminOverview> {
   const response = await api.get<AdminOverview>('/admin/overview');
+  return response.data;
+}
+
+/** The dependency checks of /ready; one that fails answers 503 with the same body. */
+export async function getReadiness(): Promise<ReadyResponse> {
+  const response = await api.get<ReadyResponse>('/ready', {
+    validateStatus: (status) => status === 200 || status === 503,
+  });
   return response.data;
 }
 

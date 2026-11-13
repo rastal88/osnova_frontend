@@ -9,17 +9,30 @@
     "leadsNew": "Новые",
     "leadsDone": "Обработаны",
     "leadsPerDay": "Заявки за {{days}} дней",
-    "openLeads": "Открыть заявки",
     "channels": "Каналы доставки",
     "channelsEnabled": "Включены",
     "channelsTotal": "Настроены",
     "noChannels": "Каналов пока нет: заявки хранятся только в админке.",
-    "openChannels": "Настроить каналы",
     "system": "Система",
     "profile": "Профиль шаблона",
     "version": "Версия",
     "languages": "Языки",
+    "signIn": "Вход",
+    "captcha": "Капча",
+    "captchaOff": "Выключена",
+    "apiDocs": "Документация API",
+    "apiDocsOpen": "Открыта (DEBUG)",
+    "apiDocsClosed": "Закрыта",
+    "frontendVersion": "фронтенд {{version}}",
     "modules": "Модули",
+    "health": "Состояние",
+    "noChecks": "Проверять нечего: внешних зависимостей нет",
+    "healthFailed": "Не удалось проверить",
+    "checks": {
+      "database": "База данных",
+      "broker": "Очередь задач (Celery)",
+      "redis": "Сессии в Redis"
+    },
     "features": {
       "authentication": "Пользователи",
       "admin": "Админка",
@@ -160,7 +173,8 @@
     "delivery": {
       "sent": "Отправлено",
       "failed": "Ошибка"
-    }
+    },
+    "close": "Закрыть"
   },
   "channels": {
     "title": "Каналы доставки",

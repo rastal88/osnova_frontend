@@ -51,7 +51,7 @@ With `authentication` on, the app has three areas in the same shell:
   everywhere, delete account (`src/modules/auth/pages/Profile`); each change asks for the
   current password (backend `/auth/me/*`).
 - **Admin → Leads** (`/admin/leads`): form submissions stored by the backend — search,
-  form / status filters, a drawer with the answers under their translated labels
+  form / status filters, a modal with the answers under their translated labels
   (`GET /admin/leads/forms`), mark done / new, delete.
 - **Notifications** (`src/modules/notifications`, `notifications` capability): the bell in
   the header for signed-in users — unread count (asked every minute while the page is
@@ -61,13 +61,13 @@ With `authentication` on, the app has three areas in the same shell:
   capability — drag-and-drop upload with progress, the user's files in a server-side
   `DataTable` with search, download links, delete. Files are private on the backend (owner
   and admins); limits come from `FILES_MAX_SIZE_MB` / `FILES_ALLOWED_TYPES` and their errors
-  are shown per file. Remove the module: delete the folder and `filesRoutes` in
-  `src/routes/routes.tsx`.
-- **Admin → Settings → Channels** (`/admin/settings/channels`): lead delivery channels — configurable entities of
-  the group `lead_channels` (`/admin/entities`). The add / edit form is generated from the
+  are shown per file. Remove the module: `npm run strip -- files --apply`.
+- **Admin → Settings → Channels** (`/admin/settings/channels`, the last item of the
+  Settings menu): lead delivery channels — configurable entities of the group
+  `lead_channels` (`/admin/entities`). The add / edit form is generated from the
   type description (`SchemaFields` with `namePrefix="params"`); secrets come as `********`
   and are kept when sent back. Root adds, edits, turns on / off, tests and deletes; the lead
-  drawer shows the delivery result per channel.
+  modal shows the delivery result per channel.
 - **Admin → Users** (`/admin/users`): server-side `DataTable` over `GET /admin/users` with
   search, role / status filters, sorting; block / unblock and the role select are shown
   only where the backend allows them (`src/modules/admin/pages/Users/permissions.ts`).
@@ -251,10 +251,15 @@ Forms are described once on the backend (`app/forms.py` in osnova_backend) and r
 
 ### 3.1. Settings in the admin
 
-**Admin → Settings** (`/admin/settings`, `src/modules/admin/pages/Settings`) is generated
-from `GET /admin/settings`: one card per settings group of the backend (`app/settings.py`),
-its fields in the same format as a form. A new setting on the backend appears here without
-frontend code. Only `root` saves; `moderator` sees the values read-only.
+**Admin → Settings** (`src/modules/admin/pages/Settings`): one page per settings group of
+the backend (`app/settings.py`), `/admin/settings/<group>`, each an item of the Settings
+menu (`src/modules/admin/navigation.ts`, like Access → Roles, Groups, Audit log; the mail
+and protection items ask for `settings.mail` / `settings.protection`, as the backend shows
+those groups only to who may change them). The form is generated from `GET /admin/settings`
+in the same format as a form, so a new setting of a group appears without frontend code; a
+new group needs its menu item and a title in `pages` (`common.json`). `/admin/settings`
+opens the site group (an old `?group=` link its group). Only `root` saves; `moderator`
+sees the values read-only.
 
 After a save the app re-reads `/bootstrap` (`useBootstrapStore.refresh`), so the site name,
 contacts (footer) and languages change at once; if the current language was turned off,

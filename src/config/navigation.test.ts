@@ -72,7 +72,7 @@ describe('submenus', () => {
       path: 'settings',
       label: 'pages.settings',
       children: [
-        { path: '/admin/settings', label: 'pages.settingsGeneral' },
+        { path: '/admin/settings', label: 'pages.settings' },
         { path: '/admin/settings/channels', label: 'pages.channels', capability: 'admin' },
       ],
     },
@@ -120,10 +120,10 @@ describe('getBreadcrumbs', () => {
       { titleKey: 'pages.admin', path: '/admin' },
       { titleKey: 'pages.users', path: '/admin/users' },
     ]);
-    expect(getBreadcrumbs('/admin/settings/channels').map((crumb) => crumb.titleKey)).toEqual([
+    expect(getBreadcrumbs('/admin/settings/mail').map((crumb) => crumb.titleKey)).toEqual([
       'pages.admin',
       'pages.settings',
-      'pages.channels',
+      'pages.settingsMail',
     ]);
   });
 });

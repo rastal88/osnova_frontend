@@ -1,5 +1,7 @@
 .bar-chart {
   margin: 0;
+  /* Labels thin out by the width of the chart, not of the screen (narrow cards) */
+  container-type: inline-size;
 }
 
 .bar-chart-bars {
@@ -53,9 +55,16 @@
   color: var(--color-text-tertiary);
 }
 
-/* Every other label, so dates do not overlap on narrow screens */
-@media (max-width: 575px) {
+/* Every other label, so dates do not overlap in a narrow chart; every fourth in a very
+   narrow one */
+@container (max-width: 600px) {
   .bar-chart-item:nth-child(even) .bar-chart-label {
+    visibility: hidden;
+  }
+}
+
+@container (max-width: 360px) {
+  .bar-chart-item:not(:nth-child(4n + 1)) .bar-chart-label {
     visibility: hidden;
   }
 }

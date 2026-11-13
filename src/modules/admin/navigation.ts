@@ -1,12 +1,18 @@
 import {
-  ControlOutlined,
+  BellOutlined,
   DashboardOutlined,
+  FieldTimeOutlined,
+  FileOutlined,
+  GlobalOutlined,
   HistoryOutlined,
   InboxOutlined,
+  LockOutlined,
+  MailOutlined,
   SafetyOutlined,
   SendOutlined,
   SettingOutlined,
   TeamOutlined,
+  TranslationOutlined,
   UserSwitchOutlined,
   UsergroupAddOutlined,
 } from '@ant-design/icons';
@@ -38,12 +44,48 @@ export const adminNavItems: NavItem[] = [
     ],
   },
   {
-    // A group key, not a page: its pages are the children
+    // One item per settings group of the backend (add one for a new group; mail and
+    // protection hold secrets, so only those who may change them see them), then the
+    // delivery channels
     path: 'settings',
     label: 'pages.settings',
     icon: SettingOutlined,
     children: [
-      { path: '/admin/settings', label: 'pages.settingsGeneral', icon: ControlOutlined },
+      { path: '/admin/settings/site', label: 'pages.settingsSite', icon: GlobalOutlined },
+      {
+        path: '/admin/settings/languages',
+        label: 'pages.settingsLanguages',
+        icon: TranslationOutlined,
+      },
+      {
+        path: '/admin/settings/mail',
+        label: 'pages.settingsMail',
+        icon: MailOutlined,
+        permission: 'settings.mail',
+      },
+      {
+        path: '/admin/settings/protection',
+        label: 'pages.settingsProtection',
+        icon: LockOutlined,
+        permission: 'settings.protection',
+      },
+      {
+        path: '/admin/settings/retention',
+        label: 'pages.settingsRetention',
+        icon: FieldTimeOutlined,
+      },
+      {
+        path: '/admin/settings/files',
+        label: 'pages.settingsFiles',
+        icon: FileOutlined,
+        capability: 'files',
+      },
+      {
+        path: '/admin/settings/notifications',
+        label: 'pages.settingsNotifications',
+        icon: BellOutlined,
+        capability: 'notifications',
+      },
       { path: '/admin/settings/channels', label: 'pages.channels', icon: SendOutlined },
     ],
   },

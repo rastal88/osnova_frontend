@@ -1,8 +1,8 @@
 import { SendOutlined } from '@ant-design/icons';
-import { Alert, Button, Card, Form, Grid, Modal, Space, Tabs, Typography, message } from 'antd';
+import { Alert, Button, Card, Form, Modal, Space, Typography, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { getErrorMessage } from '../../../../api/errors';
 import type { FormValues } from '../../../../api/forms';
@@ -48,7 +48,7 @@ const MailTest = () => {
   );
 };
 
-// One card per settings group; its fields come from the backend description.
+// The form of a settings group; its fields come from the backend description.
 const GroupForm = ({ group }: { group: SettingsGroupDescription }) => {
   const { t } = useTranslation('admin');
   const [form] = Form.useForm<FormValues>();
@@ -73,7 +73,7 @@ const GroupForm = ({ group }: { group: SettingsGroupDescription }) => {
   };
 
   return (
-    <Card title={group.title}>
+    <Card>
       {toastHolder}
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {!editable && <Alert type="info" showIcon message={t('settings.readOnly')} />}
@@ -100,13 +100,13 @@ const GroupForm = ({ group }: { group: SettingsGroupDescription }) => {
 };
 
 /**
- * Admin → Settings: one tab per group the backend shows to this user (groups with
- * secrets only to those who may change them); the open tab is kept in the URL.
+ * Admin → Settings → <group>: the group of the address (/admin/settings/mail) as the
+ * backend shows it to this user; a group with secrets only to those who may change it.
+ * The menu lists the groups (src/modules/admin/navigation.ts).
  */
 const Settings = () => {
   const { t, i18n } = useTranslation('admin');
-  const screens = Grid.useBreakpoint();
-  const [params, setParams] = useSearchParams();
+  const { group: name } = useParams();
   const [groups, setGroups] = useState<SettingsGroupDescription[] | null>(null);
   const [error, setError] = useState(false);
   const language = i18n.language;
@@ -124,37 +124,19 @@ const Settings = () => {
     };
   }, [language]);
 
-  const names = groups?.map((group) => group.name) ?? [];
-  const asked = params.get('group');
-  const current = asked && names.includes(asked) ? asked : names[0];
-
-  const open = (name: string) => {
-    const next = new URLSearchParams(params);
-    next.set('group', name);
-    setParams(next, { replace: true });
-  };
+  const group = groups?.find((item) => item.name === name);
 
   return (
     <PageContainer
-      title={t('settings.title')}
+      title={group?.title ?? t('settings.title')}
       subtitle={t('settings.subtitle')}
       noindex
       loading={!groups && !error}
       error={error}
-      maxWidth={960}
+      // Not this user's (secrets), or no such group
+      forbidden={groups !== null && !group}
     >
-      {groups && (
-        <Tabs
-          activeKey={current}
-          onChange={open}
-          tabPosition={screens.md ? 'left' : 'top'}
-          items={groups.map((group) => ({
-            key: group.name,
-            label: group.title,
-            children: <GroupForm key={`${group.name}-${language}`} group={group} />,
-          }))}
-        />
-      )}
+      {group && <GroupForm key={`${group.name}-${language}`} group={group} />}
     </PageContainer>
   );
 };

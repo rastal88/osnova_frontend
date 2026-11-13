@@ -2,7 +2,6 @@ import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined } from '@ant-de
 import {
   Alert,
   Button,
-  Card,
   Form,
   Input,
   Modal,
@@ -167,7 +166,6 @@ const Roles = () => {
       noindex
       loading={!roles && !error}
       error={error}
-      maxWidth={860}
       actions={
         canManage && (
           <Button type="primary" icon={<PlusOutlined />} onClick={() => open('new')}>
@@ -179,15 +177,18 @@ const Roles = () => {
       {toastHolder}
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {!canManage && <Alert type="info" showIcon message={t('roles.readOnly')} />}
-        <Card>
-          <Table<RoleRead>
-            rowKey="slug"
-            columns={columns}
-            dataSource={roles ?? []}
-            pagination={false}
-            scroll={{ x: true }}
-          />
-        </Card>
+        <Table<RoleRead>
+          rowKey="slug"
+          columns={columns}
+          dataSource={roles ?? []}
+          // As in every other table (DataTable), on the client: the list comes whole
+          pagination={{
+            defaultPageSize: 20,
+            showSizeChanger: true,
+            showTotal: (total) => t('table.total', { ns: 'common', count: total }),
+          }}
+          scroll={{ x: true }}
+        />
       </Space>
 
       <Modal

@@ -1,4 +1,4 @@
-import { Button, Descriptions, Drawer, Popconfirm, Space, Tag, Typography, message } from 'antd';
+import { Button, Descriptions, Modal, Popconfirm, Space, Tag, Typography, message } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -132,34 +132,38 @@ const Leads = () => {
         searchPlaceholder={t('leads.search')}
       />
 
-      <Drawer
+      <Modal
         open={open !== null}
-        onClose={() => setOpen(null)}
+        onCancel={() => setOpen(null)}
         title={open && (form?.title ?? open.form)}
-        width={520}
-        extra={
-          open &&
-          canManage && (
-            <Space>
-              <Button
-                loading={busy}
-                onClick={() => void setStatus(open, open.status === 'new' ? 'done' : 'new')}
-              >
-                {t(open.status === 'new' ? 'leads.markDone' : 'leads.markNew')}
-              </Button>
-              <Popconfirm
-                title={t('leads.deleteConfirm')}
-                okText={t('leads.delete')}
-                okButtonProps={{ danger: true }}
-                onConfirm={() => act(() => deleteLead(open.id), 'deleted')}
-              >
-                <Button danger loading={busy}>
-                  {t('leads.delete')}
-                </Button>
-              </Popconfirm>
-            </Space>
-          )
-        }
+        width={640}
+        footer={[
+          ...(open && canManage
+            ? [
+                <Popconfirm
+                  key="delete"
+                  title={t('leads.deleteConfirm')}
+                  okText={t('leads.delete')}
+                  okButtonProps={{ danger: true }}
+                  onConfirm={() => act(() => deleteLead(open.id), 'deleted')}
+                >
+                  <Button danger loading={busy}>
+                    {t('leads.delete')}
+                  </Button>
+                </Popconfirm>,
+                <Button
+                  key="status"
+                  loading={busy}
+                  onClick={() => void setStatus(open, open.status === 'new' ? 'done' : 'new')}
+                >
+                  {t(open.status === 'new' ? 'leads.markDone' : 'leads.markNew')}
+                </Button>,
+              ]
+            : []),
+          <Button key="close" type="primary" onClick={() => setOpen(null)}>
+            {t('leads.close')}
+          </Button>,
+        ]}
       >
         {open && (
           <Descriptions column={1} bordered size="small">
@@ -211,7 +215,7 @@ const Leads = () => {
             )}
           </div>
         )}
-      </Drawer>
+      </Modal>
     </PageContainer>
   );
 };

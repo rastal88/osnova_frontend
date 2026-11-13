@@ -6,6 +6,7 @@
  * (./navigation.ts); access comes from the user's `areas`, sections ask for
  * their own permissions.
  */
+import { Navigate, useSearchParams } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 
 import LayoutComponent from '../../components/LayoutComponent/LayoutComponent';
@@ -14,6 +15,12 @@ import RouteError from '../../routes/RouteError';
 import { lazyElement } from '../../routes/lazy';
 import { ProtectedRoute } from '../auth';
 import { adminNavItems } from './navigation';
+
+/** /admin/settings opens a group: the one of an old `?group=` link, or the site. */
+const SettingsStart = () => {
+  const [params] = useSearchParams();
+  return <Navigate to={`/admin/settings/${params.get('group') ?? 'site'}`} replace />;
+};
 
 export const adminRoute: RouteObject = {
   path: '/admin',
@@ -51,7 +58,9 @@ export const adminRoute: RouteObject = {
     },
     { path: 'roles', element: lazyElement(() => import('./pages/Roles/Roles')) },
     { path: 'groups', element: lazyElement(() => import('./pages/Groups/Groups')) },
-    { path: 'settings', element: lazyElement(() => import('./pages/Settings/Settings')) },
+    // One page per settings group (/admin/settings/site, ...); the old ?group= links too
+    { path: 'settings', element: <SettingsStart /> },
+    { path: 'settings/:group', element: lazyElement(() => import('./pages/Settings/Settings')) },
     {
       path: 'settings/channels',
       element: lazyElement(() => import('./pages/Channels/Channels')),

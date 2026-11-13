@@ -92,6 +92,13 @@ export const routeTitles: Record<string, LabelKey> = {
   '/admin/leads': 'pages.leads',
   '/admin/roles': 'pages.roles',
   '/admin/settings': 'pages.settings',
+  '/admin/settings/site': 'pages.settingsSite',
+  '/admin/settings/languages': 'pages.settingsLanguages',
+  '/admin/settings/mail': 'pages.settingsMail',
+  '/admin/settings/protection': 'pages.settingsProtection',
+  '/admin/settings/retention': 'pages.settingsRetention',
+  '/admin/settings/files': 'pages.settingsFiles',
+  '/admin/settings/notifications': 'pages.settingsNotifications',
   '/admin/settings/channels': 'pages.channels',
   '/admin/users': 'pages.users',
 };
