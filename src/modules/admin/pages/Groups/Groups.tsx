@@ -2,7 +2,6 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Alert,
   Button,
-  Card,
   Form,
   Input,
   Modal,
@@ -141,7 +140,6 @@ const Groups = () => {
       noindex
       loading={(!groups || !roles) && !error && !rolesError}
       error={error || rolesError}
-      maxWidth={860}
       actions={
         canManage && (
           <Button type="primary" icon={<PlusOutlined />} onClick={() => open('new')}>
@@ -154,15 +152,18 @@ const Groups = () => {
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {!canManage && <Alert type="info" showIcon message={t('groups.readOnly')} />}
         <Alert type="info" showIcon message={t('groups.hint')} />
-        <Card>
-          <Table<GroupRead>
-            rowKey="id"
-            columns={columns}
-            dataSource={groups ?? []}
-            pagination={false}
-            scroll={{ x: true }}
-          />
-        </Card>
+        <Table<GroupRead>
+          rowKey="id"
+          columns={columns}
+          dataSource={groups ?? []}
+          // As in every other table (DataTable), on the client: the list comes whole
+          pagination={{
+            defaultPageSize: 20,
+            showSizeChanger: true,
+            showTotal: (total) => t('table.total', { ns: 'common', count: total }),
+          }}
+          scroll={{ x: true }}
+        />
       </Space>
 
       <Modal

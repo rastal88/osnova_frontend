@@ -9,17 +9,30 @@
     "leadsNew": "New",
     "leadsDone": "Done",
     "leadsPerDay": "Leads in the last {{days}} days",
-    "openLeads": "Open leads",
     "channels": "Delivery channels",
     "channelsEnabled": "Enabled",
     "channelsTotal": "Set up",
     "noChannels": "No channels yet: leads are only kept in the admin.",
-    "openChannels": "Set up channels",
     "system": "System",
     "profile": "Template profile",
     "version": "Version",
     "languages": "Languages",
+    "signIn": "Sign-in",
+    "captcha": "Captcha",
+    "captchaOff": "Off",
+    "apiDocs": "API docs",
+    "apiDocsOpen": "Open (DEBUG)",
+    "apiDocsClosed": "Closed",
+    "frontendVersion": "frontend {{version}}",
     "modules": "Modules",
+    "health": "Health",
+    "noChecks": "Nothing to check: no external dependencies",
+    "healthFailed": "Could not check",
+    "checks": {
+      "database": "Database",
+      "broker": "Task queue (Celery)",
+      "redis": "Sessions in Redis"
+    },
     "features": {
       "authentication": "Users",
       "admin": "Admin",
@@ -160,7 +173,8 @@
     "delivery": {
       "sent": "Sent",
       "failed": "Failed"
-    }
+    },
+    "close": "Close"
   },
   "channels": {
     "title": "Delivery channels",

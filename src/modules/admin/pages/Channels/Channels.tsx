@@ -149,7 +149,6 @@ const Channels = () => {
       noindex
       loading={!channels && !error}
       error={error}
-      maxWidth={860}
       actions={
         editable &&
         types.length > 0 && (

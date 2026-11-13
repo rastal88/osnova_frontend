@@ -6,6 +6,23 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- Admin: Roles, Groups and Settings use the full width like the other admin pages, and the
+  tables of Roles and Groups sit on the page like every other table (no card around them)
+  and have the same pagination.
+- Admin → Overview: the System card comes first, full width, and shows more: the frontend
+  release when it differs from the backend's, sign-in methods, captcha, whether the API
+  docs are open (`DEBUG`), and the health checks of `/ready` (database, task queue, Redis
+  sessions) next to the modules. The Users, Leads and Channels cards share the row below
+  equally; each card's icon in the corner opens its page (the "Open leads" and "Set up
+  channels" links are gone).
+- Admin → Leads: a lead opens in a modal, like the rest of the site, instead of a drawer.
+- Admin → Settings: each settings group is a page and an item of the Settings menu
+  (`/admin/settings/site`, ..., then Channels), like Access → Roles, Groups, Audit log,
+  instead of tabs; `/admin/settings` and old `?group=` links open the right group.
+- Bar chart: the day labels thin out by the width of the chart, so they do not overlap in a
+  narrow card.
+
 ### Added
 - `npm run strip` (`scripts/strip.mjs`, Node only) removes the modules a project does not
   use, by the flags of `../osnova_backend/.env` or by name, with the modules that need them
