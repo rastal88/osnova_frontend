@@ -352,6 +352,10 @@ the page opens in the default one.
 - **Tests**: Vitest, `npm test`. Tests sit next to the code as `*.test.ts` and cover pure logic
   (formatting, table query, navigation, language URLs, API errors); they run in Node, no browser.
 - **Docker**: from osnova_backend, `make up-minimal` or `make up-standard`.
+- **Remove unused modules**: `npm run strip` (README → Project structure): lists them,
+  `-- --apply` removes. When the core starts using a new value of a module, import it from
+  `modules/<name>`, add the same name to `src/modules/off.ts` (its value when the module is
+  off) and to the module's `off.check.ts`.
 
 ---
 

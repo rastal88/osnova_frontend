@@ -3,9 +3,11 @@ import type { ParseKeys } from 'i18next';
 import type { ComponentType } from 'react';
 
 import type { BootstrapFeatures } from '../api/bootstrap';
-import type { Area } from '../api/generated';
 
 export type Capability = keyof BootstrapFeatures;
+/** Areas of the app (the backend sends a user's areas); the core's own type, so it does
+ * not depend on the auth module's API types (`npm run strip` may remove them) */
+export type Area = 'admin' | 'user';
 export type MenuPosition = 'top' | 'left' | 'right';
 
 /** A key in the `common` namespace, translated where it is shown. */
