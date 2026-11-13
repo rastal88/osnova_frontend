@@ -62,7 +62,8 @@ src/
 │   ├── auth/     # sign-in, sign-up, profile, ProtectedRoute   ← authentication
 │   ├── admin/    # /admin section for root / moderator         ← admin
 │   ├── files/    # "My files": upload, list, download, delete   ← files
-│   └── notifications/ # the bell in the header                ← notifications
+│   ├── notifications/ # the bell in the header                ← notifications
+│   └── off.ts    # what the core gets from a module removed with npm run strip
 ├── pages/        # core pages: Home, legal pages, 404, error
 ├── routes/       # router built from capabilities, lazyElement()
 ├── seo/          # SEO tags shared by the app and the prerender script
@@ -72,8 +73,22 @@ src/
 
 **Module = folder.** A module exports its routes from `modules/<name>/index.tsx`; pages
 are loaded with `lazyElement()` into separate chunks, so a page that is disabled or never
-opened is never downloaded. To remove a module, delete its folder and its use in
-`src/routes/routes.tsx`.
+opened is never downloaded.
+
+**Remove the modules you do not use:** `npm run strip` reads the flags of
+`../osnova_backend/.env` (or name them: `npm run strip -- files notifications`) and lists
+what goes; `npm run strip -- --apply` removes it (asks first; only on a clean git working
+tree, so `git checkout . && git clean -fd` undoes it). A module goes with the modules that
+need it (`auth` takes admin, files and notifications). It deletes `src/modules/<name>` and
+points the core's imports of it at `src/modules/off.ts`: the same names with the values of
+a module that is off, as when its capability is off in `/bootstrap`, so the core and the
+header stay as they are. Run `make strip` in the backend too.
+
+The rule that keeps this working: the core imports a module only from its index
+(`modules/<name>`), only values, and only names that `src/modules/off.ts` has
+(`src/modules/off.test.ts` checks it). Each module's `off.check.ts` makes `npm run
+typecheck` fail when its values and their stand-ins in `off.ts` stop fitting; CI strips a
+copy for each module and runs the lint, type check, tests and build.
 
 ## Quick start
 

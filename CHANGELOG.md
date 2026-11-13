@@ -6,6 +6,23 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- `npm run strip` (`scripts/strip.mjs`, Node only) removes the modules a project does not
+  use, by the flags of `../osnova_backend/.env` or by name, with the modules that need them
+  (`auth` takes admin, files and notifications). It lists what goes; with `-- --apply`
+  (asks first, only on a clean git working tree) it deletes `src/modules/<name>`, points
+  the core's imports of it at `src/modules/off.ts` (the same names with the values of a
+  module that is off, so the core and the header do not change) and removes the CI blocks
+  between `strip:begin` and `strip:end`.
+- Checks that keep it working: `src/modules/off.test.ts` (the core imports only values
+  from a module's index that `off.ts` also has), an `off.check.ts` in each module (type
+  check that its values fit their stand-ins), a CI job that strips each module and runs
+  the lint, type check, tests and build.
+
+### Changed
+- The navigation's `Area` type is the core's own (`src/config/navigation.ts`), not the one
+  generated from the auth API, which a stripped backend no longer has.
+
 ## [0.5.0] - 2026-11-13
 
 Production: security headers with a Content Security Policy from nginx, and optional error
