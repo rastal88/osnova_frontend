@@ -47,3 +47,41 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  # strip:begin any — a project that ran `npm run strip` keeps the modules it uses
+  strip:
+    name: npm run strip ${{ matrix.modules }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # auth takes every module that needs it
+        modules: [admin, files, notifications, auth]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Strip
+        run: |
+          npm run strip -- ${{ matrix.modules }} --apply --yes
+          git status --short
+
+      - name: Lint and format (Biome)
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+  # strip:end
