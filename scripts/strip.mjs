@@ -148,6 +148,11 @@ export function apply(steps) {
     const path = join(ROOT, file);
     writeFileSync(path, removeMarkedBlocks(readFileSync(path, 'utf8'), steps.removed));
   }
+  // The new import paths sort differently
+  const biome = join(ROOT, 'node_modules', '.bin', 'biome');
+  if (steps.core.length && existsSync(biome)) {
+    execFileSync(biome, ['check', '--write', ...steps.core], { cwd: ROOT, stdio: 'inherit' });
+  }
 }
 
 async function main(argv) {

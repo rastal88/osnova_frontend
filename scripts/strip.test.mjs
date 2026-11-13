@@ -1,6 +1,9 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import {
+  ROOT,
   disabledByEnv,
   parseEnv,
   plan,
@@ -53,7 +56,9 @@ describe('the core points at off.ts', () => {
     );
   });
 
-  it('finds the core files of the real project and leaves the modules to delete', () => {
+  const hasNotifications = existsSync(join(ROOT, 'src', 'modules', 'notifications'));
+
+  it.skipIf(!hasNotifications)('finds the core files of the real project', () => {
     const steps = plan(['notifications']);
     expect(steps.folders).toEqual(['src/modules/notifications']);
     expect(steps.core).toEqual(['src/components/LayoutComponent/LayoutComponent.tsx']);
